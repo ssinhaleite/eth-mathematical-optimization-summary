@@ -1,0 +1,93 @@
+\documentclass[11pt,article,oneside,a4paper]{memoir}
+
+%% Packages
+%% ========
+
+%% many common packages
+\input{commonpackages}
+
+%% Some more packages that you may want to use.  Have a look at the
+%% file, and consult the package docs for each.
+\input{extrapackages}
+
+%% Our layout configuration.
+\input{layoutsetup}
+
+%% Theorem environments.  You will have to adapt this for a German
+%% thesis.
+\input{theoremsetup}
+
+%% Helpful macros.
+\input{macrosetup}
+
+%%page layout settings and listing templates etc.
+\input{settings}
+
+\title{Mathematical Optimization, Autumn Semester 2017}
+\author{
+Vanessa Leite\\
+\vspace{2em}
+Github (git/svn) repository page:\\ \url{https://github.com/ssinhaleite/eth-mathematical-optimization-summary}\\
+Contact \href{mailto:vrcleite@gmail.com}{vrcleite@gmail.com} if you have any questions.}
+\thesistype{Summary of the lectures in 2017}
+\advisors{Professor:\\ Prof.\ Dr.\ Robert Weismantel}
+\department{D-MATH, ETH}
+\date{\today}
+
+\begin{document}
+\frontmatter
+
+%% Title page is auto-generated from document information above.
+%% DO NOT CHANGE.
+\begin{titlingpage}
+  \calccentering{\unitlength}
+  \begin{adjustwidth*}{\unitlength-24pt}{-\unitlength-24pt}
+    \maketitle
+  \end{adjustwidth*}
+\end{titlingpage}
+
+\mainmatter
+\newpage
+\chapterprecishere{
+Summary of the lectures about Mathematical Optimization - Prof. Dr. Robert Weismantel. You can find a referece list in the end of each chapter.\\---}
+\newpage
+
+%% This change is needed if the article option for the memoir document class
+%% is used, in order to count sections (article) as if they were chapters (memoir)
+\counterwithout{section}{chapter}
+
+%% Our content
+
+\newpage
+\clearpage
+\pagenumbering{roman}
+\setcounter{tocdepth}{3}
+\setcounter{secnumdepth}{2}
+\tableofcontents
+
+\clearpage
+\pagenumbering{arabic}
+
+\newpage
+
+\subfile{01-introduction.tex}
+
+\subfile{02-linear-optimization-extreme-pointsI.tex}
+
+\subfile{03-linear-optimization-extreme-pointsII.tex}
+
+\subfile{04-projection-on-polyhedra.tex}
+
+\subfile{05-farkas-lemma-standard-polyhedra.tex}
+
+\subfile{06-linear-programming-duality.tex}
+
+\subfile{07-representation-of-polyhedra.tex}
+
+\pagebreak
+
+\subfile{08-Glossary.tex}
+
+\subfile{09-TODO.tex}
+
+\end{document}
