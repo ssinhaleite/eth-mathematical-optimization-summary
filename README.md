@@ -8,8 +8,11 @@ This course covers:
 - Integer optimization: Ties between linear and integer optimization, total unimodularity, complexity theory, cutting plane theory.
 - Combinatorial optimization: Network flow problems, structural results and algorithms for matroids, matchings and more generally, independence systems.
 
-In this course, the lectures are only at the blackboard.
-Some notes/exercises can be found at the moodle website: https://moodle-app2.let.ethz.ch/auth/shibboleth/login.php
+In this course, the lectures are only at the blackboard and concepts of linear algebra and analysis are prerequisites.
+Course webpage: [https://www.math.ethz.ch/ifor/education/courses/fall-2017/mathematical-optimization.html](https://www.math.ethz.ch/ifor/education/courses/fall-2017/mathematical-optimization.html)
+Some notes/exercises can be found at the moodle website: [https://moodle-app2.let.ethz.ch/auth/shibboleth/login.php](https://moodle-app2.let.ethz.ch/auth/shibboleth/login.php)
+Course assistants: Christoph Glanzer (christoph.glanzer@ifor.math.ethz.ch)
+
 
 ## References
 - Graph Theory: The course requires basic knowledge in graph theory. This is, for example, covered in Diestel's book (Chapters 1.1 to 1.7).
