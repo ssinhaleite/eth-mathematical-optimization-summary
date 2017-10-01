@@ -1,11 +1,199 @@
 \documentclass[main]{subfiles}
 \begin{document}
-\setcounter{section}{1}
 
 %@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 % Main Topics: optimization problems, polyhedra, convexity.
+% Optimization problems in finite dimensional space, basic definitions and
+% examples of optimization problems: 21.09.2017
+% tutorial - definitions, classifications of optimization problems and
+% complexity theory: 22.09.2017
 % author: Vanessa Leite
 
 \section{Introduction}
+
+\subsection{Optimization problems in finite dimensional space}
+Definition: Let $f: \mathbb{R}^{n} \rightarrow \mathbb{R}$ be a function.
+$dom(f) = \{ x \in \mathbb{R}^{n} \mid \left| f(x) \right| < \infty \}$.
+
+We need a function to optimize. An optimization problem is of the form: 
+
+\begin{equation*}
+\begin{aligned}
+& \underset{\mathbf{x \in \mathcal{F}}}{\text{min/max}}
+& & f(\mathbf{x})
+\end{aligned}
+\label{eq:sampleOptimizationProblem}
+\end{equation*}
+
+Where $\mathcal{F} \subseteq \mathbb{R}^{n}$ is the feasible domain given
+implicitly or by a ``membership oracle''. The function
+$\mathcal{F}: \mathbb{R}^{n} \leftarrow \mathbb{R}$ is presented implicitly
+(i.e., is a domain you can't describe) or by an ``evaluation oracle'', for
+instance, given by a query: $x \in \mathbb{R}^{n}$: true ($x \in \mathcal{F}$)
+or false ($x \notin \mathcal{F}$).
+
+\textbf{Implicitly} means that you need evaluate by a given point; continuum spectrum of points can be scaled and produce a minimum nore negative than any natural.
+
+\paragraph{What does $\displaystyle \min_{x \in \mathcal{F}} f(x)$ mean for us?}
+This problem can be assigned to one of three meanings:
+\begin{itemize} \label{items:optimization-conclusions}
+\item nothing: the problem is \emph{infeasible}; it means that the domain is
+empty, i.e., $\mathcal{F} = \emptyset$, there is nothing to optimize.
+\item the problem is \emph{unbounded}, i.e., there exists a sequence of
+points $x^{1}, x^{2}, \dots \in \mathcal{F}$ and $\forall n \in \mathbb{N},
+f(x^{1}) < -n \Rightarrow lim_{i \rightarrow \infty} f(x^{i}) = -\infty$.
+There exists a sequence of points that for each natural number, $f(x^{i} < -n$,
+so we cannot bound the sequence.
+\item the problem has an \emph{optimal solution}, i.e., $\exists x^{*} \in
+\mathcal{F}$ such that $f(x^{*}) \leq f(z) \forall z \in \mathcal{F}$.
+\end{itemize}
+
+\paragraph{Target of the course}
+Derive conclusions( meanings from above~\ref{items:optimization-conclusions}) for optimization
+problem $\displaystyle \min_{x \in \mathcal{F}} f(x)$ and give ideally a proof
+that our conclusion is correct. It is necessary to proof (find a proof) to hold
+the conclusions. What to do when the se $\mathcal{F}$ is empty? It is necessary
+a mathematical theory.
+
+
+\subsection{Basic definitions}
+\todo[inline]{organize the enumeration of figures in the text}
+\begin{itemize}
+\item A \emph{half space} is a set $\{ x \in \mathbb{R}^{n} \mid a^{T} x \leq
+\alpha \}$ for $a \in \mathbb{R}^{n}, \alpha \in \mathbb{R}$.
+
+\item A \emph{polyhedron} is the intersection of a \textbf{finite} number of
+halfspaces (Figure~\ref{fig:polyhedron}). The intersection of halfspaces gives a
+region of finite points. In this case, it is called \emph{polytope}: a bounded
+polyhedron. We need to use geometry and algebric forms. In algebric form:
+$\mathcal{P} = \{ x \in \mathbb{R}^{n} \mid Ax \leq b \}$ where $A \in
+\mathbb{R}^{m \times n}, b \in \mathbb{R}^{m}$. Rational polyhedron: $A \in
+\mathbb{Q}^{ m \times n}, b \in \mathbb{Q}^{m}$.
+
+\item A set $\mathcal{Q}$ is \emph{convex} (Figure~\ref{fig:convex-set}) if
+$\forall x, y \in \mathcal{Q}$ and $\lambda \in (0,1)$ then $\lambda x +
+(1 - \lambda)y \in \mathcal{Q}$.
+
+\item A function $f$ is \emph{linear} if $f(x) = c^{T}x$ for $c \in
+\mathbb{R}^{n}$.
+
+\item A function $f$ is \emph{convex} if $f: \mathbb{R}^{n} \rightarrow
+\mathbb{R} \Rightarrow \emptyset \neq dom(\mathcal{F})$ is a convex set and
+$f(\lambda x + (1-\lambda)y) \leq \lambda (f(x)) + (1-\lambda)(f(y)) \forall
+x, y \in dom(\mathcal{F})$ and $\forall \lambda \in (0,1)$.
+
+\item A function $f$ is \emph{strictly convex} if $f(\lambda x + (1-\lambda)y)
+< \lambda (f(x)) + (1-\lambda)(f(y)) \forall x, y \in dom(\mathcal{F})$ and
+$\forall \lambda \in (0,1)$.
+
+\item lef $f$ be continuously differentiable, then $f$ is convex if, and only
+if, $f(y) \geq f(x) + \Delta f(x)^{T}(yx) \forall y,x \in dom(f)$. And strictly
+convex if, and only if, $f(y) > f(x) + \Delta f(x)^{T}(yx) \forall y,x \in
+dom(f)$ and $y \neq x$.
+
+\item If $f$ is twice differentiable, then $f$ is convex if, and only if,
+$\Delta^{2} f(x) \geq 0, \forall x \in dom(f)$ (positive semidefinite).
+\end{itemize}
+
+\begin{figure}
+  \label{fig:polyhedron}
+  \caption{A polyhedron/polytope.}
+  \centering
+    \includegraphics[width=0.5\textwidth]{imgs/polyhedron.png}
+\end{figure}
+
+\begin{figure}
+  \label{fig:convex-set}
+  \caption{Convex and non-convex set.}
+  \centering
+    \includegraphics[width=0.5\textwidth]{imgs/convex-set.png}
+\end{figure}
+
+
+\paragraph{Convex set}
+Given vectors $(x^{1}, \dots, x^{t} \in \mathbb{R}^{n})$ the convex hull of
+this vectors are defined as $conv(x^{1}, \dots, x^{t}):= \{ x \in
+\mathbb{R}^{n} \mid \exists \lambda_{1}, \dots, \lambda_{t} \geq 0 \}$ such
+that $\mathds{1}^{T} \lambda = 1$ ( or $\sum_{i=1}^{t} \lambda_{i} = 1$):
+$x = \sum_{i=1}^{t} \lambda_{i} x^{i}$.
+
+\subparagraph{Lemma}
+\begin{enumerate}
+\item \label{item:polyhedron-convex-set} a polyhedron is a convex set
+\item \label{item:convex-hull-convex-set} $conv(x^{1}, \dots, x^{t})$ is a convex set
+\end{enumerate}
+
+\subparagraph{Proof of~\ref{item:polyhedron-convex-set}}
+Let $\mathcal{P} = \{ x \in \mathbb{R}^{n} \mid Ax \leq b\}$. Let $x,y \in
+\mathcal{P}, \lambda \in (0,1)$. Show $\lambda x + (1 - \lambda) y \in
+\mathcal{P}$.
+
+\begin{gather*}
+A [\lambda x + (1-\lambda)y ] = \lambda Ax + (1-\lambda)Ay \\
+ \lambda Ax \leq \lambda b \  \text{and}\  (1-\lambda)Ay \leq (1-\lambda) b \\
+ \lambda Ax + (1-\lambda)Ay \leq \lambda b + (1-\lambda) b = b \\
+ \Rightarrow \lambda x + (1-\lambda)y \in \mathcal{P}.
+\end{gather*}
+
+\subparagraph{Proof of~\ref{item:polyhedron-convex-set}}
+Let $x^{1}, \dots, x^{t} \in \mathbb{R}^{n}$. Let $x,y \in conv(x^{1}, \dots,
+x^{t})\ \text{and} \ 0 < \lambda < 1$. Show $\lambda x + (1-\lambda)y \in
+conv(x^{1}, \dots, x^{t})$.
+
+$x$ lies in $conv(x^{1}, \dots, x^{t})$. What does that means? That implies
+$x = \sum_{i=1}^{t} \mu_{i} x^{i}, \mu_{i} \geq 0 \forall i$ and 
+$y = \sum_{i=1}^{t} \sigma_{i} x^{i}, \sigma_{i} \geq 0 \forall i$
+
+\begin{gather*}
+\lambda x + (1-\lambda)y = \sum_{i=1}^{t} \lambda \mu_{i} x^{i} +
+\sum_{i=1}^{t} (1-\lambda) \sigma_{i} x^{i} \\
+= \sum_{i=1}^{t} (\lambda \mu_{i} + (1-\lambda) \sigma_{i}) x^{i} \\
+\tau_{i} = (\lambda \mu_{i} + (1-\lambda) \sigma_{i}), \tau_{i} \geq 0, \forall i \\
+= \sum_{i=1}^{t} \tau_{i} = \sum_{i=1}^{t} (\lambda \mu_{i} + (1-\lambda) \sigma_{i}) \\
+= \lambda \sum_{i=1}^{t} \mu_{i} + (1-\lambda) \sum_{i=1}^{t} \sigma_{i} \\
+\sum_{i=1}^{t} \mu_{i} = 1 \ \text{and} \ \sum_{i=1}^{t} \sigma_{i} = 1 \\
+= \lambda + (1-\lambda) = 1
+\end{gather*}
+
+\subsection{Examples of Optimization problems}
+\begin{itemize}
+\item \emph{linear optimization}: given $A \in \mathcal{Q}^{m \times n}, b \in
+\mathcal{Q}^{m}, c \in \mathcal{Q}^{n}$. $\displaystyle \min_{x \in
+\mathcal{P}} c^{T}x$ where $\mathcal{P}$ is a polyhedron defined by $\{ x \in
+\mathcal{R}^{n} \mid x_{i} \geq 0 \forall i, Ax = b \}$ or $\displaystyle
+\max_{x \in \mathcal{P}} c^{T}x$ where $\mathcal{P} = \{ x \in
+\mathcal{R}^{n} \mid Ax \leq b \}$
+
+\item \emph{convex optimization}: $\mathcal{F}$ is a convex set, $f:
+\mathcal{R}^{n} \rightarrow \mathcal{R}$ is a convex function and $\mathcal{F}
+\subseteq dom(f)$
+
+\todo[inline]{Example of implicitly: knapsack problem: collection are all
+feasible solutions of knapsack problem.}
+
+\item \emph{combinatorial optimization}: given finite ground set $\mathcal{E}$
+and a collection $\mathcal{I}$ of subsets of $\mathcal{E}$ (tipically,
+implicitly given: you cannot write it down).
+For $c: \mathcal{E} \mapsto \mathcal{R}$ find a member in the collection $(I
+\in \mathcal{I})$ such that $\sum_{i \in I} c_{i}$ is minimal/maximal.
+Example: $G = (V, E), E \subseteq V \times V$
+$S \subseteq V$ stable implies that for all pairs in $S (\forall i,j \in S)$,
+the corresponding edge $i,j$ is not present $(i \neq j, (i,j) \notin E)$.
+Groundset: $V$ \\
+$\mathcal{I} \subseteq 2^{V}$ \\
+$I \in \mathcal{I} \iff I$ is stable in $G$ (implicitly given) \\
+$c: V \mapsto \mathcal{R}$; suppose $c(v) = 1, \forall c \in V$ \\
+find a maximal (w.r.t. cardinality) stable set in $G$
+
+\item \emph{general integer optimization problem}: \\
+$\displaystyle \max_{x \in \mathcal{P} \cap \mathbb{Z}^{n}} c^{T}x,
+\mathcal{P} = \{ x \in \mathbb{R}^{n} \mid Ax \leq b \}$
+or 
+$\displaystyle \min_{x \in \mathcal{P} \cap \mathbb{Z}^{n}} c^{T}x,
+\mathcal{P} = \{ x \in \mathbb{R}^{n} \mid x_{i} \geq 0 \forall i, Ax = b \}$
+
+\end{itemize}
+
+
 
 \end{document}
