@@ -11,6 +11,83 @@
 
 \section{Introduction}
 
+\subsection{Complexity Theory - short revision}
+Definition: an algorithm is a finite list of instructions. The running time of
+an algorithm is the number of operations needed to complete it.
+
+\paragraph{Simplifications}
+\begin{itemize}
+\item We measure the ``complexity'' of an algorithm with respect to the length
+of the input, $n$.
+$T_{A}(n)$ = complexity of the algorithm = worst case for same input size =
+calculated/defined as the maximum over all inputs of length $n$.
+
+\item We are only interested in how $T_{A}(n)$ increases w.r.t. $n$. \\
+$T_{A}(n) = O(n)$: ``linear'' \\
+$T_{A}(n) = O(n^k)$: ``polynomial'' \\
+$T_{A}(n) = O(2^n)$: ``exponential'' \\
+
+\item We assume that every operation of the algorithm requires the same cost
+(``unit cost model'').
+\end{itemize}
+
+\subparagraph{Note}
+We need to assume that the number of bits of any stored member must be bounded
+by a (constant) multiple of the number of bits of the largest input value.
+Example: if $a \in \mathbb{Z}$ is part of the input, its input size is $O(log
+|a|)$. An algorithm with running time of $O(a)$ is not polynomial-time!
+$(O(e^{log a})$: ``pseudo polynomial time'' $\rightarrow O((log m \times
+A_{ij}) \times m \times n)$.
+
+\subsubsection{Decision Problems}
+Let $\Sigma = \{0,1\}$ and $\Sigma^{*}$ be a finite binary sequences (sequences
+on $\Sigma$). We assume that all problems are encoded as elements of
+$\Sigma^{*}$.
+
+Definition \emph{$\mathcal{P}$ problems}: For a set $S \subseteq \Sigma^{*}$,
+the decision problem defined by $S$ is the problem wether a given $x \in
+\Sigma^{*}$ is in $S$ or not.
+
+It is a polynomial-time solvable ($S \in \mathcal{P}$) if there exists an
+algorithm $\mathcal{A}$ s.t. $\forall x \in \Sigma^{*}, \mathcal{A}(x) = 1 \iff
+x \in S$.
+
+If you can solve a decision problem, usually you can solve the optimization
+problem.
+
+Definition \emph{$\mathcal{NP}$ problems}: The decision problem defined by $S
+\subseteq \Sigma^{*}$ is in $\mathcal{NP}$ if there is a polynomial time
+algorithm $\mathcal{A}: \Sigma^{*} \times \Sigma^{*} \mapsto \{0,1\}$ and a
+polynomial $p$, s.t.:
+\begin{itemize}
+\item $ \forall x \in S, \exists y \in \Sigma^{*}$ s.t. $|y| \in O(p(|x|)$ and
+$\mathcal{A}(x,y) = 1$
+\item $ \forall x \in S, \forall y in \Sigma^{*}, \mathcal{A}(x,y) = 0$
+\end{itemize}
+
+Example of $\mathcal{P}$ problems: Let $G=(V,E)$ be an undirected graph. ``does
+$G$ have a cycle?''; ``does $G$ have a perfect matching?''.
+Example of $\mathcal{NP}$ problems: ``does there exist a cycle covering all
+vertices (hamiltonian cycle)?''. This problem is easy to check, given a cycle,
+if it covers all vertices, however, it is not that easy find the cycle.
+
+\paragraph{NP-Hard vs NP-Complete}
+A decision problem $S$ is reducible to $S' (S \subseteq pS') \iff$ there is a
+function $f: \Sigma^{*} \mapsto \Sigma^{*}$ compatible in polynomial s.t. $x
+\in S \iff f(x) \in S'$.
+
+\subparagraph{Lemma}
+Let $S, S'$ be decision problems. If $S' \in \mathcal{P}$ (is polynomial-time
+solvable). Then, $S \subseteq pS' \Rightarrow S \in \mathcal{P}$.
+
+Definition NP-Complete: A decision problem is called NP-complete if $S \in
+\mathcal{NP}$ and $\forall S' \in \mathcal{NP}, S' \subseteq pS$. If you have a
+solution for $S$, you could solve all other $S$ problems in polynomial time.
+
+Definition NP-Hard: A decision problem $S$ is NP-Hard if $\forall S' \in
+\mathcal{NP}, S' \subseteq pS$.
+
+
 \subsection{Optimization problems in finite dimensional space}
 Definition: Let $f: \mathbb{R}^{n} \rightarrow \mathbb{R}$ be a function.
 $dom(f) = \{ x \in \mathbb{R}^{n} \mid \left| f(x) \right| < \infty \}$.
@@ -59,17 +136,24 @@ a mathematical theory.
 \subsection{Basic definitions}
 \todo[inline]{organize the enumeration of figures in the text}
 \begin{itemize}
-\item A \emph{half space} is a set $\{ x \in \mathbb{R}^{n} \mid a^{T} x \leq
-\alpha \}$ for $a \in \mathbb{R}^{n}, \alpha \in \mathbb{R}$.
+\item A \emph{half space} is a set of the form $\{ x \in \mathbb{R}^{n} \mid
+a^{T} x \leq \alpha \}$ for $a \in \mathbb{R}^{n}, \alpha \in \mathbb{R}$.
+\subitem A \emph{half space rational} is a set of the form $\{ x \in
+\mathbb{R}^{n} \mid a^{T} x \leq \alpha \}$ for $a \in \mathbb{Q}^{n}, \alpha
+\in \mathbb{Q}$. In this case the boundary is a rational line.
 
 \item A \emph{polyhedron} is the intersection of a \textbf{finite} number of
 halfspaces (Figure~\ref{fig:polyhedron}). The intersection of halfspaces gives a
 region of finite points. In this case, it is called \emph{polytope}: a bounded
 polyhedron. We need to use geometry and algebric forms. In algebric form:
-$\mathcal{P} = \{ x \in \mathbb{R}^{n} \mid Ax \leq b \}$ where $A \in
-\mathbb{R}^{m \times n}, b \in \mathbb{R}^{m}$. Rational polyhedron: $A \in
-\mathbb{Q}^{ m \times n}, b \in \mathbb{Q}^{m}$.
-
+$\mathcal{P} = \{ x \in \mathbb{R}^{n} \mid Ax \leq b \} = \{ x \in
+\mathbb{R}^{n} \mid a_{1}^{T}x \leq b_{1}, \dots, a_{n}^{T}x \leq b_{n} \}$
+where $A \in \mathbb{R}^{m \times n}, b \in \mathbb{R}^{m}$. $A$ is a matrix
+and $Ax \leq b$ represents each row of $A$.
+\subitem Rational polyhedron: $A \in \mathbb{Q}^{ m \times n}, b \in
+\mathbb{Q}^{m}$.
+\subitem one half space is also a polyhedron.
+\subitem all points inside a polyhedron are called feasible.
 \item A set $\mathcal{Q}$ is \emph{convex} (Figure~\ref{fig:convex-set}) if
 $\forall x, y \in \mathcal{Q}$ and $\lambda \in (0,1)$ then $\lambda x +
 (1 - \lambda)y \in \mathcal{Q}$.
@@ -117,6 +201,11 @@ this vectors are defined as $conv(x^{1}, \dots, x^{t}):= \{ x \in
 that $\mathds{1}^{T} \lambda = 1$ ( or $\sum_{i=1}^{t} \lambda_{i} = 1$):
 $x = \sum_{i=1}^{t} \lambda_{i} x^{i}$.
 
+\subparagraph{Note}
+$conv(x^{1}, \dots, x^{t}) = \{ x \in \mathbb{R}^{n} \mid x = \sum_{i=1}^{t}
+\lambda_{i} x^{i}, \lambda \geq 0, \sum \lambda = 1 \}$ is a special case of a
+polyhedron (bounded polyhedron) and every bounded polyhedron is of this form.
+
 \subparagraph{Lemma}
 \begin{enumerate}
 \item \label{item:polyhedron-convex-set} a polyhedron is a convex set
@@ -155,23 +244,53 @@ $y = \sum_{i=1}^{t} \sigma_{i} x^{i}, \sigma_{i} \geq 0 \forall i$
 = \lambda + (1-\lambda) = 1
 \end{gather*}
 
-\subsection{Examples of Optimization problems}
+\subsection{Classification of Optimization Problems}
+Definition of optimization problem: For $f: \mathbb{R}^{n} \mapsto \mathbb{R}$
+(any function), solve $\displaystyle \min_{x \in \mathcal{F}} f(x)$ (objective
+value) or $\displaystyle \argmin_{x \in \mathcal{F}} f(x)$ (value of $x$ that
+minimize $f(x)$).
+\subparagraph{Note}
+$\displaystyle \max_{x \in \mathcal{F}} f(x) = \min_{x \in \mathcal{F}} -f(x)$
+
 \begin{itemize}
-\item \emph{linear optimization}: given $A \in \mathcal{Q}^{m \times n}, b \in
+\item \emph{linear optimization problem}: given $A \in \mathcal{Q}^{m \times n}, b \in
 \mathcal{Q}^{m}, c \in \mathcal{Q}^{n}$. $\displaystyle \min_{x \in
 \mathcal{P}} c^{T}x$ where $\mathcal{P}$ is a polyhedron defined by $\{ x \in
 \mathcal{R}^{n} \mid x_{i} \geq 0 \forall i, Ax = b \}$ or $\displaystyle
 \max_{x \in \mathcal{P}} c^{T}x$ where $\mathcal{P} = \{ x \in
-\mathcal{R}^{n} \mid Ax \leq b \}$
+\mathcal{R}^{n} \mid Ax \leq b \}$ \\
+$c^{T}x$ is the objective (linear) function. \\
+$Ax \leq b$ is the constraint/feasible region.\\
+Can be solved quickly and in polinomial time.
 
-\item \emph{convex optimization}: $\mathcal{F}$ is a convex set, $f:
+\subitem \emph{integer linear optimization problem} (Figure~\ref{fig:ILP}).
+$max/min \{ c^{T}x \mid Ax \leq b, x \in \mathbb{Z}^{n} \}$.
+Solve a integer optimization problem can lead to a better result than just
+round linear solutions.
+
+\begin{figure}
+  \label{fig:ILP}
+  \caption{ILP}
+  \centering
+    \includegraphics[width=0.5\textwidth]{imgs/ILP.png}
+\end{figure}
+
+\subitem \emph{mixed integer linear optimization problem}
+$max/min \{ c^{T}x \mid Ax \leq b, x \in \mathbb{Z}^{n-d} \times
+\mathbb{R}^{d} \}$.
+
+\item \emph{convex optimization problem}: $\mathcal{F}$ is a convex set, $f:
 \mathcal{R}^{n} \rightarrow \mathcal{R}$ is a convex function and $\mathcal{F}
-\subseteq dom(f)$
+\subseteq dom(f)$\\
+$f(x)$ convex and $\mathcal{F}$ convex set. $\forall x, y \in \mathbb{R}^{n},
+\lambda \in [0,1], f(\lambda x + (1-\lambda)y) \leq \lambda f(x) + (1-\lambda)
+f(y)$. $\forall x,y \in \mathcal{F}, \lambda x + (1-\lambda)y \in \mathcal{F}$.
+
 
 \todo[inline]{Example of implicitly: knapsack problem: collection are all
 feasible solutions of knapsack problem.}
 
-\item \emph{combinatorial optimization}: given finite ground set $\mathcal{E}$
+\item \emph{combinatorial optimization problem}: given finite groundset $\mathcal{E}$
 and a collection $\mathcal{I}$ of subsets of $\mathcal{E}$ (tipically,
 implicitly given: you cannot write it down).
 For $c: \mathcal{E} \mapsto \mathcal{R}$ find a member in the collection $(I
