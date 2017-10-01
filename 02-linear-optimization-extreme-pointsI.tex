@@ -3,10 +3,24 @@
 
 %@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 % Main Topics: vertices, extreme points and basic feasible solutions
+% Linear optimization and extreme points I: 25.09.2017
 % author: Vanessa Leite
 
 \section{Linear Optimization and Extreme Points I}
+Geometry can be misleading. We try to get some intuitions from geometry but
+what we want to do is came up with the algebra.
 
-\todo[inline]{add content}
+Consider $\displaystyle \max_{s.t. x \in \mathcal{P}} c^{T}x, P = \{ x \in
+\mathcal{R}^{n} \mid Ax \leq b \}, A \in \mathbb{Q}^{m \times n}, b \in
+\mathbb{Q}^{m}, c \in \mathbb{Q}^{n}$
+
+From linear algebra we know:\\
+$A \in \mathbb{Q}^{m \times n}$\\
+$n = dim(Ker(A)) + dim(Im(A))$, where $Ker(A)$ is the kernel space and $Im(A)$
+is the image space.\\
+$Ker(A) = \{ x \in \mathbb{R}^{n} \mid Ax = 0 \}$ \\
+$Im(A) = \{ x \in \mathbb{R}^{n} \mid x^{T} = y^{T}A,\ \text{for some}\ y \in
+\mathbb{R}^{n} \}$ \\
+$Ker(A) \perp Im(A)$ (kernel space is orthogonal/perpendicular to image space).
 
 \end{document}
