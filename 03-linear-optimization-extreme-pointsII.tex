@@ -3,8 +3,77 @@
 
 %@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 % Main Topics: lines in polyhedra and extreme point solutions
+% Linear optimization and extreme points II: 28.09.2017
 % author: Vanessa Leite
 
 \section{Linear Optimization and Extreme Points II}
+
+\paragraph{Definition: A polyhedron $P$ contains a line} if there exists $d \in \mathbb{R}^{n}\setminus\{0\}$ and $y \in P$ such that $y + \lambda d \in P \forall \lambda \in \mathbb{R}$
+
+\paragraph{Lemma: Let $P = \{ x \in \mathbb{R}^{n} \mid Ax \leq b \} \neq 0$, $d \in \mathbb{R}^{n}\setminus \{0\}$ is a line $\leftrightarrow Ad = 0$ }
+\subparagraph{Proof:}
+If $d \in \mathbb{R}^{n}\setminus \{0\}$ and $Ad=0$, then take any $y \in P$, i.e, $Ay \leq b$. Then $\forall \lambda \in \mathbb{R}$, $A(y+\lambda d) = Ay + \underbrace{\lambda \underbrace{Ad}_{=0}}_{=0} \leq b$.
+Conversely, suppose $d \in \mathbb{R}^{n}\setminus \{0\}$ is a line in P. Then $\exists y \in P$ such that $y + \lambda d \in P$, $\forall \lambda \in \mathbb{R}$.
+Suppose, $\exists i \in \{1, \dots, m \}$ such that $A_{i}d \neq 0$ wlog: $A_{i}d > 0$. Let $\lambda^{*} = \frac{b_{i} - A_{i}y}{A_{i}d}$, for $\lambda > \lambda^{*}$, then $A_{i}(y + \lambda d) = A_{i}y + \lambda A_{i}d > A_{i}y + \lambda^{*}A_{i}d = A_{i}y + \frac{b_{i} - A_{i}y}{A_{i}d} A_{i}d = b_{i}$
+
+\textbf{Observation:} Suppose I give you a polyhedron non empty ($P = \{x \in \mathbb{R}^{n} \mid Ax \leq b\} \neq 0$ and $m < n$ then $P$ contains a line!
+
+\paragraph{Theorem: Let $P = \{x \in \mathbb{R}^{n} \mid Ax \leq b\} \neq 0$. $P$ has an extreme point iff $P$ does not contain a line.}
+
+\subparagraph{Proof: "$\leftarrow$" $P$ does not contain a line then $P$ has an extreme point}
+Let $x \in P$ such that $l = dim(\{A_{i\cdot} \mid i \in I(x)\})$. If $l = n$ (maximum), then $x$ is a basic feasible solution, thus, an extreme point.
+Suppose $l < n$. Then from linear algebra, there is a vector $ d \in \mathbb{R}^{n}\setminus\{0\}$ such that $A_{i\cdot}d = 0$, $\forall i \in I(x)$. $d$ is not a line $\rightarrow \exists j \notin I(x)$ such that $A_{j\cdot}d \neq 0$
+wlog: $A_{j\cdot}d \geq 0$. Let $J = \{j \notin I(x)\} \mid A_{j\cdot}d > 0\} \neq 0$.
+Notice that for $j \in J$, $A_{j\cdot}$ is linearly independent from $\{A_{i\cdot} \mid i \in I(x) \}$
+
+\begin{adjustwidth}{2.5em}{0pt}
+\textbf{Linearly independent:} Suppose $A_{j} = \sum_{i \in I(x)} A_{i}\lambda_{i}$, then $\underbrace{A_{j\cdot}d}_{=0} = \sum_{i \in I(x)} \lambda_{i} A_{i\cdot} d = 0$. So, it is linearly independent.
+\end{adjustwidth}
+
+Let, $\lambda^{*} = \min \{\frac{b_{j} - A_{j\cdot}}{A_{j\cdot}d} \mid j \in J \}$. Then $x + \lambda^{*} d \in P$. Moreover, we observe $A_{i\cdot}(x + \lambda^{*}d) = b_{i}$, $\forall i \in I(x)$.
+Let $j \in J$ such that $\underbrace{ \lambda^{*} = \frac{b_{j} - A_{j\cdot}x}{A_{j\cdot}d}}_{\text{the minimum}}$, then $A_{j\cdot}(x + \lambda^{*}d) = A_{j\cdot}x + \frac{b_{j} - A_{j\cdot}x}{A_{j\cdot}d} A_{j\cdot}d = b_{j}$.
+
+$A_{j\cdot}$ is linearly independent from $\{A_{i} \mid i \in I(x) \} \rightarrow dim(\{A_{k\cdot} \mid k \in I(x + \lambda^{*}d)\}) = l+1$, so, this is a contradiction of $l$ be maximal.
+
+\subparagraph{Prood: "$\rightarrow$" $P$ has an extreme point then $P$ does not contain a line}
+Let $x^{*}$ be an extreme point, then $dim(\{A_{i\cdot} \mid i \in I(x^{*})\}) = n$. Then, $A_{i\cdot}d = 0$, $\forall i \in I(x^{*})$ implies $d=0$. Therefore, $Ad=0$ implies $d=0$, by using the previous lemma, there is no line in $P$.
+
+\paragraph{Lemma: optimization problem $\rightarrow$ maximize a linear function}
+let $P = \{ x \in \mathbb{R}^{n} \mid Ax \leq b \}$ and $c \in \mathbb{R}^{n}$. Suppose that i) $P$ has an extreme point and ii) there exists an optimal solution to $\displaystyle \max_{x \in P} c^{T}x$. Then, there exists an extreme point solution attaining the optimal solution.
+
+\subparagraph{Proof:} Let $v^{*} = \displaystyle \max_{x \in P} c^{T}x =$ optimal value.
+Let $Q = \{x \in P \mid c^{T}x = v^{*} = \{x \in \mathbb{R}^{n} \mid Ax \leq b, c^{T}x \leq v^{*}, -c^{T}x \leq -v^{*} \}$. $Q$ is a polyhedron and $Q \neq 0$ (there is an optimal solution).
+$Q \subset P$, since $P$ has an extreme point.
+$P$ has no line $\rightarrow Q$ has no line $\rightarrow Q$ has an extreme point $x^{*}$.
+Claim: $x^{*}$ is an extreme point in $P$
+\begin{adjustwidth}{2.5em}{0pt}
+\textbf{Proof of the claim:}
+Suppose $\exists y, z \in P \text{, } y \neq z$ and $ \lambda \in (0,1)$ such that $x^{*} = \lambda y + (1-\lambda) $.
+$v^{*} = c^{T}x^{*} = \lambda c^{T}y + (1-\lambda)c^{T}z \leq \lambda c^{T}x^{*} + (1-\lambda)c^{T}x^{*} = c^{T}x^{*} \rightarrow \underbrace{ c^{T}y = v^{*} \text{and }c^{T}z = v^{*}}_{\text{to have an equality in previous equation}} \rightarrow y, z \in Q$, $x^{*}$ is an extreme point in $Q$.
+\end{adjustwidth}
+
+\paragraph{Theorem: Let $P \neq 0$ be a polyhedron not containing a line. Then, $\displaystyle \max_{x \in P} c^{T}x$ is either equal to $+ \infty$ or there exists an extreme point in $P$ attaining the optimal value.}
+\subparagraph{Proof:} We must show that if the optimal value is not infinite, then there exists an optimal solution. In fact, we proof a stronger claim. \\
+\textbf{Claim: if the max value is not infinite then, for every $x \in P$, there exists an extreme point, $w \in P$, such that $c^{T}x \leq c^{T}w$.}
+From the claim, the statement follows:
+Let $\{w^{1}, \dots, w^{r}\}$ be all extreme points in $P$, not empty, also $r$ is finite. Let $\underbrace{w}_{\text{is the maximum}} \in \{w^{1}, \dots, w^{r}\}$ allows $max \{c^{T}w^{1}, \dots, c^{T}w^{r} \}$.
+Then, $\forall x \in P$, there exists $w^{i}$ such that $c^{T}x \leq c^{T}w^{i}$, but by definition, $\leq c^{T}w$, then, $w$ is an optimal solution.
+
+\begin{adjustwidth}{2.5em}{0pt}
+\textbf{Proof of the claim:}
+Let $x^{*} \in P$ and $dim(\{A_{i\cdot} \mid i \in I(x^{*})\}) = k < n$. If it were equals to $n$, we could use the point itself. $\exists d \in \mathbb{R}^{n} \setminus \{0\}$ such that $A_{i\cdot}d = 0$, $\forall i \in I(x^{*})$. wlog: $c^{T}d > 0$.
+
+\begin{itemize}
+\item if $A_{j\cdot} \leq 0$, $\forall j \in I(x^{*})$, then
+\subitem $x^{*} + \lambda d \in P$, $\forall \lambda \geq 0$.
+If max value is not infinite then, $c^{T}d = 0$.
+$\exists j \in I(x^{*})$ such that $A_{j\cdot} d < 0$ (otherwise, $d$ is a line).
+We observe $A_{j\cdot}$ is linearly independent from the constraints $\{A_{i\cdot} \mid i \in I(x^{*})\}$.
+Let $\lambda^{*} = min\{\frac{b_{j} - A_{j\cdot}x^{*}}{|A_{j\cdot}d|} \mid A_{j\cdot}d < 0 \}$.
+Then, following in the negative direction, $x^{*} - \lambda^{*} d \in P$ and $c^{T}(x^{*} - \lambda^{*}d) = c^{T}x^{*} - \lambda^{*}c^{T}d = c^{T}x^{*}$. Then, $dim(\{A_{i\cdot} \mid i \in I(x^{*} - \lambda^{*}d)\} = k+ 1$. And now we can iterate with $x^{*} - \lambda^{*}d$ in place of $x^{*}$.
+\item if there exists $j \notin I(x^{*})$ such that $A_{j\cdot}d > 0$
+\subitem $A_{j\cdot}$ is linearly independent from $\{A_{i\cdot} \mid i \in I(x^{*})\}$ and then $\lambda^{*} = min \{ \frac{b_{j} - A_{i\cdot} x^{*}}{A_{i\cdot}d} \mid A_{j\cdot}d > 0 \}$ and $x^{*} + \lambda^{*}d \in P$ and $dim(\{A_{i\cdot} \mid i \in I(x^{*})\}) = k+ 1$ and we can iterate with $x^{*} + \lambda^{*}d$ in place of $x^{*}$.
+\end{itemize}
+\end{adjustwidth}
 
 \end{document}
