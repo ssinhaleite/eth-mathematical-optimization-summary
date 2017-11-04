@@ -81,7 +81,7 @@ Let
 \begin{equation}
   \epsilon=\begin{cases}
     1, & \text{if $A_{i\cdot}z = 0, \forall i \notin I(x^{*})$}.\\
-    min\{\frac{b_{i} - A_{i\cdot}x^{*}}{|A_{i\cdot}z|} \mid i \notin I(x^{*}) \text{ such that } A_{i\cdot}z \neq 0 & \text{otherwise}.
+    \min\{\frac{b_{i} - A_{i\cdot}x^{*}}{|A_{i\cdot}z|} \mid i \notin I(x^{*}) \text{ such that } A_{i\cdot}z \neq 0 & \text{otherwise}.
   \end{cases}
 \end{equation}
 Note $\epsilon > 0$.
@@ -114,21 +114,46 @@ $A_{i\cdot}(x - x^{*}) = 0$, $\forall i \in I(x^{*}) \rightarrow$ (*) $x = x^{*}
 \subparagraph{Corollary: The number of vertices (extreme points or basic feasible solutions) in a Polyhedron $P$ is finite.}
 \textbf{Proof:} $A \in Q^{mxn}$. The number of basic feasible solution is smaller than $m^{n}$, and it is a finite number. \\
 
-Why are extreme points interesting for linear optimization? Consider $min 3x_{1} + 5x_{2}$
+\newpage
+
+Why are extreme points interesting for linear optimization? Consider $\min 3x_{1} + 5x_{2}$
+
+\begin{figure}[h!]
+  \label{fig:extremePoints}
+  \caption{unbounded polytope}
+  \centering
+    \includegraphics[width=0.8\textwidth]{imgs/extremePoints.png}
+\end{figure}
 
 \[ 
 P = \left \{
   x \in \mathbb{R}^{2} \mid
   \begin{tabular}{c}
-  $2x_{1} + x_{2} \geq 3$ \\
-  $2x_{1} + 2x_{2} \geq 5$ \\
-  $x_{1} + 4x_{2} \geq 4$ \\
+  $2x_{1} + x_{2} \geq 3$ (i) \\
+  $2x_{1} + 2x_{2} \geq 5$ (ii) \\
+  $x_{1} + 4x_{2} \geq 4$ (iii) \\
   $x_{1}, x_{2} \geq 0$ 
   \end{tabular}
 \right \}
 \]
 
 
+In the 2D case we can "guess" the right solution. If someone claims that the solution of $\min 3x_{1} + 5x_{2} = 0$, we can prove it is not by summing up the constraints. From (i) + (iii), we know $\min 3x_{1} + 5x_{2} \geq 7$. We can find the solution pushing the "lines" until the equation leaves the feasible solution area (marked in green in Figure~\ref{fig:extremePoints}).
+Geometrically, $(2, \frac{1}{2})$ is the optimal solution and $(3,5)^{T}\begin{pmatrix}
+         2 \\
+         \frac{1}{2}
+        \end{pmatrix} = 8.5$
+        
+Constraint (ii) times 1.5 $\rightarrow 3x_{1} + 3x_{2} \geq 7.5$ and $2x_{2} \geq 0 \rightarrow 3x_{1} + 5x_{2} \geq 7.5$.
+Take (ii) times $\frac{7}{6	}$ and add (iii) multiplied with $\frac{2}{3}$: $3x_{1} + 5x_{2} \geq 8.5$
+ 
+More generally, $\min ax_{1} + bx_{2}$:
+\begin{itemize}
+\item Suppose $a < 0$. Take the sequence of points $(k,0)$ for $k \in \mathbb{N}$, $k \geq 4$
+\subitem problem is unbounded
+\item Suppose $b < 0$. Take the sequence of points $(0,k)$ for $k \in \mathbb{N}$, $k \geq 3$
+\subitem problem is unbounded
+\end{itemize}
 
 
 \end{document}
