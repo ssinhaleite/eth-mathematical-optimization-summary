@@ -43,7 +43,7 @@ let $P = \{ x \in \mathbb{R}^{n} \mid Ax \leq b \}$ and $c \in \mathbb{R}^{n}$. 
 
 \subparagraph{Proof:} Let $v^{*} = \displaystyle \max_{x \in P} c^{T}x =$ optimal value.
 Let $Q = \{x \in P \mid c^{T}x = v^{*} = \{x \in \mathbb{R}^{n} \mid Ax \leq b, c^{T}x \leq v^{*}, -c^{T}x \leq -v^{*} \}$. $Q$ is a polyhedron and $Q \neq 0$ (there is an optimal solution).
-$Q \subset P$, since $P$ has an extreme point.
+$Q \subseteq P$, since $P$ has an extreme point.
 $P$ has no line $\rightarrow Q$ has no line $\rightarrow Q$ has an extreme point $x^{*}$.
 Claim: $x^{*}$ is an extreme point in $P$
 \begin{adjustwidth}{2.5em}{0pt}
