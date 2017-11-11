@@ -1,0 +1,72 @@
+\documentclass[main]{subfiles}
+\begin{document}
+
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+% Main Topics: KKT conditions, duality for convex optimization problems
+% Convex Optimization Duality II - 02.11.2017
+% author: Vanessa Leite
+
+\section{Convex Optimization Duality II}
+
+\subsection{KKT theorem - optimal certificate}
+\paragraph{Theorem: Let $f, g_{1}, \dots, g_{m}$ be convex and twice differentiable functions. Let $dom(f) \supset \cap_{i = 1}^{m} dom (g_{i})$.}
+
+\subparagraph{Slater condition: $\exists \bar{x}$ such that $ g( \bar{x} ) < b$ (for all components). Let $Q = \{ x = g(x) \leq b \}$ }
+
+$x^{*}$ minimizes $f \leftrightarrow \exists \lambda^{*}_{1}, \dots, \lambda^{*}_{m} \geq 0$ such that:
+\begin{itemize}
+\item $\lambda^{*}_{i} = 0 \forall i \notin I(x^{*})$
+\item $\nabla f(x^{*}) + \sum \lambda^{*}_{i} \nabla g_{i}(x^{*}) = 0$
+\end{itemize}
+
+\subparagraph{Proof}
+Let $f{*} = min \{ f(x) \mid g(x) \leq b \}$ (P). Consider $\Phi (x) = max \{ f(x) - f^{*}, g_{1}(x)-b_{1}, \dots, g_{m}(x)-b_{m} \}$. $x^{*}$ solves (P) $\leftrightarrow x^{*}$ minimizes $\Phi$, and attains value $\Phi (x^{*}) =0$ (can't be less than zero because of $\Phi(x)$.
+
+$\partial \Phi (x^{*}) = conv(\nabla f(x^{*}), \nabla g_{i}(x^{*})$, $i \in I(x^{*}) \leftrightarrow \exists \alpha_{0} \geq 0$ and $\alpha_{i} \geq 0 \forall i \in I(x^{*})$, such that $\alpha_{0} + \sum_{i \in I(x^{*})} \alpha_{i} = 1$ and $\alpha_{0} \nabla f(x^{*}) + \sum_{i \in I(x^{*})} \alpha_{i} \nabla g_{i}(x^{*}) = 0$ (**)
+
+Suppose $\alpha_{0} = 0 \forall i \in I(x^{*})$. We know $\underbrace{g_{i}(x) - g_{i}(x^{*})}_{= g_{i}(x) -b_{i}} \geq \nabla g_{i}(x^{*})^{T}(x - x^{*})$
+
+$0 = 0^{T}(x-x^{*}) \underbrace{=}_{**} \sum_{i \in I(x^{*})} \alpha_{i} \nabla g_{i}(x^{*})^{T}(x-x^{*}) \leq \sum_{i \in I(x^{*})} \alpha_{i} [\underbrace{g_{i}(x)-b_{i}}_{\leq 0}] \forall x$, and this is a contradiction. This is impossible for $x = \bar{x}$: slater point, so $\alpha_{0} \neq 0 \rightarrow \alpha_{0} > 0$.
+
+Define now $\lambda_{i}^{*} = 0 \forall i \notin I(x^{*})$, $\lambda_{i}^{*} = \frac{\alpha_{i}}{\alpha_{0}} \forall i \in I(X^{*})$.
+
+$0 = \alpha_{0} \nabla f(x^{*}) + \sum_{i \in I(x^{*})} \alpha_{i} \nabla g_{i}(x^{*}) \underbrace{=}_{by dividing by 0} \nabla f(x^{*}) + \sum_{i \in I(x^{*})} \frac{\alpha_{i}}{\alpha_{0}}\nabla g_{i}(x^{*}) = \nabla f(x^{*}) + \sum_{i \in I(x^{*})} \lambda_{i}^{*} \nabla g_{i}(x^{*})$ and $ \lambda_{i}^{*} = 0 \forall i \in I(x^{*})$.
+
+\subparagraph{Remark: The KKT point is $x^{*}$ such that $\nabla f(x^{*} + \sum_{i=1}^{m} \lambda_{i}^{*} \nabla g_{i}(x^{*})$ minimizes $f + \sum_{i =1 }^{m} (g_{i}(x) - b_{i})$ over $D$.}
+
+
+\subsection{Duality for convex optimization problems}
+
+\paragraph{Theorem Convex Optimization Duality}
+Under assumption/notation of KKT, $f^{*} = min \{ f(x) \mid g(x) \leq b \} = \displaystyle \max_{u \geq 0, u_{0} \in \mathbb{R}} \{-u^{T}b + u_{0} \mid -u^{T}g(x) + u_{0} \leq f(x), \underbrace{\forall x \in D}_{\text{infinitely many constraints}} \}$.
+
+\subparagraph{Proof:}
+
+\begin{gather*}
+\max_{u \geq 0, u_{0} \in \mathbb{R}} \{-u^{T}b + u_{0} \mid -u^{T}g(x) + u_{0} \leq f(x) \forall x \in D \} \\
+= \max_{u \geq 0, u_{0} \in \mathbb{R}} \{-u^{T}b + u_{0} \mid u_{0} \leq f(x) + u^{T}g(x) \forall x \in D \} \\
+\text{$u_{0}$ is indeed a lower bound} \\
+= \max_{u \geq 0, u_{0} \in \mathbb{R}} \{-u^{T}b + u_{0} \mid u_{0} \leq \min_{x \in D} \{f(x) + u^{T}g(x)\} \} \\
+\text{we want to make $u_{0}$ as big as possible and then remove any gap so $u_{0} = min \{f(x) + u^{T}g(x)\}$ } \\
+= \max_{u \geq 0} \{-u^{T}b + \min_{x \in D} \{f(x) + u^{T}g(x)\} \} \\
+= \max_{u \geq 0} \{ \min_{x \in D} \{f(x) + u^{T}[g(x) -b] \} \} (*)\\
+\end{gather*}
+
+From lecture \#14: $Z(\lambda) = \min_{x \in D} \{f(x) + \lambda^{T}[g(x) -b] \}$, $\lambda \geq 0, Z(\lambda) \leq f^{*}$ and $Z$ concave in $\lambda$.
+Then, $(*) = \max_{\lambda \geq 0} Z(\lambda) \leq f^{*}$, from the remark after KKT theorem, take KKT multipliers $\lambda^{*}$ then, $Z(\lambda^{*}) = f^{*}$.
+
+\paragraph{Remark: under slater condition, theorem of convex optimization duality allow us to rediscover LP-duality:}
+$\displaystyle \min_{Ax \geq b} c^{T}x = \max_{st A^{T}y = c, y \geq 0} b^{T}y$.
+
+\subparagraph{Proof:}
+$f(x) = c^{T}x, g(x) = b - Ax$
+
+$\displaystyle \min \{f(x) \mid g(x) \leq 0 \} (P) = \max_{u \geq 0, u_{0} \in \mathbb{R}} \{ u_{0} \mid -u^{T}(b-Ax) + u_{0} \leq c^{T}x$ $ \forall x \}$ \\
+$ = \displaystyle \max_{u_{0} \in \mathbb{R}, u \geq 0} \{ u_{0} \mid -u^{T}b + u_{0} \leq [c^{T} - u^{T}A]x$ $\forall x \}$
+
+\begin{itemize}
+\item Suppose does not exist $u \geq 0, c^{T} = u^{T}A \rightarrow \max_{u \geq 0, u_{0} \in \mathbb{R}} \{ u_{0} \mid \dots \} = - \inf$
+\item Suppose $\exists u \geq 0, c^{T} = u^{T}A$. Then, $ = \displaystyle \max_{u_{0} \in \mathbb{R}, u \geq 0, u^{T}A = c^{T}} \{u_{0} \mid -u^{T}b + u_{0} \leq 0 \} = \max \{ u^{T}b \mid u \geq 0, u^{T}A = c^{T} \}$
+\end{itemize}
+
+\end{document}
