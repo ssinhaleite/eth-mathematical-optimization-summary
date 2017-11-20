@@ -1,0 +1,81 @@
+\documentclass[main]{subfiles}
+\begin{document}
+
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+% Main Topics: 
+% Algorithms for hard problems: knapsack problem - 20.11.2017
+% author: Vanessa Leite
+
+\section{Algorithms for hard problems}
+
+\subsection{knapsack problem}
+\paragraph{Definition - knapsack problem}
+
+Given a set $C = \{ c_{1}, \dots, c_{n} \} \subseteq \mathbb{Z}_{+} \setminus \{ 0\}$ (values) and $A = \{a_{1}, \dots, a_{n} \subseteq \mathbb{Z}_{+} \setminus \{ 0\} \}$ (weights), $a_{0} \in \mathbb{Z}_{+} \setminus \{ 0\}, a_{0} \geq a_{i} \forall i$.
+
+$\gamma(k, a_{0}) = \{ \max \sum_{i =1}^{k} c_{i} x_{i} \mid \sum_{i=1}^{k} a_{i}x_{i} \leq a_{0}, x \in \{0,1\}^{k} \}$ is a (binary) knapsack problem. (If $x \in \mathbb{Z}_{+}^{k}$, then it is a integer knapsack problem).
+
+Dual:
+$\alpha(k, c_{0}) = \{ \min \sum_{i =1}^{k} a_{i} x_{i} \mid \sum_{i=1}^{k} c_{i}x_{i} \geq c_{0}, x \in \{0,1\}^{k} \}$
+
+\paragraph{A k-cursive algorithm}
+
+\[
+  \gamma(1, a_{0})=\begin{cases}
+               0, a_{1} > a_{0}\\
+               c_{1}, a_{1} \leq a_{0}\\
+            \end{cases}
+\]
+
+$\gamma(k, a_{0}) = max\{\gamma(k-1, a_{0}), \gamma(k-1, a_{0} - a_{k}) + c_{k}\}$
+
+The number of iterations for a given $a_{0}$ is $\mathcal{O}(n \times a_{0})$.
+
+For the dual knapsack problem:
+\[
+  \alpha(1, c_{0})=\begin{cases}
+               +\infty, c_{1} < c_{0}\\
+               a_{1}, otherwise\\
+            \end{cases}
+\]
+
+$\alpha(k, c_{0}) = mix\{\alpha(k-1, c_{0}), \alpha(k-1, c_{0} - c_{k}) + a_{k}\}$
+
+\paragraph{Corollary} The knapsack problem can be solved in time $\mathcal{O}(n \times a_{0})$ and the dual version in time $\mathcal{O}(n \times c_{0}) = \mathcal{O}(n^{2} \times max\{c_{i}: i = \{1, \dots, n\}\})$
+
+\paragraph{Notation} For numbers $d_{1}, \dots, d_{k}$, $d_{max} = max\{d_{i}: i =\{1, \dots, k\} \}$
+
+\subsection{Connections primal/dual knapsack}
+
+\paragraph{Lemma} $\alpha(k, \gamma(k, a_{0}) \leq a_{0}$
+
+\subparagraph{Proof:}
+Let $x^{*} \in \{0,1\}^{k}$ attain optimal value for $\gamma(k, a_{0})$.
+Then:
+\begin{itemize}
+\item (i) $\sum a_{i}x_{i}^{*} \leq a_{0}$
+\item (ii) $\sum c_{i}x_{i}^{*} = \gamma(k, a_{0})$
+\end{itemize}
+
+Consider the dual: $\min \{\sum_{i=1}^{k} a_i x_{i} \mid \sum_{i=1}^{k} c_{i}x_{i} \geq \gamma(k, a_{0})\}$, $x^{*}$ is feasible for the dual, $\leq \sum a_{i}x_{i}^{*} \leq a_{0}$.
+
+\paragraph{Lemma} Let $\mathbb{A}$ be an algorithm for computing $\alpha(k, c_{0}) \forall k$ and $c_{0}$. With "polynomial" many calls of $\mathbb{A}$ we can compute $\gamma(k, a_{0})$.
+
+\subparagraph{Proof:}
+$\gamma(k, a_{0}) = \max c^{T}x, a^{T}x \leq a_{0}, x \in \{0,1\}^{k}$. Assume $a_{0} \geq a_{max}$:
+
+$\underbrace{1}_{\underline{\mu}} \leq \gamma(k, a_{0}) \leq \underbrace{\sum_{i=1}^{k}c_{i}}_{\bar{\mu}}$.
+
+Consider $\mu = \frac{\bar{\mu} + \underline{\mu}}{2}$. Compute $\alpha(k, \mu)$, then two things ca happen:
+\begin{itemize}
+\item (i) the result is greather than $a_{0} \rightarrow \bar{\mu} = \mu$
+\item (ii) the result is less or equal $a_{0} \rightarrow \underline{\mu} = \mu$
+
+The number of steps that takes until $\underline{\mu} = \bar{\mu}$ is $log(k \times c_{max})$.
+
+\paragraph{Remark}
+\end{itemize}
+
+\subsection{Two approximation results}
+
+\end{document}
