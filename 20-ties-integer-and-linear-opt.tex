@@ -1,0 +1,71 @@
+\documentclass[main]{subfiles}
+\begin{document}
+
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+% Main Topics: The integer hull of a polyhedron, Cutting plane algorithms and Chvátal-Gomory cuts
+% From Linear to Integer Optimization - 27.11.2017
+% author: Vanessa Leite
+
+\section{From Linear to Integer Optimization}
+
+\subsection{The integer convex hull of a polyhedron }
+\paragraph{Theorem (?) for integer points in polyhedra}
+Note: The convex hull of the integer points of a polyhedron is also a polyhedron.
+
+Let $P = \{ x \in \mathbb{R}^n \mid Ax \leq b \}$ and $\mathcal{F} = P \cap \mathbb{Z}^n$.
+
+There exists a finite set $T \subseteq \mathcal{F}$ such that \\
+$\mathcal{F} = \{ x \in \mathbb{R}^n : x = \sum_{t \in T} \lambda_{t}t + \sum_{e \in E} \mu_{e}e$, $\lambda_t \in \mathbb{Z}_+ \forall t \in T, \mu_e \in \mathbb{Z}_+ \forall e \in E, \underbrace{\sum_{t \in T} \lambda_t = 1}_{\text{exists only one $\lambda \neq 0$ and $\lambda = 1$}} \}$
+
+where $E \subseteq \mathbb{Z}^n$ and $\underbrace{\mathcal{C}}_{\text{recession cone}} = \{ x \in \mathbb{R}^n \mid Ax \leq 0 \} = cone(E)$
+
+\subparagraph{Proof:}
+$P = conv(V) + cone(E) \rightarrow$ the polyhedron can be written as a convex hull of its vertices plus the cone of edges.
+
+$T = \{x \in \mathbb{R}^n \mid x = \sum_{v \in V} \lambda_v v + \sum_{e \in E} \lambda_e e, \sum_{v \in V} \lambda_v = 1, 0 \leq \lambda_v \leq 1 \forall v \in V, 0 \leq \lambda_e \leq 1 \forall e \in E \} \cap \mathbb{Z}^n$
+
+$|T|$ is finite $\rightarrow P$ is bounded.
+
+Let $x \in \mathcal{F}$. $\exists \lambda_v \geq 0, \forall v \in V, \lambda_e \geq 0 \forall e \in E, \sum_{v \in V} \lambda_v = 1$ such that $x = \sum_{v \in V} \lambda_v v + \sum_{e \in E} \lambda_e e =$
+$\underbrace{\sum_{v \in V} \lambda_v v + \sum_{e \in E} (\lambda_e - \lfloor \lambda_e \rfloor)e}_{(**)} + \underbrace{\sum_{e \in E} \lfloor \lambda_e \rfloor e}_{(*)}$
+
+$x$ is an integer. $x - (*)$ is an integer, so $(**)$ is also integer ($\in \mathbb{Z}^n \cap T$).
+
+\paragraph{Theorem: $P = \{ x \in \mathbb{R}^n \mid Ax \leq b\} \neq \emptyset$. $\mathcal{F} = P \cap \mathbb{Z}^n$. $conv(\mathcal{F})$ is a polyhedron}
+
+From previous theorem, $\exists T \subseteq \mathcal{F}, |T|$ is finite such that $\forall x \in \mathcal{F}, \exists t_x \in T$ and multipliers $\mu_e \in \mathbb{Z}_+$ such that $x = t_x + \sum_{e \in E} \mu_e e$.
+
+We show that: $conv(\mathcal{F}) = conv(T) + cone(E)$
+\textbf{The recession cone is the same for the IP and LP.}
+
+\subparagraph{Proof: direction "$\subseteq$"}
+Let $x^1, \dots, x^k \in \mathcal{F}$ and $\lambda_1, \dots, \lambda_k \geq 0, \sum \lambda_i = 1$.
+
+$\forall i$, let $t_{x^i} \in T$ and $\mu_e^i \in \mathbb{Z}_+$, $x^i = t_{x^i} + \sum_{e \in E} \mu_e^i e$
+
+$\sum_{i = 1}^{k} \lambda_i x^i = \sum_{i = 1}^{k} \lambda_i (t_{x^i} + \sum_{e \in E} \mu_e^i e) = \sum_{i =1}^k \lambda_i t_{x^i} + \sum_{i=1}^k \lambda_i \sum_{e \in E} \mu_e^i e$
+
+$= \underbrace{ \sum_{i=1}^k \lambda_i t_{x^i}}_{\in conv(T)} + \underbrace{\sum_{e \in E}(\underbrace{\sum_{i =1}^k \lambda_i \mu_e^i}_{\geq 0})e}_{\in cone(E)}$
+
+\subparagraph{Proof: direction "$\supseteq$"}
+Let $x \in conv(T) + cone(E)$, then $x$ is a convex combination of integer points in P.
+
+$x = \sum_{t \in T} \lambda_t t + \sum_{e \in E} \mu_e e$, $\mu_e \geq 0$ $\forall e$, $\lambda_t \geq 0$ $\forall t$, $\sum_{t}\lambda_t = 1$
+
+Let $\{t_1, \dots, t_k\} \subseteq T$ such that $\lambda_{t_i} \geq 0$
+
+$x = \sum_{i=1}^k \lambda_i t_i + \sum_{e \in E} \mu_e e = \sum_{i=2}^k \lambda_i t_i + \lambda_1 (t_1 + \sum_{e \in E} \frac{\mu_e}{\lambda_1} e)$.
+
+
+\textbf{Claim: Suppose $s \in conv(P \cap \mathbb{Z}^n), e \in E$ and let $\mu_e > 0 \rightarrow s + u_e e \in conv(P \cap \mathbb{Z}^n)$}
+
+With the claim, $t_1 + \sum_{e \in E} \frac{\mu_e}{\lambda_1}e \in conv(P \cap \mathbb{Z}^n)$ and $t_2, \dots, t_k \in conv(P \cap \mathbb{Z}^n) \rightarrow \lambda_1(t_1 + sum_{e \in E}\frac{\mu_e}{\lambda_1}e + \sum_{i =2}^k \lambda_i t_i \in conv(P \cap \mathbb{Z}^n)$.
+
+\subparagraph{Proof of the claim: $s \in conv(P \cap \mathbb{Z}^n), e \in E, \mu > 0$. $s + \mu e \in conv(P \cap \mathbb{Z}^n)$}
+wlog $\mu \notin \mathbb{Z}$
+
+\subsection{Cutting plane algorithm}
+
+\subsection{Chvátal-Gomory cuts}
+
+\end{document}
