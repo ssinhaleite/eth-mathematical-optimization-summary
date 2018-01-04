@@ -104,33 +104,36 @@ We need a function to optimize. An optimization problem is of the form:
 
 Where $\mathcal{F} \subseteq \mathbb{R}^{n}$ is the feasible domain given
 implicitly or by a ``membership oracle''. The function
-$\mathcal{F}: \mathbb{R}^{n} \leftarrow \mathbb{R}$ is presented implicitly
+$\mathcal{F}: \mathbb{R}^{n} \rightarrow \mathbb{R}$ is presented implicitly
 (i.e., is a domain you can't describe) or by an ``evaluation oracle'', for
 instance, given by a query: $x \in \mathbb{R}^{n}$: true ($x \in \mathcal{F}$)
 or false ($x \notin \mathcal{F}$).
 
-\textbf{Implicitly} means that you need evaluate by a given point; continuum spectrum of points can be scaled and produce a minimum nore negative than any natural.
+\textbf{Implicitly} means that you need evaluate by a given point; continuum
+spectrum of points can be scaled and produce a minimum nore negative than any
+natural.
 
-\paragraph{What does $\displaystyle \min_{x \in \mathcal{F}} f(x)$ mean for us?}
+\paragraph{What does $\displaystyle \min_{x \in \mathcal{F}} f(x)$ mean for
+us?}
 This problem can be assigned to one of three meanings:
 \begin{itemize} \label{items:optimization-conclusions}
 \item nothing: the problem is \emph{infeasible}; it means that the domain is
 empty, i.e., $\mathcal{F} = \emptyset$, there is nothing to optimize.
 \item the problem is \emph{unbounded}, i.e., there exists a sequence of
-points $x^{1}, x^{2}, \dots \in \mathcal{F}$ and $\forall n \in \mathbb{N},
-f(x^{1}) < -n \Rightarrow lim_{i \rightarrow \infty} f(x^{i}) = -\infty$.
-There exists a sequence of points that for each natural number, $f(x^{i} < -n$,
+points $x^{1}, x^{2}, \dots \in \mathcal{F}$ and $\forall n \in \mathbb{N}
+f(x^{i}) < -n \Rightarrow lim_{i \rightarrow \infty} f(x^{i}) = -\infty$.
+There exists a sequence of points that for each natural number, $f(x^{i}) < -n$
 so we cannot bound the sequence.
 \item the problem has an \emph{optimal solution}, i.e., $\exists x^{*} \in
 \mathcal{F}$ such that $f(x^{*}) \leq f(z) \forall z \in \mathcal{F}$.
 \end{itemize}
 
 \paragraph{Target of the course}
-Derive conclusions( meanings from above~\ref{items:optimization-conclusions}) for optimization
-problem $\displaystyle \min_{x \in \mathcal{F}} f(x)$ and give ideally a proof
-that our conclusion is correct. It is necessary to proof (find a proof) to hold
-the conclusions. What to do when the se $\mathcal{F}$ is empty? It is necessary
-a mathematical theory.
+Derive conclusions ( meanings from above~\ref{items:optimization-conclusions})
+for optimization problem $\displaystyle \min_{x \in \mathcal{F}} f(x)$ and give
+ideally a proof that our conclusion is correct. It is necessary to proof (find
+a proof) to hold the conclusions. What to do when the set $\mathcal{F}$ is
+empty? It is necessary to use a mathematical theory.
 
 \subsection{Basic definitions}
 \todo[inline]{organize the enumeration of figures in the text}
@@ -149,18 +152,17 @@ a^{T} x \leq \alpha \}$ for $a \in \mathbb{R}^{n}, \alpha \in \mathbb{R}$.
 \in \mathbb{Q}$. In this case the boundary is a rational line.
 
 \item A \emph{polyhedron} is the intersection of a \textbf{finite} number of
-halfspaces (Figure~\ref{fig:polyhedron}). The intersection of halfspaces gives a
-region of finite points. In this case, it is called \emph{polytope}: a bounded
-polyhedron. We need to use geometry and algebric forms. In algebric form:
-$\mathcal{P} = \{ x \in \mathbb{R}^{n} \mid Ax \leq b \} = \{ x \in
+halfspaces (Figure~\ref{fig:polyhedron}). The intersection of halfspaces gives
+a region of finite points. In this case, it is called \emph{polytope}: a
+bounded polyhedron. We need to use geometry and algebric forms. In algebric
+form: $\mathcal{P} = \{ x \in \mathbb{R}^{n} \mid Ax \leq b \} = \{ x \in
 \mathbb{R}^{n} \mid a_{1}^{T}x \leq b_{1}, \dots, a_{n}^{T}x \leq b_{n} \}$
-where $A \in \mathbb{R}^{m \times n}, b \in \mathbb{R}^{m}$. $A$ is a matrix
-and $Ax \leq b$ represents each row of $A$.
+where $A \in \mathbb{R}^{m \times n}, b \in \mathbb{R}^{m}$.
 \subitem Rational polyhedron: $A \in \mathbb{Q}^{ m \times n}, b \in
 \mathbb{Q}^{m}$.
 \subitem one half space is also a polyhedron.
 \subitem all points inside a polyhedron are called feasible.
-\subitem $Ax \leq b$ represents the multplication of the rows of $A$ with $x$. This is less equal than a value in $b$.
+\subitem $Ax \leq b$ represents the multplication of the rows of $A$ with $x$. This is less equal than a value in same row of the column vector $b$.
 \todo[inline]{add a graphical representation of this subitem}
 
 \item A set $\mathcal{Q}$ is \emph{convex} (Figure~\ref{fig:convex-set}) if
@@ -218,7 +220,8 @@ polyhedron (bounded polyhedron) and every bounded polyhedron is of this form.
 \subparagraph{Lemma}
 \begin{enumerate}
 \item \label{item:polyhedron-convex-set} a polyhedron is a convex set
-\item \label{item:convex-hull-convex-set} $conv(x^{1}, \dots, x^{t})$ is a convex set
+\item \label{item:convex-hull-convex-set} $conv(x^{1}, \dots, x^{t})$ is a
+convex set
 \end{enumerate}
 
 \subparagraph{Proof of~\ref{item:polyhedron-convex-set}}
@@ -246,11 +249,14 @@ $y = \sum_{i=1}^{t} \sigma_{i} x^{i}, \sigma_{i} \geq 0 \forall i$
 \lambda x + (1-\lambda)y = \sum_{i=1}^{t} \lambda \mu_{i} x^{i} +
 \sum_{i=1}^{t} (1-\lambda) \sigma_{i} x^{i} \\
 = \sum_{i=1}^{t} (\lambda \mu_{i} + (1-\lambda) \sigma_{i}) x^{i} \\
-\tau_{i} = (\lambda \mu_{i} + (1-\lambda) \sigma_{i}), \tau_{i} \geq 0, \forall i \\
-= \sum_{i=1}^{t} \tau_{i} = \sum_{i=1}^{t} (\lambda \mu_{i} + (1-\lambda) \sigma_{i}) \\
+\tau_{i} = (\lambda \mu_{i} + (1-\lambda) \sigma_{i}), \tau_{i} \geq 0,
+\forall i \\
+= \sum_{i=1}^{t} \tau_{i} = \sum_{i=1}^{t} (\lambda \mu_{i} + (1-\lambda)
+\sigma_{i}) \\
 = \lambda \sum_{i=1}^{t} \mu_{i} + (1-\lambda) \sum_{i=1}^{t} \sigma_{i} \\
 \sum_{i=1}^{t} \mu_{i} = 1 \ \text{and} \ \sum_{i=1}^{t} \sigma_{i} = 1 \\
 = \lambda + (1-\lambda) = 1
+\rightarrow \sum_{i=1}^{t} \tau_i x^i \in conv(x^1, \dots, x^t)
 \end{gather*}
 
 \subsection{Classification of Optimization Problems}
@@ -262,7 +268,8 @@ minimize $f(x)$).
 $\displaystyle \max_{x \in \mathcal{F}} f(x) = \min_{x \in \mathcal{F}} -f(x)$
 
 \begin{itemize}
-\item \emph{linear optimization problem}: given $A \in \mathcal{Q}^{m \times n}, b \in
+\item \emph{linear optimization problem}: given $A \in \mathcal{Q}^{m \times
+n}, b \in
 \mathcal{Q}^{m}, c \in \mathcal{Q}^{n}$. $\displaystyle \min_{x \in
 \mathcal{P}} c^{T}x$ where $\mathcal{P}$ is a polyhedron defined by $\{ x \in
 \mathcal{R}^{n} \mid x_{i} \geq 0 \forall i, Ax = b \}$ or $\displaystyle
@@ -297,9 +304,9 @@ f(y)$. $\forall x,y \in \mathcal{F}, \lambda x + (1-\lambda)y \in \mathcal{F}$.
 \subitem Example of implicitly: knapsack problem: collections are all feasible
 solutions of knapsack problem.
 
-\item \emph{combinatorial optimization problem}: given finite groundset $\mathcal{E}$
-and a collection $\mathcal{I}$ of subsets of $\mathcal{E}$ (tipically,
-implicitly given: you cannot write it down).
+\item \emph{combinatorial optimization problem}: given finite groundset
+$\mathcal{E}$ and a collection $\mathcal{I}$ of subsets of $\mathcal{E}$
+(tipically, implicitly given: you cannot write it down).
 For $c: \mathcal{E} \mapsto \mathcal{R}$ find a member in the collection $(I
 \in \mathcal{I})$ such that $\sum_{i \in I} c_{i}$ is minimal/maximal.
 Example: $G = (V, E), E \subseteq V \times V$
@@ -319,7 +326,4 @@ $\displaystyle \min_{x \in \mathcal{P} \cap \mathbb{Z}^{n}} c^{T}x,
 \mathcal{P} = \{ x \in \mathbb{R}^{n} \mid x_{i} \geq 0 \forall i, Ax = b \}$
 
 \end{itemize}
-
-
-
 \end{document}
