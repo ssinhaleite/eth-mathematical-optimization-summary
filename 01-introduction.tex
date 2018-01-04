@@ -132,13 +132,19 @@ that our conclusion is correct. It is necessary to proof (find a proof) to hold
 the conclusions. What to do when the se $\mathcal{F}$ is empty? It is necessary
 a mathematical theory.
 
-
 \subsection{Basic definitions}
 \todo[inline]{organize the enumeration of figures in the text}
+\begin{figure}[!h]
+  \label{fig:convex-set}
+  \caption{Types of polyhedra.}
+  \centering
+    \includegraphics[width=0.5\textwidth]{imgs/polyhedra-types.png}
+\end{figure}
 \begin{itemize}
+
 \item A \emph{half space} is a set of the form $\{ x \in \mathbb{R}^{n} \mid
 a^{T} x \leq \alpha \}$ for $a \in \mathbb{R}^{n}, \alpha \in \mathbb{R}$.
-\subitem A \emph{half space rational} is a set of the form $\{ x \in
+\subitem A \emph{rational half space} is a set of the form $\{ x \in
 \mathbb{R}^{n} \mid a^{T} x \leq \alpha \}$ for $a \in \mathbb{Q}^{n}, \alpha
 \in \mathbb{Q}$. In this case the boundary is a rational line.
 
@@ -288,10 +294,8 @@ $max/min \{ c^{T}x \mid Ax \leq b, x \in \mathbb{Z}^{n-d} \times
 $f(x)$ convex and $\mathcal{F}$ convex set. $\forall x, y \in \mathbb{R}^{n},
 \lambda \in [0,1], f(\lambda x + (1-\lambda)y) \leq \lambda f(x) + (1-\lambda)
 f(y)$. $\forall x,y \in \mathcal{F}, \lambda x + (1-\lambda)y \in \mathcal{F}$.
-
-
-\todo[inline]{Example of implicitly: knapsack problem: collection are all
-feasible solutions of knapsack problem.}
+\subitem Example of implicitly: knapsack problem: collections are all feasible
+solutions of knapsack problem.
 
 \item \emph{combinatorial optimization problem}: given finite groundset $\mathcal{E}$
 and a collection $\mathcal{I}$ of subsets of $\mathcal{E}$ (tipically,
