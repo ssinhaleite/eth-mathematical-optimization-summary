@@ -3,10 +3,25 @@
 
 %@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 % Main Topics: consequences of projections, Farkas Lemma, standard form
-% polyhedra, conessummarizes Matchings, Hall's theorem, Kőnig's theorem, Tutte condition 
-% author: 
+% polyhedra, cones
+% author: Vanessa Leite
 
 \section{Farkas Lemma and Standard Form Polyhedra}
 
+\subsection{Some consequences from lecture 4}
+
+\paragraph{Corollary: If I take a polyhedron $P = \{ x \in \mathbb{R}^n \mid Ax
+\leq b\}$, the projection $proj_{(x_1, \dots, x_i}(P)$ is a polyhedron (by
+removing points). }
+
+\paragraph{Corollary: Take a polyhedron $P = \{ x \in \mathbb{R}^n \mid Ax \leq
+b\}$, consider the set $Q$ (the set of all vectors of the form: $\{ wx \mid x
+\in P \}$, where $w \in \mathbb{Q}^{d \times n}$; $wx \subseteq \mathbb{R}^d$.
+$Q$ is a polyhedron.}
+
+\subparagraph{Proof:}
+Let's define another set $D = \{(x,y): wx - y = 0$, $x \in P\} = \{(x,y) \mid wx -y = 0$, $Ax \leq b\} \subseteq \mathbb{R}^{n+d}$. $Q$ is the projection of $D$ on the space of $Q = proj_y (D) = \{ y \in \mathbb{R}^d \mid \exists x \in \mathbb{R}^{d \times n}$ such that $\underbrace{(x,y) \in D}_{\text{that means $wx =y$}} \}$.
+
+\subsection{Standard form polyhedra}
 
 \end{document}

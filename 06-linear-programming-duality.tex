@@ -3,8 +3,56 @@
 
 %@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 % Main Topics: linear programming duality, complementary slackness 
-% author:
+% Duality theorem for linear programing - 09.10.2017
+% author: Vanessa Leite
 
 \section{Linear Programming Duality}
+
+\textbf{Theorem (Neuman '47): Let $P = \{x \in \mathbb{R}^n \mid Ax \leq b \}
+\neq \emptyset$. Assume there exists a point in the polyhedron. $D = \{ y \in
+\mathbb{R}^m \mid y \geq 0$, $y^TA = c^T\} \neq \emptyset$.
+\emph{$\displaystyle \max_{x \in \mathcal{P}} c^{T}x = \min_{y \in D} y^T b$ }}
+
+\subparagraph{Proof:}
+\begin{itemize}
+\item $D$ is a polyhedron in standard form, $D \neq \emptyset$, so, there is no
+line, then, $D$ has an extreme point $x^* \in \mathcal{P}$, because
+$\mathcal{P} \neq \emptyset$. 
+$c^T x \underbrace{=}_{\forall y \in \mathcal{D}} \underbrace{y^T}_{\geq 0}
+\underbrace{Ax}_{\leq b} \leq y^T b$, therefore, the minimum is not infinity.
+$\rightarrow \exists y^* \in \mathcal{D}$, extreme point such that
+$\underbrace{\delta^*}_{\text{optimal value}} = y^{*^T} b = min\{y^T b \mid y
+\in \mathcal{D}\}$
+\item \textbf{$y^*$ exists.}
+$\forall x \in \mathcal{P}$, then $c^T x = y^{*^T}Ax \leq \delta^* \rightarrow
+\displaystyle \max_{x \in \mathcal{P}} c^{T}x$ is bounded (can not go to
+$+\infty$).
+\end{itemize}
+
+Show $\{x \in\mathcal{P} \mid c^T x \geq \delta^* \} \neq \emptyset$. Suppose
+it is empty, then:\\
+$\rightarrow Ax \leq b$ has no solution \\
+$-c^T x \leq -\delta^*$
+
+By Farka's Lemma, there exists multipliers $z \in \mathbb{R}_{+}^{m}$ and
+$\lambda \in \mathbb{R}_{+}$, such that $z^T A - \lambda c^T = 0$, $z^T b -
+\lambda \delta^* < 0$.\\
+Assume $\lambda = 0$: $\exists$ solution $z \geq 0$ such that $z^T A = 0$,
+$z^T b < 0 \iff \mathcal{P} = \emptyset$.
+Assume $\lambda > 0$: define $y = \frac{z}{\lambda}$. Then, $z^T A = \lambda 
+c^T \iff y^T A = c^T$, $z^T b < \lambda \delta^* \iff y^T b < \delta^*$.
+
+$\delta^*$ is $\displaystyle \min_{y \in \mathcal{D}} y^{T}b$, so it is a
+contradiction $y^T b < \delta^* \rightarrow \{ x \in \mathcal{P} \mid c^T x 
+\geq \delta^*\} \neq \emptyset$.
+
+\subsection{Weak complementary slackness}
+\textbf{Theorem: $P = \{x \in \mathbb{R}^n \mid Ax \leq b \} \neq \emptyset$
+and $D = \{ y \geq 0 \mid y^T A = c^T \} \neq \emptyset$. We say $x \in
+\mathcal{P}$ and $y \in \mathcal{D}$ are simultaneously optimal solutions iff
+$y_i (A_{i\cdot}x - b_i) = 0$ $\forall i = 1, \dots, m$. }
+
+\subparagraph{Proof:}
+
 
 \end{document}
