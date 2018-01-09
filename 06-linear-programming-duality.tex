@@ -53,6 +53,12 @@ and $D = \{ y \geq 0 \mid y^T A = c^T \} \neq \emptyset$. We say $x \in
 $y_i (A_{i\cdot}x - b_i) = 0$ $\forall i = 1, \dots, m$. }
 
 \subparagraph{Proof:}
+\begin{equation} \label{eq:proof-weak-slackness}
+c^T x = y^T Ax = \sum_{i=1}^{m} y_i A_{i\cdot} x = \sum_{i: y_i > 0} y_i A_{i
+\cdot} x \leq \sum_{i: y_i > 0} y_i b_i = y^T b
+\end{equation}
+
+$x \in P, y \in D$ are simultaneously optimal $\underbrace{\text{iff}}_{duality} c^T x = y^T b \iff \forall i: y_i > 0$, then $A_i x = b_i$.
 
 
 \end{document}
