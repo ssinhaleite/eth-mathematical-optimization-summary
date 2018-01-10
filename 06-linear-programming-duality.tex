@@ -47,10 +47,10 @@ contradiction $y^T b < \delta^* \rightarrow \{ x \in \mathcal{P} \mid c^T x
 \geq \delta^*\} \neq \emptyset$.
 
 \subsection{Weak complementary slackness}
-\textbf{Theorem: $P = \{x \in \mathbb{R}^n \mid Ax \leq b \} \neq \emptyset$
-and $D = \{ y \geq 0 \mid y^T A = c^T \} \neq \emptyset$. We say $x \in
-\mathcal{P}$ and $y \in \mathcal{D}$ are simultaneously optimal solutions iff
-$y_i (A_{i\cdot}x - b_i) = 0$ $\forall i = 1, \dots, m$. }
+\textbf{Theorem: $\mathcal{P} = \{x \in \mathbb{R}^n \mid Ax \leq b \} \neq
+\emptyset$ and $\mathcal{D} = \{ y \geq 0 \mid y^T A = c^T \} \neq \emptyset$.
+We say $x \in \mathcal{P}$ and $y \in \mathcal{D}$ are simultaneously optimal
+solutions iff $y_i (A_{i\cdot}x - b_i) = 0$ $\forall i = 1, \dots, m$. }
 
 \subparagraph{Proof:}
 \begin{equation} \label{eq:proof-weak-slackness}
@@ -58,7 +58,64 @@ c^T x = y^T Ax = \sum_{i=1}^{m} y_i A_{i\cdot} x = \sum_{i: y_i > 0} y_i A_{i
 \cdot} x \leq \sum_{i: y_i > 0} y_i b_i = y^T b
 \end{equation}
 
-$x \in P, y \in D$ are simultaneously optimal $\underbrace{\text{iff}}_{duality} c^T x = y^T b \iff \forall i: y_i > 0$, then $A_i x = b_i$.
+$x \in \mathcal{P}, y \in \mathcal{D}$ are simultaneously optimal 
+$\underbrace{\text{iff}}_{duality} c^T x = y^T b \iff \forall i: y_i > 0$, then
+$A_i x = b_i \iff y_i(A_{i\cdot}x - b_i) = 0$.
+
+\textbf{Observation: What happens when $\mathcal{P}$ or $\mathcal{D}$ are
+empty?}
+
+\paragraph{Lemma: assume $\mathcal{P}$ is non empty, but the dual $\mathcal{D}$
+is empty.}
+$\mathcal{P} = \{ x \in \mathbb{R}^n \mid Ax \leq b \} \neq \emptyset$,
+$D = \{y \in \mathbb{R}^m_+ \mid \underbrace{y^T A = c^T}_{= A^T y = c, y \geq
+0} \} =  \emptyset$. Then $\displaystyle \max_{x \in \mathcal{P}} c^{T}
+x = +\infty$.
+
+\subparagraph{Proof:}
+$\mathcal{P} \neq \emptyset \rightarrow \exists \bar{x} \in \mathcal{P}$.
+$\mathcal{D} = \emptyset \underbrace{\rightarrow}_{\text{farka's lemma}}
+\exists z$ such that $Az \geq 0, c^T z \leq 0$. \\
+
+\textbf{Claim:} $\bar{x} - \lambda z \in \mathcal{P}, \forall \lambda \geq 0$\\
+$A(\bar{x} - \lambda z) = A\bar{x} - \lambda \underbrace{Az}_{\geq 0} \leq b$\\
+$c^T(\bar{x} - \lambda z) = c^T \bar{x} - \lambda c^T z \xrightarrow[x \to
+\infty]{} +\infty$.
+
+\paragraph{Lemma: assume $\mathcal{D}$ is non empty, but the primal
+$\mathcal{P}$ is empty.}
+$\mathcal{D} = \{y \in \mathbb{R}^m_+ \mid y^T A = c^T \} \neq \emptyset$,
+$\mathcal{P} = \{x \in \mathbb{R}^n \mid Ax \leq b \} = \emptyset$. Then
+$\displaystyle \min_{y \in \mathcal{D}} y^{T} b = -\infty$.
+
+\subparagraph{Proof:}
+$\mathcal{D} \neq \emptyset \rightarrow \exists \bar{y} \in \mathcal{D}$.
+$\mathcal{P} = \emptyset \underbrace{\rightarrow}_{\text{farka's lemma}} 
+\exists y: y^T A = 0, y^T b < 0 \rightarrow y < 0$.
+
+\textbf{Claim:} $\bar{y} + \underbrace{\lambda y}_{\text{you can scale
+infinitely}} \in \mathcal{D}$, $\forall \lambda \geq 0$ and the sequence of
+points $b^T [\bar{y} + \lambda y] \xrightarrow[\lambda \to \infty]{} -\infty$.
+
+
+\subsection{A short summary}
+
+\begin{center}
+ \begin{tabular}{||c c c||} 
+ \hline
+ & $\mathcal{P} = \emptyset$ & $\mathcal{P} \neq \emptyset$ \\ [0.5ex] 
+ \hline\hline
+ $\mathcal{D} = \emptyset$ & Both are infeasible &  $\displaystyle \max_{x \in 
+ \mathcal{P}} c^{T} x = +\infty$ \\ 
+ \hline
+ $\mathcal{D} \neq \emptyset$ & $\displaystyle \min_{y \in \mathcal{D}} y^{T}
+ b = -\infty$ & $\displaystyle \max_{x \in \mathcal{P}} c^{T} x =
+ \displaystyle \min_{y \in \mathcal{D}} y^{T} b$ \\
+ \hline
+\end{tabular}
+\end{center}
+
+\subsection{Dualization operator}
 
 
 \end{document}
