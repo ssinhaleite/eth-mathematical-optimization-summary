@@ -116,6 +116,34 @@ points $b^T [\bar{y} + \lambda y] \xrightarrow[\lambda \to \infty]{} -\infty$.
 \end{center}
 
 \subsection{Dualization operator}
+If we agree on a linear optimization of the following form: $\displaystyle 
+\max_{Ax \leq b} c^{T} x$, we can create a "dualization" operator.\\
+
+$ Dual(\displaystyle \max_{x \in \mathcal{P}} c^{T} x) = \displaystyle
+\min_{y^T A = c^T, y \geq 0} y^{T} b$\\
+
+\textbf{Observation:} The dual of the dual linear programming is the primal, 
+provided all are non empty.\\
+
+By applying the dual, we first drop the sign:\\
+ $\displaystyle \max_{x \in \mathcal{P}} c^{T} x =
+ \displaystyle \min_{y \in \mathcal{D}} y^{T} b =
+ \displaystyle -\max -y^{T}$,  $A^T y \leq c$, $-A^T y \leq -c$, $-Iy \leq 0 b$
+ \\
+ 
+$ Dual(\displaystyle \max (-b)^{T} y)$, $A^T y \leq c$, $-A^T y \leq -c$, $-Iy
+\leq 0) =  \displaystyle \min -c^{T}\underbrace{(v - u)}_{=z}$, $A(v-u)+w = b$, 
+$u, v, w \geq 0 = \displaystyle \min -c^T z$, $Az + w =b$, $w \geq 0$\\
+ 
+$\displaystyle \min -c^{T} z$, $Az \leq b = \displaystyle \max c^{T} z$, $-Az
+\geq -b$
+
+Then, we reapply the sign.
+ 
+
+
+
+
 
 
 \end{document}

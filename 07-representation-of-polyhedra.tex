@@ -3,8 +3,35 @@
 
 %@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 % Main Topics: extreme  rays, recession cones and representation of polyhedra 
-% author:
+% Representation of Polyhedra - 12.10.2017
+% author: Vanessa Leite
 
 \section{Representation of Polyhedra}
+Definition: $Let \mathcal{P} = \{x \in \mathbb{R}^n \mid Ax \leq b\}$ be a 
+polyhedron. $dim(\mathcal{P}) = n - dim(\{A_{i\cdot} \mid A_{i\cdot}x = b_i$, $
+\forall x \in \mathcal{P} \})$ (implicitly linearly independent equations).
+
+For $I \subseteq \{1, \dots, m\}$, $F = \{ x \in \mathcal{P} \mid A_{i\cdot} x = 
+b$, $\forall i \in I \}$ is a face of $\mathcal{P}$.
+Extreme case: $F = \emptyset$, $F = P$.\\
+
+Vertices are faces of dimension $0$. Edges are faces of dimension $1$. Facets 
+are faces of dimension $dim(\mathcal{P})-1$.\\
+
+When $b = 0$, $\mathcal{P}$ is a cone. A cone is \textbf{pointed} if it does not 
+contain a line.\\
+
+For $\mathcal{P}$ and a point $y \in \mathcal{P}$, $\underbrace{rec}
+_{\text{recession}}(y, \mathcal{P}) = \{ d \in \mathbb{R}^n \mid y + \lambda d 
+\in \mathcal{P}$, $\forall \lambda \geq 0 \}$. If $\mathcal{P}$ is bounded then 
+$rec(y, \mathcal{P}) = \{ 0 \}$, $\forall y \in \mathcal{P}$. \\
+
+\paragraph{Observation:}
+if $\mathcal{P} = \{x \in \mathbb{R}^n \mid Ax \leq b \}$, then the recession
+cone $rec(y, \mathcal{P}) = \{d \in \mathbb{R}^n \mid Ad \leq 0 \}$, $\forall y
+\in \mathcal{P}$. Therefore for every point $y \in \mathcal{P} \rightarrow
+rec(y, \mathcal{P}) = rec(\mathcal{P}) = \{ d \in \mathbb{R}^n \}$.
+
+
 
 \end{document}
