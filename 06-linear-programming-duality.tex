@@ -14,37 +14,82 @@
 \emph{$\displaystyle \max_{x \in \mathcal{P}} c^{T}x = \min_{y \in D} y^T b$ }}
 
 \subparagraph{Proof:}
-\begin{itemize}
-\item $D$ is a polyhedron in standard form, $D \neq \emptyset$, so, there is no
-line, then, $D$ has an extreme point $x^* \in \mathcal{P}$, because
-$\mathcal{P} \neq \emptyset$. 
+$D$ is a polyhedron in standard form, $D \neq \emptyset$, so, there is no
+line, then, $D$ has an extreme point. \\
+Since $\mathcal{P} \neq \emptyset$, take any $x \in \mathcal{P}$.
 $c^T x \underbrace{=}_{\forall y \in \mathcal{D}} \underbrace{y^T}_{\geq 0}
 \underbrace{Ax}_{\leq b} \leq y^T b$, therefore, the minimum is not infinity.
-$\rightarrow \exists y^* \in \mathcal{D}$, extreme point such that
+$\exists y^* \in \mathcal{D}$, extreme point such that
 $\underbrace{\delta^*}_{\text{optimal value}} = y^{*^T} b = min\{y^T b \mid y
-\in \mathcal{D}\}$
-\item \textbf{$y^*$ exists.}
+\in \mathcal{D}\}$\\
 $\forall x \in \mathcal{P}$, then $c^T x = y^{*^T}Ax \leq \delta^* \rightarrow
 \displaystyle \max_{x \in \mathcal{P}} c^{T}x$ is bounded (can not go to
-$+\infty$).
-\end{itemize}
+$+\infty$).\\
 
-Show $\{x \in\mathcal{P} \mid c^T x \geq \delta^* \} \neq \emptyset$. Suppose
+This way, 
+\begin{equation}
+\displaystyle \max_{x \in \mathcal{P}} c^{T}x \leq \displaystyle \min_{y \in 
+\mathcal{D}} y^{T}b
+\end{equation}
+
+Now, consider all points in $\mathcal{P}$ such that $c^T x \geq \delta^*$.
+This set must be non empty, because for some $x$, $c^T x = \delta^*$.\\
+$\{x \in\mathcal{P} \mid c^T x \geq \delta^* \} \neq \emptyset$. Suppose
 it is empty, then:\\
-$\rightarrow Ax \leq b$ has no solution \\
-$-c^T x \leq -\delta^*$
+$Ax \leq b$ has no solution and $-c^T x \leq -\delta^*$ (multiplied by $-1$,
+so, every inequality is organized in the same way).
 
 By Farka's Lemma, there exists multipliers $z \in \mathbb{R}_{+}^{m}$ and
-$\lambda \in \mathbb{R}_{+}$, such that $z^T A - \lambda c^T = 0$, $z^T b -
-\lambda \delta^* < 0$.\\
-Assume $\lambda = 0$: $\exists$ solution $z \geq 0$ such that $z^T A = 0$,
-$z^T b < 0 \iff \mathcal{P} = \emptyset$.
-Assume $\lambda > 0$: define $y = \frac{z}{\lambda}$. Then, $z^T A = \lambda 
-c^T \iff y^T A = c^T$, $z^T b < \lambda \delta^* \iff y^T b < \delta^*$.
+$\lambda \in \mathbb{R}_{+}$ ($z$ is a multiplier for the first inequality and 
+$\lambda$ for the second).
 
+\begin{equation}
+\begin{pmatrix}
+    z \\
+    \lambda
+\end{pmatrix}
+\begin{pmatrix}
+    A \\
+    -c^T x
+\end{pmatrix}
+= 0
+\end{equation}
+
+and
+\begin{equation}
+\begin{pmatrix}
+    z \\
+    \lambda
+\end{pmatrix}
+\begin{pmatrix}
+    b \\
+    -\delta^*
+\end{pmatrix}
+< 0
+\end{equation}
+
+so, $z^T A - \lambda c^T = 0$, $z^T b -\lambda \delta^* < 0$.\\
+Assume $\lambda = 0$:\\
+By Farka's Lemma, $\exists$ solution $z \geq 0$ such that $z^T A = 0$ and
+$z^T b < 0 \iff \mathcal{P} = \emptyset$.
+This is a contradiction by definition.\\
+Assume $\lambda > 0$:\\
+Since $\lambda > 0$ we can divide the system by $\lambda$, this way define
+$\bar{y} = \frac{z}{\lambda}$. Then, $z^T A = \lambda c^T \iff
+\bar{y}^T A = c^T$, $z^T b < \lambda \delta^* \iff \bar{y}^T b < \delta^*$.\\
 $\delta^*$ is $\displaystyle \min_{y \in \mathcal{D}} y^{T}b$, so it is a
 contradiction $y^T b < \delta^* \rightarrow \{ x \in \mathcal{P} \mid c^T x 
-\geq \delta^*\} \neq \emptyset$.
+\geq \delta^*\} \neq \emptyset$, otherwise we would have found another
+point better than the minimum.
+
+This way, $\exists x \in \mathcal{P}$ such that $c^Tx \geq \delta^*$.
+Since $\forall x \in \mathcal{P}$, $c^Tx \leq \delta^*$, we can conclude that
+$c^T x = \delta^*$, thus,
+
+\begin{equation}
+\displaystyle \max_{x \in \mathcal{P}} c^{T}x = \displaystyle \min_{y \in 
+\mathcal{D}} y^{T}b
+\end{equation}
 
 \subsection{Weak complementary slackness}
 \textbf{Theorem: $\mathcal{P} = \{x \in \mathbb{R}^n \mid Ax \leq b \} \neq
@@ -125,25 +170,21 @@ $ Dual(\displaystyle \max_{x \in \mathcal{P}} c^{T} x) = \displaystyle
 \textbf{Observation:} The dual of the dual linear programming is the primal, 
 provided all are non empty.\\
 
-By applying the dual, we first drop the sign:\\
- $\displaystyle \max_{x \in \mathcal{P}} c^{T} x =
- \displaystyle \min_{y \in \mathcal{D}} y^{T} b =
- \displaystyle -\max -y^{T}$,  $A^T y \leq c$, $-A^T y \leq -c$, $-Iy \leq 0 b$
+By applying the dual, we first "drop" the sign on the objective function:\\
+ $\displaystyle \min_{y \in \mathcal{D}} y^{T} b =
+ \displaystyle \max -y^{T}b$,  $A^T y \leq c$, $-A^T y \leq -c$, $-Iy \leq 0$
  \\
  
 $ Dual(\displaystyle \max (-b)^{T} y)$, $A^T y \leq c$, $-A^T y \leq -c$, $-Iy
 \leq 0) =  \displaystyle \min -c^{T}\underbrace{(v - u)}_{=z}$, $A(v-u)+w = b$, 
 $u, v, w \geq 0 = \displaystyle \min -c^T z$, $Az + w =b$, $w \geq 0$\\
- 
-$\displaystyle \min -c^{T} z$, $Az \leq b = \displaystyle \max c^{T} z$, $-Az
-\geq -b$
 
-Then, we reapply the sign.
- 
+Then, we "reapply" the sign on the objective function 
+$\displaystyle \min -c^{T} z$, $Az \leq b = \displaystyle \max c^{T} z$, $Az
+\leq b$
 
-
-
-
+\subsection{Supplementary Reading - Section 4.3 from [BT97]}
+\todo[inline]{update}
 
 
 \end{document}
