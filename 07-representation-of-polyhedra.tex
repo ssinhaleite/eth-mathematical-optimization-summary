@@ -7,7 +7,7 @@
 % author: Vanessa Leite
 
 \section{Representation of Polyhedra}
-Definition: $Let \mathcal{P} = \{x \in \mathbb{R}^n \mid Ax \leq b\}$ be a 
+Definition: Let $\mathcal{P} = \{x \in \mathbb{R}^n \mid Ax \leq b\}$ be a 
 polyhedron. $dim(\mathcal{P}) = n - dim(\{A_{i\cdot} \mid A_{i\cdot}x = b_i$, $
 \forall x \in \mathcal{P} \})$ (implicitly linearly independent equations).
 
@@ -34,15 +34,15 @@ rec(y, \mathcal{P}) = rec(\mathcal{P}) = \{ d \in \mathbb{R}^n \}$.
 
 \subparagraph{Proof of observation:}
 Take $y \in \mathcal{P}$, $rec(y, \mathcal{P}) = \{d \in \mathbb{R}^n \mid y +
-\lambda d \in \mathcal{P}$, $\forall \lambda \geq 0 \}$, now we laim ths is the
-same as $\{d \in \mathbb{R}^n \mid Ad \leq 0 \} = \mathcal{Q}$.\\
+\lambda d \in \mathcal{P}$, $\forall \lambda \geq 0 \}$, now we claim this is
+the same as $\{d \in \mathbb{R}^n \mid Ad \leq 0 \} = \mathcal{Q}$.\\
 
 "$Q \subseteq rec(y, \mathcal{P})$": if $d \in \mathcal{Q} \rightarrow Ad \leq
 0 \underbrace{\rightarrow}_{\forall y \in \mathcal{P}} A (y + \lambda d) = Ay +
 \underbrace{\lambda}_{\geq 0} \underbrace{A d}_{\leq 0} \leq b$. \\
 
 "$rec(y, \mathcal{P}) \subseteq Q$": Suppose it is not true, so, there exists
-$i$, such that for $d \in rec(y, \mathcal{P}) A_{i\cdot}d > 0$. $y+ \lambda d
+$i$, such that for $d \in rec(y, \mathcal{P}) \rightarrow A_{i\cdot}d > 0$. $y+ \lambda d
 \in \mathcal{P}$, $\forall \lambda \geq 0 \rightarrow A_{i\cdot} (y + \lambda
 d) = A_{i\cdot}y + \lambda A_{i\cdot} d \leq b_i \rightarrow \lambda \leq
 \frac{b_i - A_{i\cdot}y}{A_{i\cdot}d}$, which contradicts $\lambda > 0$.
@@ -106,12 +106,12 @@ Conversely, $\displaystyle \max_{x \in \mathcal{P}} c^{T} x = +\infty$, shows
 that exists an extreme ray. Write down a dual problem.
 \todo[inline]{homework}
 
-Consider that the dual $min b^T y$, $st. A^T y = c$, $y \geq 0$ has no
-solution. We know that $min 0^T y$, $st. A^T y = c$, $y \geq 0$ is infeasible.
-Consider now the cone problem: $max c^T x$, $st. Ax \leq 0$. This problem is
+Consider that the dual $\min b^T y$, $st. A^T y = c$, $y \geq 0$ has no
+solution. We know that $\min 0^T y$, $st. A^T y = c$, $y \geq 0$ is infeasible.
+Consider now the cone problem: $\max c^T x$, $st. Ax \leq 0$. This problem is
 either unbounded or infeasible. $0$ is feasible for our problem, so,
-$max c^T x$, $st. Ax \leq 0$ is unbounded. As $max c^T x$ is unbounded,
-$max c^T x = +\infty$.\\
+$\max c^T x$, $st. Ax \leq 0$ is unbounded. As $\max c^T x$ is unbounded,
+$\max c^T x = +\infty$.\\
 
 $\mathcal{P}$ has at least one extreme point, therefore has no lines, and in
 particular, $dim(\{A_{i\cdot} \mid i = 1, \dots, m\}) = n$. If $\mathcal{P}$
@@ -123,7 +123,7 @@ cone such that $c^T d > 0$.
 lecture 03)}
 
 \paragraph{Theorem: Let $\mathcal{P} = \{x \in \mathbb{R}^n \mid Ax \leq b\}$
-with at least one extreme point. Let $\{v^1, dots, v^k\}$ be all the extreme
+with at least one extreme point. Let $\{v^1, \dots, v^k\}$ be all the extreme
 points in $\mathcal{P}$ and $\{w^1, \dots, w^r\}$ be all the extreme rays in
 $\mathcal{P}$. \\ Then $\mathcal{P} = \mathcal{Q} = \{ \sum_{i =1}^{k}
 \lambda_i v^i + \sum_{j=1}^{r} \mu_j w^j \mid \lambda \geq 0$, $\mu \geq 0$,
