@@ -33,32 +33,32 @@ vertex, we change the variables of the basis.
 
 \paragraph{Definition: Given $x^* \in \mathcal{P}$, $d \in \mathbb{R}^n$.
 $d$ is a feasible direction if we can move along the vector $d$, i.e, if there
-exists $\lambda  0$ such that $x^* + \lambda d \in \mathcal{P}$.}
+exists $\lambda > 0$ such that $x^* + \lambda d \in \mathcal{P}$.}
 $\lambda$ needs to be greather than zero to move far from $x^*$, but this can
 be a problem in degeneracy.
 
 \paragraph{Definition:}
 $x^* \in \mathcal{P}$, that is a basic feasible solution $\rightarrow \exists$
 basis $B$ such that $x^* = (x^*_B, x^*_N) = (A^{-1}_B, 0)$.
-The $j$th non basic direction is the vector $d \in \mathbb{R}^n$ (uniquely
+The $j$-th non-basis direction is the vector $d^* \in \mathbb{R}^n$ (uniquely
 determined), such that for $j \in N$, $d^*_N = \underbrace{e_j \in 
-\mathbb{R}^{|N|}}_{\text{all zeros but the $j$th position}}$ (non-basic
+\mathbb{R}^{|N|}}_{\text{all zeros but the $j$-th position}}$ (non-basis
 variables), $d^*_B = -A^{-1}_B A_{\cdot j}$.
 
 \paragraph{Lemma: Given a bfs $x^*$ for the primal. Assume that $x^*$ is
 non-degenerate ($\bar{b}$ is strictly positive in all components).
-The $j$-th non basic direction is feasible.}
+The $j$-th non-basis direction is feasible.}
 
-Proof:\\
-Let $d^*$ be the $j$-th non-basic direction. $\underbrace{Ad^* = 0}_{Ax^* = b
+\subparagraph{Proof:}
+Let $d^*$ be the $j$-th non-basis direction. $\underbrace{Ad^* = 0}_{Ax^* = b
 \text{, stays at the same kernel}} = A_B d^*_B + A_N d^*_N =
--A_B A^{-1}_B A_{\cdot j} + A_N e_j = -A+{\cdot j} + A_{\cdot j } = 0$.\\
+-A_B A^{-1}_B A_{\cdot j} + A_N e_j = -A_{\cdot j} + A_{\cdot j } = 0$.\\
 
 $x^* + \lambda d^* \in \mathcal{P}$, $\forall \lambda \geq 0 \rightarrow
-x^*_ \lambda d^* \geq 0$ such that $\lambda \leq \frac{x^*_i}{-d^*_i}$,
-$\forall i \in B$ such that $d_i < 0$.\\
+x^* + \lambda d^* \geq 0$ such that $\lambda \leq \frac{x^*_i}{-d^*_i}$,
+$\forall i \in B$ such that $d^*_i < 0$.\\
 
-In the non basic,  $x^*_i + \lambda d^*$ is always positive because $d$ is the
+In the non-basis,  $x^*_i + \lambda d^*$ is always positive because $d$ is the
 unit vector. So, take $i \in B$:
 
 \[
@@ -72,15 +72,15 @@ unit vector. So, take $i \in B$:
   \right.
 \]
 
-\paragraph{Observation: the $j$-th non-basic direction $d^*$ satisfies
+\paragraph{Observation: the $j$-th non-basis direction $d^*$ satisfies
 $c^T d^* = \bar{c_j}$.}
 
-$c^T d^* = c^T_B d^*_B + c^T_N d^*_N = -c^T_B A^{-1}_B A_{\cdot j} + c_j =
-\bar{c)j}$.
+\subparagraph{$c^T d^* = c^T_B d^*_B + c^T_N d^*_N = -c^T_B A^{-1}_B
+A_{\cdot j} + c_j = \bar{c_j}$}
 
 \paragraph{Theorem: Let $x^*$ be a bfs for the primal, with associated basis
 $B$. Let $j \notin B$ st $\bar{c_j} < 0$. Assume $x^*$ is non-degenerate.
-Let $d$ be the $j$-th non basic direction:}
+Let $d$ be the $j$-th non-basis direction:}
 \begin{enumerate}
 \item if $d_i \geq 0$ $\forall i \in B \rightarrow \displaystyle \min_{x
 \in \mathcal{P}} c^{T} x = -\infty$.
@@ -109,7 +109,7 @@ $\rightarrow \lambda^* = \max \{ \lambda > 0 \mid x^* + \lambda d
 \item $\bar{B}$ is a basis, $i \in \{1, \dots, n\} \rightarrow$ true,
 $|B| = n \rightarrow$ true. Show $A^{-1}_B$ exists (and has full row rank).\\
 \subitem $A_B$ is non singular $\iff A^{-1}_B A_{\bar{B}}$ is non singular.\\
-Let $d$ be the $j$-th non basic direction. $d_B = -A^{-1}_B A_{\cdot j}$,
+Let $d$ be the $j$-th non-basis direction. $d_B = -A^{-1}_B A_{\cdot j}$,
 $d_k \leq 0$, so, $A^{-1}_B A_{\bar{B}}$ is non singular, because
 $(A^{-1}_B A_{\cdot j})_k \neq 0$.\\
 \subitem From previous prove, $\bar{B}$ is a basis.
