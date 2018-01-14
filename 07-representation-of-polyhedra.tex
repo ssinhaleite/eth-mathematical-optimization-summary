@@ -30,7 +30,8 @@ $rec(y, \mathcal{P}) = \{ 0 \}$, $\forall y \in \mathcal{P}$. \\
 if $\mathcal{P} = \{x \in \mathbb{R}^n \mid Ax \leq b \}$, then the recession
 cone $rec(y, \mathcal{P}) = \{d \in \mathbb{R}^n \mid Ad \leq 0 \}$, $\forall y
 \in \mathcal{P}$. Therefore for every point $y \in \mathcal{P} \rightarrow
-rec(y, \mathcal{P}) = rec(\mathcal{P}) = \{ d \in \mathbb{R}^n \}$.
+rec(y, \mathcal{P}) = rec(\mathcal{P})$. In other words, the recession cone is
+independent of $y$.
 
 \subparagraph{Proof of observation:}
 Take $y \in \mathcal{P}$, $rec(y, \mathcal{P}) = \{d \in \mathbb{R}^n \mid y +
@@ -42,10 +43,11 @@ the same as $\{d \in \mathbb{R}^n \mid Ad \leq 0 \} = \mathcal{Q}$.\\
 \underbrace{\lambda}_{\geq 0} \underbrace{A d}_{\leq 0} \leq b$. \\
 
 "$rec(y, \mathcal{P}) \subseteq Q$": Suppose it is not true, so, there exists
-$i$, such that for $d \in rec(y, \mathcal{P}) \rightarrow A_{i\cdot}d > 0$. $y+ \lambda d
-\in \mathcal{P}$, $\forall \lambda \geq 0 \rightarrow A_{i\cdot} (y + \lambda
-d) = A_{i\cdot}y + \lambda A_{i\cdot} d \leq b_i \rightarrow \lambda \leq
-\frac{b_i - A_{i\cdot}y}{A_{i\cdot}d}$, which contradicts $\lambda > 0$.
+$i$, such that for $d \in rec(y, \mathcal{P}) \rightarrow A_{i\cdot}d > 0$.
+$y+ \lambda d \in \mathcal{P}$, $\forall \lambda \geq 0 \rightarrow A_{i\cdot}
+(y + \lambda d) = A_{i\cdot}y + \lambda A_{i\cdot} d \leq b_i \rightarrow
+\lambda \leq \frac{b_i - A_{i\cdot}y}{A_{i\cdot}d}$,
+which contradicts $\lambda > 0$.
 
 
 \emph{Remark: For a polyhedron in standard form $P=\{x \in \mathbb{R}^n_+ \mid
@@ -71,7 +73,7 @@ a linear combination).
 \paragraph{Definition: Let the cone $C =\{x \in \mathbb{R}^n \mid Ax \leq 0\}$.
 $x \in C$, $ x \neq 0$ is called an extreme ray of $C$ if the dimension of all
 the tight constraints at this point is $n-1$ ($dim(\{A_{i\cdot} \mid i \in
-I(x)) = n-1$}.\\
+I(x)) = n-1$)}.\\
 For $\mathcal{P} = \{x \in \mathbb{R}^n \mid Ax \leq b \}$ an extreme ray of
 $\mathcal{P}$ is an extreme point of $rec(\mathcal{P})$.
 
