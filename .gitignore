@@ -14,11 +14,11 @@ main.bbl
 main.blg
 main.dvi
 main.tex.bak
-04-projection-on-polyhedra.aux
-04-projection-on-polyhedra.log
-04-projection-on-polyhedra.out
-04-projection-on-polyhedra.pdf
-04-projection-on-polyhedra.synctex.gz
-04-projection-on-polyhedra.thm
+*.aux
+*.log
+*.out
+*.pdf
+*.synctex.gz
+*.thm
 
 
