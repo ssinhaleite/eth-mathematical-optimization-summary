@@ -4,8 +4,149 @@
 %@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 % Main Topics: basis exchange and pivoting primal simplex algorithm
 % The Simplex Algorithm II - 19.10.2017
-% author:
+% author: Vanessa Leite
 
 \section{Simplex Algorithm II}
+
+Consider $\min \{c^T x\mid Ax = b, x\geq 0\}$ as the primal and $\max \{b^T y
+\mid A^T y \leq c\}$ as the dual.
+
+What is a basis? A subset of the variables with size $N$.
+A subset of the columns with size $N$, they are rows linearly independent, i.e.,
+$A \in \mathbb{R}^{m \times n}$ (full row rank), $B$ basis, $B \subseteq \{1,
+\dots, m\}$, $|B| = n$.
+
+\paragraph{$A^{-1}_B$ exists.}
+Given a basis it can be associated with two points $B \rightarrow
+\begin{pmatrix}
+x^*\\
+y^*
+\end{pmatrix}$.
+They can be feasible or not. $(x^*_B, x^*_N) = (A^{-1}_B b, 0)$ and
+$y^*_B = c^T_B A^{-1}_B$.\\
+
+$B$ is optimal basis if $\bar{b}\geq 0$ and $\bar{c} \geq 0$.\\
+
+Simplex algorithm is jumping between basis, geometrically jumping between
+vertices. This is jumping basis because, every time we change the selected
+vertex, we change the variables of the basis.
+
+\paragraph{Definition: Given $x^* \in \mathcal{P}$, $d \in \mathbb{R}^n$.
+$d$ is a feasible direction if we can move along the vector $d$, i.e, if there
+exists $\lambda  0$ such that $x^* + \lambda d \in \mathcal{P}$.}
+$\lambda$ needs to be greather than zero to move far from $x^*$, but this can
+be a problem in degeneracy.
+
+\paragraph{Definition:}
+$x^* \in \mathcal{P}$, that is a basic feasible solution $\rightarrow \exists$
+basis $B$ such that $x^* = (x^*_B, x^*_N) = (A^{-1}_B, 0)$.
+The $j$th non basic direction is the vector $d \in \mathbb{R}^n$ (uniquely
+determined), such that for $j \in N$, $d^*_N = \underbrace{e_j \in 
+\mathbb{R}^{|N|}}_{\text{all zeros but the $j$th position}}$ (non-basic
+variables), $d^*_B = -A^{-1}_B A_{\cdot j}$.
+
+\paragraph{Lemma: Given a bfs $x^*$ for the primal. Assume that $x^*$ is
+non-degenerate ($\bar{b}$ is strictly positive in all components).
+The $j$-th non basic direction is feasible.}
+
+Proof:\\
+Let $d^*$ be the $j$-th non-basic direction. $\underbrace{Ad^* = 0}_{Ax^* = b
+\text{, stays at the same kernel}} = A_B d^*_B + A_N d^*_N =
+-A_B A^{-1}_B A_{\cdot j} + A_N e_j = -A+{\cdot j} + A_{\cdot j } = 0$.\\
+
+$x^* + \lambda d^* \in \mathcal{P}$, $\forall \lambda \geq 0 \rightarrow
+x^*_ \lambda d^* \geq 0$ such that $\lambda \leq \frac{x^*_i}{-d^*_i}$,
+$\forall i \in B$ such that $d_i < 0$.\\
+
+In the non basic,  $x^*_i + \lambda d^*$ is always positive because $d$ is the
+unit vector. So, take $i \in B$:
+
+\[
+  x^*_i + \lambda d^*_i =
+  \left\{
+	\begin{array}{ll}
+    \geq x^*_i \geq 0 \text{, }\forall i \in B \text{ such that }d_i \geq 0\\
+	\geq x^*_i + \frac{x^*_i}{-d^*_i} d^*_i = 0 \text{, } \forall i \in B
+	\text{ such that } d_i < 0.
+    \end{array}
+  \right.
+\]
+
+\paragraph{Observation: the $j$-th non-basic direction $d^*$ satisfies
+$c^T d^* = \bar{c_j}$.}
+
+$c^T d^* = c^T_B d^*_B + c^T_N d^*_N = -c^T_B A^{-1}_B A_{\cdot j} + c_j =
+\bar{c)j}$.
+
+\paragraph{Theorem: Let $x^*$ be a bfs for the primal, with associated basis
+$B$. Let $j \notin B$ st $\bar{c_j} < 0$. Assume $x^*$ is non-degenerate.
+Let $d$ be the $j$-th non basic direction:}
+\begin{enumerate}
+\item if $d_i \geq 0$ $\forall i \in B \rightarrow \displaystyle \min_{x
+\in \mathcal{P}} c^{T} x = -\infty$.
+\item if $d \ngeq 0$ (some components are smaller than zero),
+then $\lambda^* = \min \{\frac{x^*_i}{-d_i} \mid i \in B \text{ st } d_i < 0 \}
+= \max \{\lambda \geq 0 \mid x^* + \lambda d \in \mathcal{P} \}$.
+\item under previous assumption (2), let $k \in B$, such that
+$\lambda^* = \frac{x^*_k}{-d_k}$, where $d_k < 0$. Let $\bar{B} =
+B\setminus \{ k\} \cup \{j\}$:
+\subitem $\bar{B}$ is a basis.
+\subitem $x^* + \lambda^* d $ is the bfs associated with $\bar{B}$.
+\end{enumerate}
+
+\subparagraph{Proof:}
+\begin{enumerate}
+\item $Ad =0 \rightarrow A(x^* + \lambda d) = b$, $\forall \lambda \geq 0$.
+$c^T d = \bar{c_j} < 0$. $x^*$ is feasible so, $x^* \geq 0$. If $d \geq 0$
+then $x^* + \lambda d \geq 0$, $\lambda \geq 0$. Then $x^* + \lambda d \in
+\mathcal{P}$, $\forall \lambda > 0$, $c^T(x^* + \lambda d) = c^T x^* +
+\lambda \bar{c_j} \xrightarrow[\lambda \to \infty]{} -\infty \rightarrow
+\displaystyle \min_{x \in \mathcal{P}} c^{T} x = -\infty$.
+\item $Ad = 0$, $x^*_i + \lambda d_i \geq 0$, $\lambda \geq 0 \rightarrow
+\lambda \leq \frac{x^*_i}{-d_i}$, $\forall i \in B$, such that $d_i < 0$,
+$\rightarrow \lambda^* = \max \{ \lambda > 0 \mid x^* + \lambda d
+\in \mathcal{P} \}$.
+\item $\bar{B}$ is a basis, $i \in \{1, \dots, n\} \rightarrow$ true,
+$|B| = n \rightarrow$ true. Show $A^{-1}_B$ exists (and has full row rank).\\
+\subitem $A_B$ is non singular $\iff A^{-1}_B A_{\bar{B}}$ is non singular.\\
+Let $d$ be the $j$-th non basic direction. $d_B = -A^{-1}_B A_{\cdot j}$,
+$d_k \leq 0$, so, $A^{-1}_B A_{\bar{B}}$ is non singular, because
+$(A^{-1}_B A_{\cdot j})_k \neq 0$.\\
+\subitem From previous prove, $\bar{B}$ is a basis.
+Define $y = x^* + \lambda^* d$. $\forall i \in N \setminus \{j\}$:
+$y_i = x^*_i + \lambda^* \underbrace{d_i}_{d_i = 0 \text{; } d_j = 1} = 0
+\rightarrow y_k = x^*_k + \lambda^* d_k = x^*_k + \frac{x^*_k}{-d_k} d_k = 0$.
+\end{enumerate}
+
+We have found a feasible solution $y$ to the system: $Az = b$, $z_i = 0
+\underbrace{\forall i \notin \bar{B}}_{i \in N \setminus \{j\} \cup \{k\}}$.
+This system has a unique solution: $\hat{z}$. $\hat{z}_B = A^{-1}_{\bar{B}} b$,
+$\hat{z}_N = 0$. $\hat{z} = y$.
+
+\subsection{Simplex Algorithm - primal setting}
+\begin{enumerate}
+\item Choose a bfs $x^*$ with basis $B$ and cost $c^* = c^T x^*$.
+\item Compute the reduced cost: $\bar{c_j} = c_j - c^T_B A^{-1}_B A_{\cdot j}$,
+$\forall j \in N$.
+\item if $\bar{c} \geq 0$, stop $\rightarrow$ optimal!
+\item Otherwise, determine $j \in N$, such that $\bar{c_j} < 0$.
+\subitem if $d_B = - A^{-1}_B A_{\cdot j} \geq 0$, stop $\rightarrow$ unbounded!
+\item Otherwise, compute $\lambda^* = \min_{i \in B} \{\frac{x^*_i}{-d_i}
+\mid i \in B, d_i < 0 \}$ and index $k \in B$ such that $\lambda^* =
+\frac{x^*_k}{-d_k}$.
+\item Update the basis and the solutions:\\
+$B = B\setminus \{k\} \cup \{j\}$ and set $x^*_k = 0$\\
+$x^*_i = x^*_i + \lambda^* d_i$, $\forall i \in B\setminus \{k\}$\\
+$x^*_j = \lambda^*$\\
+$c^* = c^* + \lambda^* \bar{c_j}$
+\end{enumerate}
+
+\paragraph{Theorem:} For $\mathcal{P} \neq \emptyset$ and assuming that all
+basic feasible solutions in $\mathcal{P}$ are non degenerate, then the simplex
+algorithm terminates with a correct answer in finite time.
+\subparagraph{Proof:}
+Either the minimum value is $-\infty$ or the minimum value is finite.
+Every pivot operation decreases the objective function value and leads us to a
+new basis (finitely many), and no basis is visited twice.
 
 \end{document}
