@@ -59,10 +59,10 @@ $x_i = 0 \iff 0 \leq x^*_B = A^{-1}_B b$
 \end{enumerate}
 
 \paragraph{Definition: Reduced cost}
-We define the vector of reduced cost $\bar{c} \in \mathbb{R}^{n \times m}$ by
-$\bar{c_j} = c_j - c_B A^{-1}_B A_{\cdot j}$.\\
-$\bar{b} = A^{-1}_B b$\\
-$\bar{A} = A^{-1}_B A = [\mathcal{I} | A^{-1}_B A_N ]$
+We define the vector of reduced cost $\bar{c} \in \mathbb{R}^{n - m}$ by
+$\bar{c_j} = c_j - c^T_B A^{-1}_B A_{\cdot j}$\\
+Define $\bar{b} = A^{-1}_B b$\\
+Define $\bar{A} = A^{-1}_B A = [\mathcal{I} | A^{-1}_B A_N ]$
 
 The basic idea for an algorithm:\\
 \begin{figure}[!h]
@@ -82,12 +82,12 @@ $\lambda$ fast? When to stop?}
 \paragraph{Definition:}
 \begin{enumerate}
 \item For $\mathcal{P} = \{x \in \mathbb{R}^n \mid Ax \leq b\}$ (canonical
-form), a basic feasible solution $x^*$ is degenerated if $|I(x^*)| > n$, where
+form), a bfs $x^*$ is degenerated if $|I(x^*)| > n$, where
 $I(x^*) = \{i \in \{1, \dots, m\} \mid A_{i\cdot}x^* = b_i\}$, i.e, more than
 $n$ constraints are tight.
-\item For $\mathcal{P} = \{x \in \mathbb{R}^n_+ \mid Ax = b\}$, a basic
-feasible solution $x^*$ is degenerated if more than $n-m$ components of $x^*$
-are equal to zero, i.e, some entries od $x^*_B$ are zero.
+\item For $\mathcal{P} = \{x \in \mathbb{R}^n_+ \mid Ax = b\}$ (standard form),
+a bfs $x^*$ is degenerated if more than $n-m$ components of $x^*$ are equal to
+zero, i.e, some entries of $x^*_B$ are zero.
 \end{enumerate}
 
 There are differents ways such that degeneracy arises.\\
@@ -146,15 +146,15 @@ $\begin{pmatrix}
 2
 \end{pmatrix}$ for $B = \{1,3\}, \{2, 3\}$
 
-\paragraph{Theorem: Let $x^*$, $y^*$ as defined previously, $X^*$ is feasible,
+\paragraph{Theorem: Let $x^*$, $y^*$ as defined previously, $x^*$ is feasible,
 then:}
 \begin{enumerate}
 \item if $\bar{c} \geq 0 \rightarrow x^*$ is optimal.
 \item if $x^*$ is optimal and non degenerated $\rightarrow \bar{c} \geq 0$
-\end{enumerate}
+\item if $y^*$ is feasible for the dual and $A^{-1}_B b \geq 0$ then $y^*$ is
+optimal
 
-\emph{if $A^{-1}_B b \geq 0 \rightarrow y^*$ is optimal, if it is feasible for
-the dual.}
+\end{enumerate}
 
 \subparagraph{Proof:}
 \begin{enumerate}
@@ -168,7 +168,7 @@ As $z \in \mathcal{P} \rightarrow \forall j \in N$, $z_j =
 \underbrace{x^*_j}_{=0} + d_j \geq 0 \rightarrow d_N \geq 0$.\\
 But then, $c^T z = c^T x^* + c^T d = c^T x^* +
 \sum_{j \in N} \underbrace{\bar{c_j}}_{\geq 0} \underbrace{d_j}_{\geq 0}
-\geq c^T x$.
+\geq c^T x^*$. So, $c^T x^*$ is, indeed, minimal.
 
 \item Let $x^*$ be non-degenerate $\rightarrow x^*_i > 0$, $\forall i \in B$.
 Assume that $\exists j \in N$: $\bar{c_j} < 0$ and $x^*$ is optimal.\\
@@ -190,16 +190,12 @@ Now, $c^T(x^* + \epsilon d) = c^T x^* + \epsilon c^T d = c^T x^* + \epsilon
 \bar{c_j} \underbrace{d_j}_{=1} = c^T x^* + \epsilon
 \underbrace{\bar{c_j}}_{< 0} < c^T x^*$.\\
 So, by contradiction, no other point improves objective value of $x^*$.
-\end{enumerate}
 
-\paragraph{Theorem: Let $x^*$, $y^*$ as defined. Then if $A^{-1}_B b \geq 0$
-and $y^*$ feasible, then $y^*$ is optimal.}
-
-Proof:\\
-Let $z \in \mathcal{D}$ feasible for the dual.
+\item Let $z \in \mathcal{D}$ feasible for the dual. \\
 By definition, $z^T A \leq c^T \rightarrow z^T A_B \leq c^T_B$.
-Now, $(y^*)^T b = c^T_B \underbrace{A^{-1})_B b}_{\geq 0}
+Now, $(y^*)^T b = c^T_B \underbrace{A^{-1}_B b}_{\geq 0}
 \geq z^T A_B A^{-1}_B b = z^T b$. So, $y^*$ is optimal.
 
+\end{enumerate}
 
 \end{document}
