@@ -10,9 +10,172 @@
 \section{Simplex Algorithm IV}
 
 \subsection{The revised Simplex Algorithm}
-:)
+
+\paragraph{Implementational issue: update algorithmic for basis inverses}
+Mathematics is unchanged. Core: "elementary row operations".
+
+\paragraph{Definition (Elementary Row Operation): Given a matrix
+$A \in \mathbb{R}^{n \times m}$, the operation of adding a multiple of
+$\lambda \neq 0$ of rows $i$ to row $k$ is an elementart row operation (ERO).
+When $i=k$, we are doing a scale operation.}
+The resulting matrix $\bar{A} = Q \times A$, when $Q = I^{n\times m} + D$,
+where $D_{k,i} = \lambda$ and $D_{r,s} = 0$ elsewhere.
+
+$ Q =
+\begin{bmatrix}
+1 & 0 & \dots & 0 \\
+0 & 1 & \lambda & 0 \\
+\vdots & 0 & \dots & 0 \\
+\vdots & \vdots & \ddots & 0 \\
+0 & 0 & \dots & 1
+\end{bmatrix}$
+
+$\lambda$ is on the intersection of row $k$ and column
+$i \rightarrow D_{k,i} = \lambda$
+
+\emph{$Q$ is invertible}
+
+\paragraph{Remark:}
+By applying a sequence of $l$ elementary row operations to a matrix $A$, it
+gives us $\bar{A} = Q_l \times Q_{l-1} \times \dots \times Q_1 A$. Where each
+$Q_i$ is of the form introduced before.
+
+\paragraph{Observation:}
+Let $Q = Q_l \times Q_{l-1} \times \dots \times Q_1$, then $Q^{-1}$ exists.
+$Q^{-1} = Q^{-1}_1 \times Q^{-1}_2 \times \dots \times Q^{-1}_l$. This is true
+because $Q \times Q^{-1} = (Q_l \times \dots \times Q_1)(Q^{-1}_1 \times \dots
+\times Q^{-1}_l) = I$.
+
+\paragraph{Application to basis update: Let $\mathcal{P} = \{x \in
+\mathbb{R}^n \mid Ax \leq b, x \geq 0\}$. $A \in \mathbb{Q}^{m \times n}$ of
+full row rank.}
+Change basis takes in the worst case, $m$ row operations.
+
+
+Assume basis $B \subseteq \{1, \dots, m\}$ is given, i.e, $|B| = m$, $A^{-1}_B$
+exists. Suppose we apply a pivot operation. This leads us to a new basis
+$\bar{B}$, such that $l \in B$, $l \notin \bar{B}$, $j \in N$, $j \notin B$,
+$j \in \bar{B}$, $l \in N$.\\
+Wlog $B = \{1, \dots, m\}$. $A_{\bar{B}} = [A_{\cdot 1} | \dots |
+A_{\cdot, l-1} | A_{\cdot j} | A_{\cdot ,l+1} |\dots |A_{\cdot m}]$
+
+$A^{-1}_B A_{\bar{B}} =
+\left[
+\begin{array}{ccc|c|ccc}
+1 &  & 0 & & 0 & 0 & 0 \\
+ & \ddots & 1 & u & 1 & \ddots & \\
+0 & &  &  & 0 & & 1\\
+\end{array}
+\right]
+=
+[e_1 | \dots | e_{l-1} | u |e_{l+1} | \dots | e_m ]$
+
+$u = A^{-1}_B A_{\cdot j }$
+
+Where $e_i$ is the $i$-th unit vector in $\mathbb{R}^m$.
+
+\paragraph{Goal: apply a sequence of elementary rows operations to the matrix
+$A^{-1}_B A{\bar{B}}$, so the new matrix becomes the identity $I$.}
+
+For $i \neq l$: add $(\frac{-u_i}{u_l})$ times row $l$ to row $i$.\\
+Replace row $l$ by $\frac{1}{u_l}$ times row $l$.
+
+\paragraph{Observation:} From our discussions there exists an invertible matrix
+$Q$, such that $Q A^{-1}_B A_{\bar{B}} = I \rightarrow Q A^{-1}_B =
+A^{-1}_{\bar{B}}$.
+
+\subsubsection{An iteration of the revised SA}
+\begin{enumerate}
+\item Let $B$ be a basis. Assume we know $A^{-1}_B$. $(x_B, x_N) =
+(A^{-1}_B b, 0)$.
+\item Compute $p^T = c^T_B A^{-1}_B$. Compute $\bar{c_j} = c_j - p^T A_j$
+(the reduced cost) $\forall j \in N$. If $\bar{c_j} \geq 0 \forall j$,
+stop: optimal.
+\item Compute $u = A^{-1}_B A_{\cdot j}$, $\forall j \in N$, such that
+$\bar{c_j} < 0$. If $u_i \leq 0 \forall i$, stop: unbounded.
+\item Compute $\lambda^* = \min \{\frac{x_i}{u_i} : i \in B$, $u_i > 0\}$.
+\item Determine $l \in B$ such that $\lambda^* = \frac{x_l}{u_l}$. Determine
+$\bar{B}= B\setminus \{l\} \cup \{j\}$.
+$x_{\bar{B}} = \{ x_i - \lambda^* u_i$, for all $i \in B\setminus \{l\}$,
+$x_j = \lambda^* \}$.
+\item Let $Q$ be the matrix from the previous observation.
+Then, $A^{-1}_{\bar{B}} = Q A^{-1}_B$.
+\end{enumerate}
 
 \subsection{Degeneracy and anticycling rules}
-:)
+(Primal) $\min \{c^T x \mid Ax = b, x \geq 0 \}$.\\
+$B$ is a basis, degenerate, i.e, $A^{-1}_B b \ngtr 0$, there is some components
+that are zero.
+
+What can happen, let $j \in N$, $\bar{c_j} > 0$. $\lambda^* = \max \{\lambda
+\in \mathbb{R}_+ \mid x^* + \lambda d \in \mathcal{P}\}$, where $d$ is the
+$j$-th non-basis direction.\\
+If some components are zero, $\lambda^*$ can be zero, and we cannot change our
+bfs. However, we can still have another basis representation, this can lead to
+a loop (cycle).
+
+\paragraph{Definition - degenerate pivot operation} Let $B$ be a basis.
+A pivot operation is called degenerate if the objective function value after
+the basis switch does not change.
+
+\paragraph{Lemma:} A pivot operation is degenerate $\iff \lambda^* = 0 \iff$
+the bfs $x^*$ does not change.
+
+\subparagraph{Proof:}
+
+$\lambda^* = 0 \rightarrow$ bfs does not change $x^* = x^* +
+\underbrace{\lambda^*}_{=0} d = x^*$.\\
+Suppose objective function does not change after the pivot. Then $c^T(x^* +
+\lambda^* d) = c^T x^* \rightarrow \lambda^* \underbrace{c^T d}_{\bar{c_j}} = 0
+\rightarrow \lambda^* \underbrace{\bar{c_j}}_{< 0} = 0 \rightarrow \lambda^* =
+0$.
+
+\paragraph{Observation:} For any deterministic pivot-rule (an algorithm that
+tells us which $j \in N$, $\bar{c_j} < 0$ to select and which pivot-row to
+select, in case it is not unique), either the SA terminates in finite time or
+it cycles through degenerate basis.
+
+\subparagraph{Proof:}
+We have almost
+$
+\begin{pmatrix}
+m \\
+n
+\end{pmatrix}$ possible basis. Either the SA visits each basis at most once or
+one basis $B$ is seen at least twice. Consider subsequence of basis
+$B \mapsto B_1 \mapsto \dots \mapsto B \rightarrow c^T(x^*_B) \geq 
+c^T(x^*_{B_i}) \geq \dots \geq c^(x^*_B)$, where $x^*_B$ is the bfs in
+$\mathbb{R}^n$ associated with $B \rightarrow c^T(x^*_{B_i}) = c^T(x^*_B)
+\underbrace{\rightarrow}_{\text{lemma}}$ we cycle through degenerate basis.\\
+
+\emph{We need anticycling rules}
+
+\paragraph{Definition - lexicographic order}
+Let $u, v \in \mathbb{R}^n$, $u <_lex v$ if there exists $k \in
+\{1, \dots, n\}$, such that $u_i = v_i$ $\forall i = 1, \dots, k-1$.
+
+\paragraph{Definition - lexicographic pivot rule}
+Let $B$ a basis and $T \in \mathbb{R}^{m+1 \times n+1}$ the tableu matrix.
+
+\begin{enumerate}
+\item Choose $j \in N$, $\bar{c_j} < 0$ arbitrarily.
+\item Among all rows $k$ such that $\frac{x^*_k}{\abs{A_{kj}}} = \lambda^* =
+\min \{\frac{x^*_i}{\abs{\bar{A_{ij}}}}$, choose one such that the row vector
+$\frac{T_k}{\abs{A_{kj}}}$ is minimal lexicographically.
+\end{enumerate}
+
+\paragraph{Theorem:} The SA with a lexicographic pivoting rule always
+terminates in finite time.
+
+\subparagraph{Proof:}
+Start with basis and bfs. $B = \{1, \dots, m\}$, then $\bar{A} = (I, \bar{A_N})
+\rightarrow$ every row $\bar{A_{i \cdot}} >_lex 0 \rightarrow T_{i \cdot} >_lex
+0$, $\forall i \geq 1$.
+
+\paragraph{Claim: In the course of pivoting $T_{i\cdot} >_lex 0$, $\forall
+i \geq 1$}
+
+\subparagraph{Proof:}
+todo.
 
 \end{document}
