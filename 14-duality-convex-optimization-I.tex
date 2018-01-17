@@ -20,10 +20,13 @@ g_m(x)
 \end{pmatrix}
 \in \R^m$. Let $D = \bigcap_{i=1}^m dom(g_i)$, $D \subseteq dom(f)$.\\
 Consider \\
-$f^* = \min\{f(x): g(x) \leq b\}$(*)\\
+\begin{equation}
+\label{eq:*}
+f^* = \min\{f(x): g(x) \leq b\}
+\end{equation}
 $b \in \R^m$ given. The function
 $Z: \R^m \mapsto \R$: $Z(\lambda) = \displaystyle \min_{x \in D} \{f(x) + 
-\lambda^T (g(x) -b)\}$ is called the lagrange function for (*).\\
+\lambda^T (g(x) -b)\}$ is called the lagrange function for~\ref{eq:*}.\\
 
 We want to maximize $Z(\lambda)$ to achieve $f^*$.
 
@@ -35,7 +38,7 @@ We want to maximize $Z(\lambda)$ to achieve $f^*$.
 
 \subparagraph{Proof:}
 \begin{enumerate}
-\item Let $x^*$ be optimal for (*), then $g_i(x^*) \leq b_i \forall i$\\
+\item Let $x^*$ be optimal for~\ref{eq:*}, then $g_i(x^*) \leq b_i \forall i$\\
 $Z(\lambda) \leq \underbrace{f(x^*)}_{f^*} + \underbrace{\lambda^T}_{\geq 0}
 (\underbrace{g(x^*) - b}_{\leq 0}) \leq f^*$
 \item Let $\lambda_1 , \lambda_2 \in \R^m$ and $\alpha \in (0,1)$. $\lambda =
@@ -59,13 +62,97 @@ dom(f)$, i.e., $\delta f(x) = \{s \in \R^n \mid s \text{ subgradient of } x\}$.
 
 \todo[inline]{add a figure here - check lecture annotations}
 
-\paragraph{Lemma}
+\paragraph{Lemma: Let $f$ be convex and continuous. $x^*$ is minimum of $f
+\iff \vec{0} \in \partial f(x^*)$.}
 
+\subparagraph{Proof:}
+$f(x) \geq f(x^*) \forall x \in dom(f) \iff f(x) - f(x^*) \geq 0 = 0^T (x -
+x^*)$.
 
+\paragraph{Remark: existence of subgradients}
+Let $f$ be continuous and convex. Then $\forall x_0 \in dom(f)$, $\partial
+f(x_0) \neq 0$ and $\forall d \in \R^m$ we have that $$\lim_{\epsilon\to 0}
+\frac{f(x_0 + \epsilon d) - f(x_0)}{\epsilon} = \sup \{h^T d \mid h \in
+\partial f(x_0)\}$$
 
 
 \subsection{The projection (sub) gradient algorithm}
-Not polytime: pseudo polytime algorithm.
+Not polytime: pseudo polytime algorithm.\\
+Easy version: you can use the gradient, but you can use (plug) any
+subgradient.\\
+
+\paragraph{Motivation:} compute $\displaystyle \max_{\lambda \geq 0}
+Z(\lambda)$ or directly~\ref{eq:*}. We want to show that both attains the same
+results, under some assumptions.
+
+$f* = \min \{f(x) \mid x \in Q \}$ and $x^*$ is a minimizer.
+
+\begin{itemize}
+\item $Q$ is convex, non-empty, compact
+\item $Q \subseteq dom(f)$
+\item $Q$ has diameter $D$, i.e, $|| x-y||_2 \leq D$ $\forall x, y \in Q$
+\end{itemize}
+
+\paragraph{Projection oracle:} input $y \in \R^n$, output $PO(y) \in Q$
+attaining
+$\min \{ \underbrace{||x-y||_2}_{ \text{strictly convex, projection is unique}}
+\mid x \in Q \}$.
+
+We know $||x - PO(y)|| \leq ||x-y|| \forall x \in Q$.\\
+
+$f$ is convex, (?)-continuous and differentiable on $dom(f)$:\\
+
+$\vec{0} \leq |f(x) -f(y)| \leq L ||x-y||$ $ \forall x, y \in dom(f)
+\rightarrow ||\nabla f(x) \leq L$ $\forall x \in dom(f)$.\\
+
+$\vec{0} =
+\abs{ \nabla f(x)^T (y-x) }
+\rightarrow y = \lambda \nabla f(x) + r$,
+$r \perp \nabla f(x)$.
+
+\subparagraph{Proof:}
+\todo[inline]{proof as homework}
+tips: $f(x) - f(x_t) \geq \nabla f(x_t)^T (x - x_t)$. play with: $x = \lambda
+\nabla f(x_t) + r^{\perp \nabla f(x)}$.
+
+\paragraph{Algorithm:}
+
+\begin{enumerate}
+\item Choose $\epsilon > 0$, $x_0 \in Q$. Set $\lambda = \frac{2\epsilon}{5L}$,
+$T = \lceil (\frac{5LD}{4\epsilon})^2 \rceil$. (Since it depends on the
+diameter, it is not polytime.)
+\item For $t = 0, \dots, T-1$:
+\subitem compute $y_{t+1} = x_t - \underbrace{\frac{\lambda}{||\nabla
+f(x_t)||}}_{\text{scale, walks in the negative direction}} \nabla f(x_t)$,
+$x_{t+1} = PO(y_{t+1})$.
+\item return best point $\bar{x} = \min \{f(x_t) \forall t\}$ that was
+generated.
+\end{enumerate}
+
+\paragraph{Theorem: $f(\bar{x}) - f^* \leq \epsilon$}
+\subparagraph{Proof:}
+$\norm{x_{t+1} - x^*}^2 = \norm{PO(y_{t+1}) - x^*}^2 \leq
+\norm{y_{t+1} - x^* }^2 = \norm{ x_t - \frac{\lambda}{\norm{\nabla f(x_t)}}
+\nabla f(x_t) - x^*}^2$
+$= \norm{x_t - x^*}^2 - 2\frac{\lambda \nabla f(x_t)^T} {\norm{\nabla f(x_t)}}
+(x_t - x^*) + \lambda^2 = \norm{x_t - x^*}^2 + \frac{2\lambda \nabla f(x_t)}
+{\norm{ \nabla f(x_t)}} (x^* - x_t) + \lambda^2$
+$\leq \norm{x_t - x^*} + \frac{2 \lambda}{\norm{\nabla f(x_t)}} (f(x^*) -
+f(x_t)) + \lambda^2$
+$\leq \norm{x_t -x^*}^2 + \frac{2\lambda}{L} (f^* - f(x_t)) + \lambda^2$
+$\rightarrow f(x_t) - f^* \leq \frac{L}{2 \lambda} (\norm{x_t - x^*}^2 - 
+\norm{x_{t+1} - x^*}^2) + \frac{L \lambda}{2}$
+$f(\bar{x}) - f^* \leq f(x_t) - f^*$
+[recursive part?]
+$\rightarrow T (f(\bar{x}) - f^*) \leq \frac{L}{2 \lambda} (\norm{x_0 -x^*}^2 - 
+\underbrace{\norm{x_{T} - x^*}^2}_{\geq 0 \rightarrow \text{dropped}}) + T 
+\frac{L\lambda}{2}$
+$\leq \frac{L}{2\lambda} D^2 + T \frac{L\lambda}{2} \rightarrow f(x) - f^* \leq
+\underbrace{\frac{L}{2\lambda T} D^2}_{=\frac{4\epsilon}{5}} +
+\underbrace{\frac{L \lambda}{2}}_{=\frac{\epsilon}{5}} = \epsilon$.
+
+\paragraph{Algorithm extends to subgradients}
+\todo[inline]{algorithm as homework}
 
 \subsection{Some further tool}
 
