@@ -10,8 +10,65 @@
 
 \subsection{The Lagrange function}
 
+\paragraph{Definition - Lagrange function}
+Let $f$ and $g_1, \dots, g_m$ continuous and convex functions. The vector $g(x)
+=
+\begin{pmatrix}
+g_1(x)\\
+\vdots\\
+g_m(x)
+\end{pmatrix}
+\in \R^m$. Let $D = \bigcap_{i=1}^m dom(g_i)$, $D \subseteq dom(f)$.\\
+Consider \\
+$f^* = \min\{f(x): g(x) \leq b\}$(*)\\
+$b \in \R^m$ given. The function
+$Z: \R^m \mapsto \R$: $Z(\lambda) = \displaystyle \min_{x \in D} \{f(x) + 
+\lambda^T (g(x) -b)\}$ is called the lagrange function for (*).\\
+
+We want to maximize $Z(\lambda)$ to achieve $f^*$.
+
+\paragraph{Lemma:}
+\begin{enumerate}
+\item $Z(\lambda) \leq f^* \forall \lambda \geq 0$ ($\lambda$ is a vector)
+\item $Z: \R^m_+ \mapsto \R$ is concave
+\end{enumerate}
+
+\subparagraph{Proof:}
+\begin{enumerate}
+\item Let $x^*$ be optimal for (*), then $g_i(x^*) \leq b_i \forall i$\\
+$Z(\lambda) \leq \underbrace{f(x^*)}_{f^*} + \underbrace{\lambda^T}_{\geq 0}
+(\underbrace{g(x^*) - b}_{\leq 0}) \leq f^*$
+\item Let $\lambda_1 , \lambda_2 \in \R^m$ and $\alpha \in (0,1)$. $\lambda =
+\alpha \lambda_1 + (1-\alpha)\lambda_2$\\
+Let $\hat{x} \in D$ be such that $Z(\lambda) = f(\hat{x}) + \lambda^T 
+(g(\hat{x}) - b)$\\
+In particular, $\forall i \in 1,2$: $Z(\lambda_i) \leq f(\hat{x}) + \lambda_i^T 
+(g(\hat{x}) - b) \rightarrow \alpha Z(\lambda_1) + (1-\alpha)Z(\lambda_2) \leq 
+\alpha (f(\hat{x}) + \lambda_1^T (g(\hat{x}) - b) + (1 -\alpha) (f(\hat{x}) + 
+\lambda_2^T (g(\hat{x}) - b)) = f(\hat{x}) + \underbrace{(\alpha \lambda_1 + 
+(1-\alpha)\lambda_2)^T}_{\lambda^T} (g(\hat{x}) - b) = Z(\lambda)$.
+\end{enumerate}
+
+\paragraph{How to determine $\displaystyle \max_{\lambda \geq 0} Z(\lambda)$?}
+Remember: $Z(\lambda)$ is concave!
+
+\paragraph{Definition - subgradient}
+Let $f$ be continuously and convex. Given $x \in dom(f)$, a vector $s \in \R^n$
+is called a \emph{subgradient} if $f(y) - f(x) \geq s^T(y-x)$ $\forall y \in
+dom(f)$, i.e., $\delta f(x) = \{s \in \R^n \mid s \text{ subgradient of } x\}$.
+
+\todo[inline]{add a figure here - check lecture annotations}
+
+\paragraph{Lemma}
+
+
+
+
 \subsection{The projection (sub) gradient algorithm}
+Not polytime: pseudo polytime algorithm.
+
 \subsection{Some further tool}
+
 \paragraph{Theorem:}
 Let $f_{1}, f_{2}, \dots, f_{m}$ be convex and twice differentiable functions. Let $D = \cap_{i = 1}^{m} dom (f_{i}) \neq \emptyset$.
 
