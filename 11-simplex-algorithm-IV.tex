@@ -151,7 +151,7 @@ $\mathbb{R}^n$ associated with $B \rightarrow c^T(x^*_{B_i}) = c^T(x^*_B)
 \emph{We need anticycling rules}
 
 \paragraph{Definition - lexicographic order}
-Let $u, v \in \mathbb{R}^n$, $u <_lex v$ if there exists $k \in
+Let $u, v \in \mathbb{R}^n$, $u <_{lex} v$ if there exists $k \in
 \{1, \dots, n\}$, such that $u_i = v_i$ $\forall i = 1, \dots, k-1$.
 
 \paragraph{Definition - lexicographic pivot rule}
@@ -169,13 +169,21 @@ terminates in finite time.
 
 \subparagraph{Proof:}
 Start with basis and bfs. $B = \{1, \dots, m\}$, then $\bar{A} = (I, \bar{A_N})
-\rightarrow$ every row $\bar{A_{i \cdot}} >_lex 0 \rightarrow T_{i \cdot} >_lex
-0$, $\forall i \geq 1$.
+\rightarrow$ every row $\bar{A_{i \cdot}} >_{lex} 0 \rightarrow T_{i \cdot}
+>{_lex} 0$, $\forall i \geq 1$.
 
-\paragraph{Claim: In the course of pivoting $T_{i\cdot} >_lex 0$, $\forall
+\paragraph{Claim: In the course of pivoting $T_{i\cdot} >_{lex} 0$, $\forall
 i \geq 1$}
 
 \subparagraph{Proof:}
-todo.
+
+Pick $j \in N$, $\bar{c_j} < 0$. Pick $k \in B$ st $\frac{T_k}{\bar{A_{kj}}}$
+lexicographically smallest.
+Start basis $\{1, \dots, m\}$, wlog:\\
+$T_{i\cdot} >_{lex} 0 \forall i \geq 1$.\\
+Claim: (exercise) Invariant property $T_{i\cdot} >_{lex} 0 \forall i \geq 1$.
+We know $\bar{c_j}<0$ and hence $T_{0\cdot} - \frac{\bar{c_j}}{\bar{A_{kj}}}
+\underbrace{T_{k\cdot}}_{\text{pivot row}} >_{lex} T_{0\cdot}$. So, no basis is
+visited twice.
 
 \end{document}
