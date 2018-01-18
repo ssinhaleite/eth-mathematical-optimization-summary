@@ -87,11 +87,6 @@ Let $d$ be the $j$-th non-basis direction:}
 \item if $d \ngeq 0$ (some components are smaller than zero),
 then $\lambda^* = \min \{\frac{x^*_i}{-d_i} \mid i \in B \text{ st } d_i < 0 \}
 = \max \{\lambda \geq 0 \mid x^* + \lambda d \in \mathcal{P} \}$.
-\item under previous assumption (2), let $k \in B$, such that
-$\lambda^* = \frac{x^*_k}{-d_k}$, where $d_k < 0$. Let $\bar{B} =
-B\setminus \{ k\} \cup \{j\}$:
-\subitem $\bar{B}$ is a basis.
-\subitem $x^* + \lambda^* d $ is the bfs associated with $\bar{B}$.
 \end{enumerate}
 
 \subparagraph{Proof:}
@@ -106,13 +101,32 @@ then $x^* + \lambda d \geq 0$, $\lambda \geq 0$. Then $x^* + \lambda d \in
 \lambda \leq \frac{x^*_i}{-d_i}$, $\forall i \in B$, such that $d_i < 0$,
 $\rightarrow \lambda^* = \max \{ \lambda > 0 \mid x^* + \lambda d
 \in \mathcal{P} \}$.
-\item $\bar{B}$ is a basis, $i \in \{1, \dots, n\} \rightarrow$ true,
-$|B| = n \rightarrow$ true. Show $A^{-1}_B$ exists (and has full row rank).\\
-\subitem $A_B$ is non singular $\iff A^{-1}_B A_{\bar{B}}$ is non singular.\\
+\end{enumerate}
+
+\paragraph{Theorem: Let $x^*$ be a bfs of $\mathcal{P}$ (which is not
+necessarily non-degenerate). Suppose that there exists an index $j \in N$ st
+$\bar{c_j} < 0$. Let $d$ be the $j$-th non basis direction. Assume that at
+least one entry of $d$ is strictly negative ($d < 0$). Let $k \in B$, be an
+index reaching the minimum in the definition of $\lambda^*$, i.e.,
+$\lambda^* = \frac{x^*_k}{-d_k} = \displaystyle \min_{i \in \{1, \dots, n\}}
+\frac{x_i}{-d_i}$. Let $\bar{B} = B\setminus \{ k\} \cup \{j\}$:}
+\begin{enumerate}
+\item $\bar{B}$ is a basis of $x^*$ w.r.t. to $\mathcal{P}$.
+\item $x^* + \lambda^* d $ is the bfs associated with $\bar{B}$.
+\end{enumerate}
+
+\subparagraph{Proof:}
+
+\begin{enumerate}
+\item Proof of $\bar{B}$ be a basis:
+\subitem $i \in \{1, \dots, n\} \rightarrow$ true
+\subitem $|B| = n \rightarrow$ true.
+\subitem Now, show $A^{-1}_B$ exists (and has full row rank).\\
+$A_B$ is non singular $\iff A^{-1}_B A_{\bar{B}}$ is non singular.\\
 Let $d$ be the $j$-th non-basis direction. $d_B = -A^{-1}_B A_{\cdot j}$,
 $d_k \leq 0$, so, $A^{-1}_B A_{\bar{B}}$ is non singular, because
 $(A^{-1}_B A_{\cdot j})_k \neq 0$.\\
-\subitem From previous prove, $\bar{B}$ is a basis.
+\item From previous proof, $\bar{B}$ is a basis.
 Define $y = x^* + \lambda^* d$. $\forall i \in N \setminus \{j\}$:
 $y_i = x^*_i + \lambda^* \underbrace{d_i}_{d_i = 0 \text{; } d_j = 1} = 0
 \rightarrow y_k = x^*_k + \lambda^* d_k = x^*_k + \frac{x^*_k}{-d_k} d_k = 0$.

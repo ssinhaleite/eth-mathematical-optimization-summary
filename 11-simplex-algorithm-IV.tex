@@ -15,10 +15,10 @@
 Mathematics is unchanged. Core: "elementary row operations".
 
 \paragraph{Definition (Elementary Row Operation): Given a matrix
-$A \in \mathbb{R}^{n \times m}$, the operation of adding a multiple of
+$A \in \mathbb{R}^{m \times n}$, the operation of adding a multiple of
 $\lambda \neq 0$ of rows $i$ to row $k$ is an elementart row operation (ERO).
 When $i=k$, we are doing a scale operation.}
-The resulting matrix $\bar{A} = Q \times A$, when $Q = I^{n\times m} + D$,
+The resulting matrix $\bar{A} = Q \times A$, when $Q = I^{m\times m} + D$,
 where $D_{k,i} = \lambda$ and $D_{r,s} = 0$ elsewhere.
 
 $ Q =
@@ -49,7 +49,7 @@ because $Q \times Q^{-1} = (Q_l \times \dots \times Q_1)(Q^{-1}_1 \times \dots
 \paragraph{Application to basis update: Let $\mathcal{P} = \{x \in
 \mathbb{R}^n \mid Ax \leq b, x \geq 0\}$. $A \in \mathbb{Q}^{m \times n}$ of
 full row rank.}
-Change basis takes in the worst case, $m$ row operations.
+Change the basis takes in the worst case, $m$ row operations.
 
 
 Assume basis $B \subseteq \{1, \dots, m\}$ is given, i.e, $|B| = m$, $A^{-1}_B$
@@ -75,7 +75,7 @@ $u = A^{-1}_B A_{\cdot j }$
 Where $e_i$ is the $i$-th unit vector in $\mathbb{R}^m$.
 
 \paragraph{Goal: apply a sequence of elementary rows operations to the matrix
-$A^{-1}_B A{\bar{B}}$, so the new matrix becomes the identity $I$.}
+$A^{-1}_B A_{\bar{B}}$, so the new matrix becomes the identity $I$.}
 
 For $i \neq l$: add $(\frac{-u_i}{u_l})$ times row $l$ to row $i$.\\
 Replace row $l$ by $\frac{1}{u_l}$ times row $l$.

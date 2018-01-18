@@ -158,30 +158,29 @@ property: $y^* = c^T_B A^{-1}_B$, and dual feasible implies $\bar{c} \geq 0$.
 \item We look into the matrix $A$, if $\bar{A_{ij}} \geq 0$ $\forall j \in N$
 then $\displaystyle \max_{y \in \mathcal{D}} y^{T} b = + \infty$
 \item Otherwise, $\lambda^* = \min \{\frac{-\bar{c_j}}{\bar{A_{ij}}} \mid
-\bar{A_{ij}} < 0$, $j \in N \}$ and $y^T = (y^*)^T - \lambda^* (A^{-1}_B)_i$ is
-feasible for the dual. $b^T y = b^T y^* - \lambda^* \bar{b_j}$.
-$B \setminus \{i\} \cup \{k\}$ is a new basis where $\lambda^* =
-\frac{-\bar{c_k}}{\bar{A_{ik}}}$ ($k$ is not in the basis).
+\bar{A_{ij}} < 0$, $j \in N \}$ and $(y^*)^T = (y^*)^T - \lambda^*
+(A^{-1}_B)_i$ is feasible for the dual. $b^T y = b^T y^* - \lambda^*
+\bar{b_j}$, i.e, $b^T y > b^T y^*$, where $\lambda^* = \frac{-\bar{c_k}}
+{\bar{A_{ik}}}$ ($k$ is not in the basis).\\
+$B \setminus \{i\} \cup \{k\}$ is a new basis.
 \end{itemize}
 
 \subparagraph{Proof:}
 Let $y^T = (y^*)^T - \lambda (A^{-1}_B)_i$ where $\lambda > 0$.
 $y^T A = (y^*)^T  A - \underbrace{\lambda}_{\geq 0}
 \underbrace{\bar{A_i}}_{\geq 0} \leq c^T$.
-
 In the otherwise case: $y^T A = (y^*)^T  A - \lambda^* A_i$. If $\bar{A_{ij}}
 \geq 0 \rightarrow y^T A \leq c_j$, otherwise, if $\bar{A_{ij}} < 0 \rightarrow
 y^T A \leq (y^*)^T A_{\cdot j} \frac{-\bar{c_j}}{-\bar{A_{ij}}} \bar{A_{ij}} =
 \underbrace{c^T_B A^{-1}_B A_{\cdot j}}_{y^*} +
 \underbrace{c_j - c^T_B A^{-1}_B A_{\cdot j}}_{\bar{c_j}} = c_j$.
-
 $B\setminus \{i\} \cup \{k\}$ being a basis is the same argument as in lecture
 8, pivoting-theorem.
 
 
 \subsubsection{The major simplex steps in the dual setting}
 \begin{enumerate}
-\item Choose a dual bfs in the dual setting
+\item Choose a dual bfs in the dual setting: $y^*$
 \item $\bar{b} = A^{-1}_B b$
 \item If $\bar{b} \geq 0$, stop: optimal
 \item Otherwise, let $i \in B$, $\bar{b_i} < 0$
@@ -190,6 +189,6 @@ $B\setminus \{i\} \cup \{k\}$ being a basis is the same argument as in lecture
 \mid \bar{A_{ij}} < 0$ $j \in N \}$ and an index $k \in N$, st $\lambda^* =
 \frac{-\bar{c_k}}{\bar{A_{ij}}}$.
 \item Swap indices and update solutions, $B = B\setminus \{i\} \cup \{k\}$, 
-$y^T = (y^*)^T - \lambda^* (A^{-1}_B)_i$.
+$(y^*)^T = (y^*)^T - \lambda^* (A^{-1}_B)_i$.
 \end{enumerate}
 \end{document}
