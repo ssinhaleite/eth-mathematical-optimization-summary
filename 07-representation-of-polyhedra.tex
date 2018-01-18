@@ -11,15 +11,15 @@ Definition: Let $\mathcal{P} = \{x \in \mathbb{R}^n \mid Ax \leq b\}$ be a
 polyhedron. $dim(\mathcal{P}) = n - dim(\{A_{i\cdot} \mid A_{i\cdot}x = b_i$, $
 \forall x \in \mathcal{P} \})$ (implicitly linearly independent equations).
 
-For $I \subseteq \{1, \dots, m\}$, $F = \{ x \in \mathcal{P} \mid A_{i\cdot} x = 
-b$, $\forall i \in I \}$ is a face of $\mathcal{P}$.
+For $I \subseteq \{1, \dots, m\}$, $F = \{ x \in \mathcal{P} \mid A_{i\cdot}
+x = b$, $\forall i \in I \}$ is a face of $\mathcal{P}$.
 Extreme case: $F = \emptyset$, $F = P$.\\
 
 Vertices are faces of dimension $0$. Edges are faces of dimension $1$. Facets 
 are faces of dimension $dim(\mathcal{P})-1$.\\
 
-When $b = 0$, $\mathcal{P}$ is a cone. A cone is \textbf{pointed} if it does not 
-contain a line.\\
+When $b = 0$, $\mathcal{P}$ is a cone. A cone is \textbf{pointed} if it does 
+not contain a line.\\
 
 For $\mathcal{P}$ and a point $y \in \mathcal{P}$, $\underbrace{rec}
 _{\text{recession}}(y, \mathcal{P}) = \{ d \in \mathbb{R}^n \mid y + \lambda d 
@@ -77,7 +77,7 @@ I(x)) = n-1$)}.\\
 For $\mathcal{P} = \{x \in \mathbb{R}^n \mid Ax \leq b \}$ an extreme ray of
 $\mathcal{P}$ is an extreme point of $rec(\mathcal{P})$.
 
-\paragraph{Remark: Extreme rays of $C$ are faces of $C$ with dimenstion $1$. 
+\paragraph{Remark: Extreme rays of $C$ are faces of $C$ with dimension $1$. 
 From now on, if $A \in Q^{m \times n}$, extreme rays are scaled to be integers 
 whose $gcd = 1$.}
 
@@ -105,10 +105,10 @@ $\rightarrow c^T(x +\lambda d) = c^T x + \lambda c^T d \xrightarrow[\lambda \to
 \infty]{} +\infty$.
 
 Conversely, $\displaystyle \max_{x \in \mathcal{P}} c^{T} x = +\infty$, shows 
-that exists an extreme ray. Write down a dual problem.
+that exists an extreme ray.
 \todo[inline]{homework}
 
-Consider that the dual $\min b^T y$, $st. A^T y = c$, $y \geq 0$ has no
+Consider now that the dual $\min b^T y$, $st. A^T y = c$, $y \geq 0$ has no
 solution. We know that $\min 0^T y$, $st. A^T y = c$, $y \geq 0$ is infeasible.
 Consider now the cone problem: $\max c^T x$, $st. Ax \leq 0$. This problem is
 either unbounded or infeasible. $0$ is feasible for our problem, so,
@@ -148,7 +148,7 @@ satisfies $Ax = \underbrace{Ay}_{\leq b} + \underbrace{Az}_{\leq 0} \leq b
 "$\mathcal{P} \subseteq \mathcal{Q}$"\\
 Assume the statement is not true. This implies there exists $z \in \mathcal{P}$
 and $z \notin \mathcal{Q}$.
-Then, $R = \max \sum_{i = 1}^{k} 0\lambda_i + \sum_{j=1}^{r} 0 \mu_j$, $st.
+Then, $R = \min \sum_{i = 1}^{k} 0\lambda_i + \sum_{j=1}^{r} 0 \mu_j$, $st.
 \sum_{i = 1}^{k} \lambda_i v^i + \sum_{j = 1}^{r} \mu_j w^j = z$, $\lambda_i$,
 $\mu_j \geq 0$, $\mathtt{1}^T \lambda = 1$. If $z \notin \mathcal{Q}$, $R$ is
 infeasible, so the dual problem is unbounded. The dual of $R$ is
@@ -186,9 +186,9 @@ $}.
 
 What if $\mathcal{P}$ does contain a line? e.g. $\{x \in \mathbb{R}^2 \mid x_2
 \geq 1 \} =
-\underbrace{\begin{pmatrix} 0 \\ 1 \end{pmatrix} + cone (\begin{Bmatrix} 0 \\ 1
-\end{Bmatrix})}_{\text{pointed}} + cone(\underbrace{\{ \begin{pmatrix} 1 \\ 0
-\end{pmatrix}, \begin{pmatrix} 1 \\ 0 \end{pmatrix} \}}_{\in ker(A)})$
+\underbrace{\begin{pmatrix} 0 \\ 1 \end{pmatrix}}_{\text{convex hull of vertices, just one vertex in this case}} + cone (\begin{Bmatrix} 0 \\ 1
+\end{Bmatrix}) + cone(\{ \begin{pmatrix} 1 \\ 0
+\end{pmatrix}, \begin{pmatrix} -1 \\ 0 \end{pmatrix} \})$
 
 This idea can be generalized: Let $\mathcal{P} = \{x \in \mathbb{R}^n \mid Ax
 \leq b \}$ for $A \in \mathbb{Q}^{m \times n}$, $b \in \mathbb{Q}^m$ be a
