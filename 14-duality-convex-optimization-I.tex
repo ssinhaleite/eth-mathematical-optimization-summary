@@ -157,7 +157,51 @@ $\leq \frac{L}{2\lambda} D^2 + T \frac{L\lambda}{2} \rightarrow f(x) - f^* \leq
 \subsection{Some further tool}
 
 \paragraph{Theorem:}
-Let $f_{1}, f_{2}, \dots, f_{m}$ be convex and twice differentiable functions. Let $D = \cap_{i = 1}^{m} dom (f_{i}) \neq \emptyset$.
+Let $f_{1}, f_{2}, \dots, f_{m}$ be convex and twice continuous differentiable
+functions. Let $D = \cap_{i = 1}^{m} dom (f_{i}) \neq \emptyset$. Let $f(x) =
+\max \{f_1(x), \dots, f_i(x) \}$. (subfunctions are differentiable, but in some
+points of $f(x)$ we need subgradients.)
+
+\emph{For $x \in D, I(x) = \{i \in \{1, \dots, m\}, f(x) = f_i(x)\}$. Then,
+$\partial f(x) = conv(\nabla f_i(x) \mid i \in I(x))$.}
+
+\subparagraph{Proof:}
+\begin{itemize}
+\item "$conv(\nabla f_i(x) \mid i \in I(x)) \subseteq \partial f(x)$"
+\subitem Take $x_0 \in D$. $\forall i \in I(x_0) \rightarrow f_i(x) - f_i(x_0)
+\geq \nabla f_i^T(x-x_0) \forall x \in D$.\\
+$f(x) - f(x_0) \underbrace{\geq}_{i \in I(x_0)} f_i(x) - f_i(x_0)$ ($f(x_0) =
+f_i(x_0)$, but $f(x) \geq f_i(x)$)\\
+$\geq \nabla f_i(x_0)^T(x-x_0) \forall x \in D$\\
+$\rightarrow \nabla f_i(x_0) \in \partial f(x_0)$ $\forall i \in I(x_0)
+\rightarrow conv(\nabla f_i(x_0) \mid i \in I(x_0)) \subseteq \partial f(x_0)$.
+\item "$\partial f(x) \subseteq conv(\nabla f_i(x) \mid i \in I(x))$"
+\subitem Let $x_0 \in D$. Conversely, suppose $\exists s \in \R^n$, $s \in
+\partial f(x)$, $s \notin conv(\nabla f_i(x) \mid i \in I(x))$.\\
+From the separate hyperplane theorem, $\exists d \in \R^n$, $p \in \R$ such
+that $d^T h \leq p$, $\forall h \in conv(\nabla f_i(x) \mid i \in I(x))$,
+\begin{equation}
+\label{eq:*}
+d^T s > p
+\end{equation}
+$f_i(x_0) < f(x_0) \forall i \notin I(x_0)$. $\exists \alpha > 0$ such that
+$f(x_0 + \epsilon d) = f_k(x_0 + \epsilon d)$ for some $k \in I(x_0)$ and
+$\forall 0 \leq \epsilon \leq \alpha$.
+\begin{enumerate}
+\item $f(x) - f(x_0) \geq s^T (x-x_0) \underbrace{=}_{x = x_0 + \epsilon d}
+\epsilon d^T s$
+\item $f(x) - f(x_0) = f_k(x_0 + \epsilon d) - f_k(x_0) = \nabla f_k(x_0)^T
+(\epsilon d) + r(\epsilon)$, where $r(\epsilon)$ is a taylor approximation and
+quadratic, i.e, $r(\epsilon) = \sigma(\epsilon^2) \rightarrow r(\epsilon) \leq
+\beta \epsilon^2$ for some constant $\beta$.
+\end{enumerate}
+We know from~\ref{eq:*}: $\delta = d^T s - d^T \nabla f_k(x_0) > 0$.\\
+From (1) and (2): $\epsilon d^T s \leq \epsilon d^T \nabla f_k(x_0) +
+r(\epsilon) \rightarrow \epsilon \delta \leq r(\epsilon) \leq \beta
+\epsilon^2$, which is a contradiction when $\epsilon \to 0$.
+\end{itemize}
+
+
 
 
 \end{document}
