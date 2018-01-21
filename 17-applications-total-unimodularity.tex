@@ -81,7 +81,139 @@ Thus, $\sum_{i \in J_1} M_{ij} - \sum_{i \in J_2} M_{ij}
 \in \{0, \pm 1\}^{\abs{A}}$.
 \end{enumerate}
 
-
 \paragraph{Maximum stable set problem}
+
+\paragraph{Given $G=(V,E)$, find largest $w \subseteq V$ st no two vertices in
+$w$ are adjacent (no edges between them).}
+
+\subparagraph{Example:}
+\begin{figure}[!h]
+  \label{fig:projection}
+  \centering
+    \includegraphics[width=0.3\textwidth]{imgs/graph-stable-set.png}
+\end{figure}
+
+Some stable sets are: $\{v_1\}$, $\{v_1, v_2\}$, $\{v_1, v_4\}$, and the
+maximum for this graph contains two vertices.
+
+\paragraph{We can model this problem as an ILP}
+\begin{equation*}
+\begin{aligned}
+& \max
+& & \sum_{v \in V} x v \\
+& \text{st}
+& & xv + xw \leq 1, \; \forall \{v, w\} \in E
+& & xv \in \{0,1\} \; \forall v \in V
+\end{aligned}
+\end{equation*}
+
+\paragraph{Proposition: If $G$ is bipartite, then the optimal solution to
+$\max \{ \sum_{v \in V} xv \mid xv + xw \leq 1, xv \in [0,1] \}$ is integral.}
+
+\subparagraph{Proof (idea):}
+\begin{figure}[!h]
+  \label{fig:projection}
+  \centering
+    \includegraphics[width=0.6\textwidth]{imgs/bipartite-integral-solution.jpg}
+\end{figure}
+
+
+\paragraph{Definition - (s-t)-flow}
+Let $D=(V,A)$ be a digraph. For each $a \in A$, $Ca \in \R_+$ is the \emph{arc 
+capacity}. Let $s, t \in V$ with $s \neq t$. A function $x: V \mapsto \R$ is an
+\emph{(s-t)-flow} if:
+\begin{enumerate}
+\item flow conservation constraint: $\sum_{a \in \delta^+(v)} xa = \sum_{a \in
+\delta^-(v)} xa$, $\forall v \in V \setminus \{s, t\}$, i.e., the amount of
+flow arriving in an intermediate node must be the same amount that comes out.
+\item $0 \leq xa \leq Ca$ $\forall a \in A$
+\end{enumerate}
+
+The value of $x$ is $val(x) = \sum_{a \in \delta^+(s)} xa - \sum_{a \in
+\delta^-(s)} xa$.
+
+\todo[inline]{check figure on notes}
+
+\paragraph{Theorem: If $Ca \in \Z_+$ for all $a \in A$, then the max value of
+an (s-t)-flow can be chosen to be integral.}
+\subparagraph{Proof:}
+Let $M$ be the node-arc incidence matrix of $D$. Define $b \in \R^{|V|}$ as 
+$b_i =
+\left\{
+  \begin{array}{ll}
+  0 \text{ if } i \in V \setminus \{s,t\} \\
+  ||c||_1 \text{ if } i \in \{s, t\}
+  \end{array}
+\right.$
+
+A max (s-t)-flow is the solution to $\max \{ \sum_{e \in \delta^+(s)} xe - 
+\sum_{e \in \delta^-(s)} xe$ st $-b \leq M \leq b$ and $0 \leq x \leq c\}$
+
+\paragraph{Definition - cut} Let $D=(V,A)$ and $w \subseteq V$. The set
+$\delta^+(w)$ is a cut (induced by $w$). An (s-t)-cut satisfies $s \in w$ and
+$t \notin w$. Given $c \in \R^{|A|}_+$, the capacity of $\delta^+(w)$ is
+$c(\delta^+(w)) = \sum_{a \in \delta^+(w)} Ca$.
+
+\todo[inline]{example on notes}
+
+\paragraph{Lemma: Given $D=(V,A)$ and $s \neq t \in V$, let $x$ be an
+(s-t)-flow. For every $w \subseteq V$ st $s \in w$, $t \notin w$, $val(x) =
+\sum_{a \in \delta^+(w)} xa - \sum_{a \in \delta^-(w)} xa$.}
+Intuitively, $val(x)$ is (flow out of $w$) - (flow into $w$).
+
+\subparagraph{Proof}
+proof requires some manipulation of definition
+\todo[inline]{prove!}
+
+\paragraph{Lemma: Let $x$ be an (s-t)-flow and $\delta^+(w)$ an (s-t)-cut. Then
+$val(x) \leq c(\delta^+(w))$, i.e., the amount of the flow is at most the
+amount of the cut.}
+
+\subparagraph{Proof:}
+$val(x) = \sum_{a \in \delta^+(w)} xa - \sum_{a \in \delta^-(w)} xa$, each $x$
+is bounded by $0$ and $Ca$, then $$val(x) \leq \sum_{a \in \delta^+(w)} Ca -
+\sum_{a \in \delta^-(w)} 0 = c(\delta^+(w))$.
+
+\paragraph{Theorem: Let $D=(V,A)$, $s \neq t \in V$, $c \in \R^{|A|}_+$. The
+max value of an (s-t)-flow is equal to the min capacity of an (s-t)-cut.}
+
+\subparagraph{Proof:}
+The max flow can be solved using:
+\begin{equation*}
+\begin{aligned}
+& \max
+& & z\\
+& \text{st}
+& & x(\delta^-(v)) - x(\delta^+(v)) = 0, \; \forall v \in V \setminus \{s,t\}
+& & x(\delta^-(s)) - x(\delta^+(s)) + z = 0
+& & x(\delta^-(t)) - x(\delta^+(t)) - \bar{z} = 0
+& & xa \leq Ca, \; \forall a \in A
+& & xa \geq 0
+\end{aligned}
+\end{equation*}
+
+The dual LP is 
+\begin{equation*}
+\begin{aligned}
+& \min
+& & \sum_{a \in A} Caya\\
+& \text{st}
+& & ya + zv - zu \geq 0, \; \forall a = (u,v) \in A
+& & zs = 0
+& & zt = 1
+& & ya \geq 0, \; \forall a \in A
+\end{aligned}
+\end{equation*}
+
+let $x^*$ be an optimal solution to LP (max). From previous lemma, it is enough
+to find an (s-t)-cut satisfying $val(x^*) = c(\delta^+(w))$. Let $(y^*, z^*)$
+be an optimal dual solution and set $w = \{ u \in V \mid zu^* > 0\}$.\\
+If $a=(u,v) \in \delta^+(w)$ then $zu^* > 0$, $zv^* \leq 0$.
+
+$y^* a > 0$. By complementary slackness $x^* a = Ca$ if $a =(u,v) \in \delta^-
+(w)$, then $y^*a + zv - zu > 0$, so, $x^*a = 0$. Thus, $val(x) = \sum_{a \in 
+\delta^+(w)} xa - \sum_{a \in \delta^-(w)} xa = \sum_{a \in \delta^+(w)} Ca -
+\sum_{a \in \delta^-(w)} 0 = c(\delta^+(w))$.
+
 
 \end{document}
