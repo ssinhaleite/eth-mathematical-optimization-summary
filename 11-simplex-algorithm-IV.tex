@@ -136,17 +136,18 @@ select, in case it is not unique), either the SA terminates in finite time or
 it cycles through degenerate basis.
 
 \subparagraph{Proof:}
-We have almost
+We have at most
 $
 \begin{pmatrix}
 m \\
 n
-\end{pmatrix}$ possible basis. Either the SA visits each basis at most once or
-one basis $B$ is seen at least twice. Consider subsequence of basis
-$B \mapsto B_1 \mapsto \dots \mapsto B \rightarrow c^T(x^*_B) \geq 
-c^T(x^*_{B_i}) \geq \dots \geq c^(x^*_B)$, where $x^*_B$ is the bfs in
-$\mathbb{R}^n$ associated with $B \rightarrow c^T(x^*_{B_i}) = c^T(x^*_B)
-\underbrace{\rightarrow}_{\text{lemma}}$ we cycle through degenerate basis.\\
+\end{pmatrix}$ possible basis. Either the SA visits each basis at most once
+(finite termination of the algorithm) or one basis $B$ is seen at least twice.
+Consider subsequence of basis $B \mapsto B_1 \mapsto \dots \mapsto B
+\rightarrow c^T(x^*_B) \geq c^T(x^*_{B_i}) \geq \dots \geq c^T(x^*_B)$, where
+$x^*_B$ is the bfs in $\mathbb{R}^n$ associated with $B \rightarrow
+c^T(x^*_{B_i}) = c^T(x^*_B) \underbrace{\rightarrow}_{\text{lemma}}$ we cycle
+through degenerate basis.\\
 
 \emph{We need anticycling rules}
 
@@ -170,7 +171,7 @@ terminates in finite time.
 \subparagraph{Proof:}
 Start with basis and bfs. $B = \{1, \dots, m\}$, then $\bar{A} = (I, \bar{A_N})
 \rightarrow$ every row $\bar{A_{i \cdot}} >_{lex} 0 \rightarrow T_{i \cdot}
->{_lex} 0$, $\forall i \geq 1$.
+>_{lex} 0$, $\forall i \geq 1$.
 
 \paragraph{Claim: In the course of pivoting $T_{i\cdot} >_{lex} 0$, $\forall
 i \geq 1$}
