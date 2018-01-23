@@ -11,8 +11,8 @@
 \subsection{The Lagrange function}
 
 \paragraph{Definition - Lagrange function}
-Let $f$ and $g_1, \dots, g_m$ continuous and convex functions. The vector $g(x)
-=
+Let $f$ and $g_1, \dots, g_m$ continuous and convex functions. Let the vector
+$g(x) =
 \begin{pmatrix}
 g_1(x)\\
 \vdots\\
@@ -25,14 +25,15 @@ Consider \\
 f^* = \min\{f(x): g(x) \leq b\}
 \end{equation}
 $b \in \R^m$ given. The function
-$Z: \R^m \mapsto \R$: $Z(\lambda) = \displaystyle \min_{x \in D} \{f(x) + 
-\lambda^T (g(x) -b)\}$ is called the lagrange function for~\ref{eq:*}.\\
+$Z: \R^m_+ \mapsto \R$: $Z(\lambda) = \displaystyle \min_{x \in D} \{f(x) + 
+\lambda^T (g(x) -b)\}$ is called the lagrange function for~\ref{eq:*}
+(the previous minimization problem).\\
 
 We want to maximize $Z(\lambda)$ to achieve $f^*$.
 
 \paragraph{Lemma:}
 \begin{enumerate}
-\item $Z(\lambda) \leq f^* \forall \lambda \geq 0$ ($\lambda$ is a vector)
+\item $Z(\lambda) \leq f^*$ $\forall \lambda \geq 0$ ($\lambda$ is a vector)
 \item $Z: \R^m_+ \mapsto \R$ is concave
 \end{enumerate}
 
@@ -90,7 +91,7 @@ $f* = \min \{f(x) \mid x \in Q \}$ and $x^*$ is a minimizer.
 \begin{itemize}
 \item $Q$ is convex, non-empty, compact
 \item $Q \subseteq dom(f)$
-\item $Q$ has diameter $D$, i.e, $|| x-y||_2 \leq D$ $\forall x, y \in Q$
+\item $Q$ has diameter $D > 0$, i.e, $|| x-y||_2 \leq D$ $\forall x, y \in Q$
 \end{itemize}
 
 \paragraph{Projection oracle:} input $y \in \R^n$, output $PO(y) \in Q$
@@ -100,10 +101,10 @@ $\min \{ \underbrace{||x-y||_2}_{ \text{strictly convex, projection is unique}}
 
 We know $||x - PO(y)|| \leq ||x-y|| \forall x \in Q$.\\
 
-$f$ is convex, (?)-continuous and differentiable on $dom(f)$:\\
+$f$ is convex, Lipschitz-continuous and differentiable on $dom(f)$:\\
 
 $\vec{0} \leq |f(x) -f(y)| \leq L ||x-y||$ $ \forall x, y \in dom(f)
-\rightarrow ||\nabla f(x) \leq L$ $\forall x \in dom(f)$.\\
+\rightarrow ||\nabla f(x)|| \leq L$ $\forall x \in dom(f)$.\\
 
 $\vec{0} =
 \abs{ \nabla f(x)^T (y-x) }
@@ -152,6 +153,9 @@ $\leq \frac{L}{2\lambda} D^2 + T \frac{L\lambda}{2} \rightarrow f(x) - f^* \leq
 \underbrace{\frac{L \lambda}{2}}_{=\frac{\epsilon}{5}} = \epsilon$.
 
 \paragraph{Algorithm extends to subgradients}
+The projection gradient method naturally extends to using subgradients $s$ such
+that $||s||_2 \leq L$ instead of gradients.
+
 \todo[inline]{algorithm as homework}
 
 \subsection{Some further tool}
@@ -159,7 +163,7 @@ $\leq \frac{L}{2\lambda} D^2 + T \frac{L\lambda}{2} \rightarrow f(x) - f^* \leq
 \paragraph{Theorem:}
 Let $f_{1}, f_{2}, \dots, f_{m}$ be convex and twice continuous differentiable
 functions. Let $D = \cap_{i = 1}^{m} dom (f_{i}) \neq \emptyset$. Let $f(x) =
-\max \{f_1(x), \dots, f_i(x) \}$. (subfunctions are differentiable, but in some
+\max \{f_1(x), \dots, f_m(x) \}$. (subfunctions are differentiable, but in some
 points of $f(x)$ we need subgradients.)
 
 \emph{For $x \in D, I(x) = \{i \in \{1, \dots, m\}, f(x) = f_i(x)\}$. Then,
@@ -200,8 +204,5 @@ From (1) and (2): $\epsilon d^T s \leq \epsilon d^T \nabla f_k(x_0) +
 r(\epsilon) \rightarrow \epsilon \delta \leq r(\epsilon) \leq \beta
 \epsilon^2$, which is a contradiction when $\epsilon \to 0$.
 \end{itemize}
-
-
-
 
 \end{document}

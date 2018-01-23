@@ -26,35 +26,38 @@ The node-arc incidence matrix of $D=(V,A)$ is the matrix
 $M \in \{0, \pm1\}^{\abs{V} \times \abs{A}}$, where $M_{ia} = 
 \left\{
   \begin{array}{ll}
-    1 & \text{if } (i,j) = a \\
-    -1 & \text{if } (j,i) = a \\
+    1 & \text{if } (i,j) = a \in A\\
+    -1 & \text{if } (j,i) = a \in A \\
     0 & \text{else}
   \end{array}
 \right.$
-
-\paragraph{Definition}
-Let $w \subseteq V$.\\
-$\delta^+(w) = \{(i,j) \in A, i \in w, j \notin w \}$.\\
-$\delta^-(w) = \{(i,j) \in A, i \notin w, j \in w \}$.\\
-\subparagraph{Example:}
-\begin{figure}[!h]
-  \label{fig:projection}
-  \centering
-    \includegraphics[width=0.3\textwidth]{imgs/graph-definition.png}
-\end{figure}
-
-$\delta^+(w) = \{a1,a2\}$.\\
-$\delta^-(w) = \emptyset$.\\
 
 \paragraph{Definition - Node-edge incidence matrix}
 The node-edge incidence matrix of an undirected graph $G=(V,E)$ is
 $M \in \{0,1\}^{\abs{V} \times \abs{E}}$, where $M_{ve} = 
 \left\{
   \begin{array}{ll}
-    1 & \text{if } e = (v,w)\\
+    1 & \text{if } e = (v,w) \in E\\
     0 & \text{else}
   \end{array}
 \right.$
+
+\paragraph{Definition -  Edge sets $\delta^+$, $\delta^-$ and $\delta$}
+Let $D=(V,A)$ and Let $W \subseteq V$.\\
+$\delta^+(W) = \{(i,j) \in A, i \in W, j \notin W \}$, i.e., all the arcs
+leaving $W$.\\
+$\delta^-(W) = \{(i,j) \in A, i \notin W, j \in W \}$, i.e, all the arcs
+entering $W$.\\
+Let $G=(V,E)$ and $i \in V$. Then, $\delta(i) = \{(i,j) \in E\}$.
+
+\subparagraph{Example:}
+\begin{figure}[!h]
+  \centering
+    \includegraphics[width=0.2\textwidth]{imgs/graph-definition.png}
+\end{figure}
+
+$\delta^+(w) = \{a1,a2\}$.\\
+$\delta^-(w) = \emptyset$.\\
 
 \paragraph{Theorem: The following matrices are TU:}
 \begin{enumerate}
@@ -79,16 +82,16 @@ Since $G$ is bipartite, $V = V_1 \cup V_2$. Let $J_1 = J \cap V_1$ and
 $J_2 = J \cap V_2$.
 Thus, $\sum_{i \in J_1} M_{ij} - \sum_{i \in J_2} M_{ij}
 \in \{0, \pm 1\}^{\abs{A}}$.
+\item \todo[inline]{exercise}
 \end{enumerate}
 
 \paragraph{Maximum stable set problem}
 
-\paragraph{Given $G=(V,E)$, find largest $w \subseteq V$ st no two vertices in
-$w$ are adjacent (no edges between them).}
+\paragraph{Given $G=(V,E)$, find largest $W \subseteq V$ st no two vertices in
+$W$ are adjacent (no edges between them).}
 
 \subparagraph{Example:}
 \begin{figure}[!h]
-  \label{fig:projection}
   \centering
     \includegraphics[width=0.3\textwidth]{imgs/graph-stable-set.png}
 \end{figure}
@@ -99,42 +102,48 @@ maximum for this graph contains two vertices.
 \paragraph{We can model this problem as an ILP}
 \begin{equation*}
 \begin{aligned}
-& \max
-& & \sum_{v \in V} x v \\
-& \text{st}
-& & xv + xw \leq 1, \; \forall \{v, w\} \in E
-& & xv \in \{0,1\} \; \forall v \in V
+& \max      & & \sum_{v \in V} x_v \\
+& \text{st} & & x_v + x_w \leq 1, \; \forall \{v, w\} \in E\\
+& & & x_v \in \{0,1\} \; \forall v \in V
 \end{aligned}
 \end{equation*}
 
 \paragraph{Proposition: If $G$ is bipartite, then the optimal solution to
-$\max \{ \sum_{v \in V} xv \mid xv + xw \leq 1, xv \in [0,1] \}$ is integral.}
+$\max \{ \sum_{v \in V} x_v \mid x_v + x_w \leq 1, x_v \in [0,1] \}$ is
+integral.}
 
-\subparagraph{Proof (idea):}
+\subparagraph{Proof}
+This follows since the constraint matrix is the node-edge incidence matrix of
+an undirected bipartite graph.\\
+Let $A$ be the node-edge incidence matrix of a bipartite graph $G$. There is a
+$1-1$ correspondece between the integral points in $P = \{x \in \R^n_+ \mid
+A^T x \leq e\}$ where $e ={1}^{|E|}$ and the stable sets of $G$. Therefore,
+optimizing over $P$, which is defined by a TU matrix, yields an integral
+solution.
+
 \begin{figure}[!h]
-  \label{fig:projection}
+  \label{fig:bipartite-solution}
   \centering
-    \includegraphics[width=0.6\textwidth]{imgs/bipartite-integral-solution.jpg}
+    \includegraphics[width=0.5\textwidth]{imgs/bipartite-integral-solution.jpg}
 \end{figure}
 
-
 \paragraph{Definition - (s-t)-flow}
-Let $D=(V,A)$ be a digraph. For each $a \in A$, $Ca \in \R_+$ is the \emph{arc 
-capacity}. Let $s, t \in V$ with $s \neq t$. A function $x: V \mapsto \R$ is an
+Let $D=(V,A)$ be a digraph. For each $a \in A$, $c_a \in \R_+$ is the \emph{arc
+capacity}. Let $s, t \in V$ with $s \neq t$. A function $x: A \mapsto \R$ is an
 \emph{(s-t)-flow} if:
 \begin{enumerate}
-\item flow conservation constraint: $\sum_{a \in \delta^+(v)} xa = \sum_{a \in
-\delta^-(v)} xa$, $\forall v \in V \setminus \{s, t\}$, i.e., the amount of
+\item flow conservation constraint: $\sum_{a \in \delta^+(v)} x_a = \sum_{a \in
+\delta^-(v)} x_a$, $\forall v \in V \setminus \{s, t\}$, i.e., the amount of
 flow arriving in an intermediate node must be the same amount that comes out.
-\item $0 \leq xa \leq Ca$ $\forall a \in A$
+\item $0 \leq x_a \leq c_a$ $\forall a \in A$
 \end{enumerate}
 
-The value of $x$ is $val(x) = \sum_{a \in \delta^+(s)} xa - \sum_{a \in
-\delta^-(s)} xa$.
+The value of $x$ is $val(x) = \sum_{a \in \delta^+(s)} x_a - \sum_{a \in
+\delta^-(s)} x_a$.
 
 \todo[inline]{check figure on notes}
 
-\paragraph{Theorem: If $Ca \in \Z_+$ for all $a \in A$, then the max value of
+\paragraph{Theorem: If $c_a \in \Z_+$ for all $a \in A$, then the max value of
 an (s-t)-flow can be chosen to be integral.}
 \subparagraph{Proof:}
 Let $M$ be the node-arc incidence matrix of $D$. Define $b \in \R^{|V|}$ as 
@@ -146,33 +155,36 @@ $b_i =
   \end{array}
 \right.$
 
-A max (s-t)-flow is the solution to $\max \{ \sum_{e \in \delta^+(s)} xe - 
-\sum_{e \in \delta^-(s)} xe$ st $-b \leq M \leq b$ and $0 \leq x \leq c\}$
+A max (s-t)-flow is the solution to $\max \{ \sum_{e \in \delta^+(s)} x_e - 
+\sum_{e \in \delta^-(s)} x_e$ st $-b \leq Mx \leq b$ and $0 \leq x \leq c\}$.
+As M is TU, the optimal solution to the problem is integral.
 
-\paragraph{Definition - cut} Let $D=(V,A)$ and $w \subseteq V$. The set
-$\delta^+(w)$ is a cut (induced by $w$). An (s-t)-cut satisfies $s \in w$ and
-$t \notin w$. Given $c \in \R^{|A|}_+$, the capacity of $\delta^+(w)$ is
-$c(\delta^+(w)) = \sum_{a \in \delta^+(w)} Ca$.
+\paragraph{Definition - cut} Let $D=(V,A)$ and $W \subseteq V$. The set
+$\delta^+(W)$ is a cut (induced by $W$). An (s-t)-cut satisfies $s \in W$ and
+$t \notin W$. Given $c \in \R^{|A|}_+$, the capacity of $\delta^+(W)$ is
+$c(\delta^+(W)) = \sum_{a \in \delta^+(W)} c_a$.
 
 \todo[inline]{example on notes}
 
 \paragraph{Lemma: Given $D=(V,A)$ and $s \neq t \in V$, let $x$ be an
-(s-t)-flow. For every $w \subseteq V$ st $s \in w$, $t \notin w$, $val(x) =
-\sum_{a \in \delta^+(w)} xa - \sum_{a \in \delta^-(w)} xa$.}
-Intuitively, $val(x)$ is (flow out of $w$) - (flow into $w$).
+(s-t)-flow. For every $W \subseteq V$ st $s \in W$, $t \notin W$, $val(x) =
+\sum_{a \in \delta^+(W)} x_a - \sum_{a \in \delta^-(W)} x_a$.}
+Intuitively, $val(x)$ is (flow out of $W$) - (flow into $W$).
 
 \subparagraph{Proof}
 proof requires some manipulation of definition
 \todo[inline]{prove!}
 
-\paragraph{Lemma: Let $x$ be an (s-t)-flow and $\delta^+(w)$ an (s-t)-cut. Then
-$val(x) \leq c(\delta^+(w))$, i.e., the amount of the flow is at most the
+\paragraph{Lemma: Let $x$ be an (s-t)-flow and $\delta^+(W)$ an (s-t)-cut. Then
+$val(x) \leq c(\delta^+(W))$, i.e., the amount of the flow is at most the
 amount of the cut.}
 
 \subparagraph{Proof:}
-$val(x) = \sum_{a \in \delta^+(w)} xa - \sum_{a \in \delta^-(w)} xa$, each $x$
-is bounded by $0$ and $Ca$, then $$val(x) \leq \sum_{a \in \delta^+(w)} Ca -
-\sum_{a \in \delta^-(w)} 0 = c(\delta^+(w))$.
+Let $x$ be an (s-t)-flow. Let $W \subseteq V$ be such that $s \in W$ and
+$t \notin W$. The capacity of the (s-t)-cut induced by $W$ is $c(\delta^+(W))$.
+$val(x) = \sum_{a \in \delta^+(W)} x_a - \sum_{a \in \delta^-(W)} x_a$, each
+$x$ is bounded by $0$ and $c_a$, then $val(x) \leq \sum_{a \in \delta^+(W)} c_a
+- \sum_{a \in \delta^-(W)} 0 = c(\delta^+(W))$.
 
 \paragraph{Theorem: Let $D=(V,A)$, $s \neq t \in V$, $c \in \R^{|A|}_+$. The
 max value of an (s-t)-flow is equal to the min capacity of an (s-t)-cut.}
@@ -181,39 +193,35 @@ max value of an (s-t)-flow is equal to the min capacity of an (s-t)-cut.}
 The max flow can be solved using:
 \begin{equation*}
 \begin{aligned}
-& \max
-& & z\\
-& \text{st}
-& & x(\delta^-(v)) - x(\delta^+(v)) = 0, \; \forall v \in V \setminus \{s,t\}
-& & x(\delta^-(s)) - x(\delta^+(s)) + z = 0
-& & x(\delta^-(t)) - x(\delta^+(t)) - \bar{z} = 0
-& & xa \leq Ca, \; \forall a \in A
-& & xa \geq 0
+& \max & & z\\
+& \text{st} & & x(\delta^-(v)) - x(\delta^+(v)) = 0, \; \forall v \in V
+\setminus \{s,t\}\\
+& & & x(\delta^-(s)) - x(\delta^+(s)) + z = 0\\
+& & & x(\delta^-(t)) - x(\delta^+(t)) - \bar{z} = 0 \\
+& & & x_a \leq c_a, \; \forall a \in A \\
+& & & x_a \geq 0, \; \forall a \in A
 \end{aligned}
 \end{equation*}
 
 The dual LP is 
 \begin{equation*}
 \begin{aligned}
-& \min
-& & \sum_{a \in A} Caya\\
-& \text{st}
-& & ya + zv - zu \geq 0, \; \forall a = (u,v) \in A
-& & zs = 0
-& & zt = 1
-& & ya \geq 0, \; \forall a \in A
+& \min & & \sum_{a \in A} c_a y_a\\
+& \text{st} & & y_a + z_v - z_u \geq 0, \; \forall a = (u,v) \in A \\
+& & & z_s = 0 \\
+& & & z_t = 1 \\
+& & & y_a \geq 0, \; \forall a \in A
 \end{aligned}
 \end{equation*}
 
 let $x^*$ be an optimal solution to LP (max). From previous lemma, it is enough
-to find an (s-t)-cut satisfying $val(x^*) = c(\delta^+(w))$. Let $(y^*, z^*)$
-be an optimal dual solution and set $w = \{ u \in V \mid zu^* > 0\}$.\\
-If $a=(u,v) \in \delta^+(w)$ then $zu^* > 0$, $zv^* \leq 0$.
+to find an (s-t)-cut satisfying $val(x^*) = c(\delta^+(W))$. Let $(y^*, z^*)$
+be an optimal dual solution and set $w = \{ u \in V \mid z_u^* > 0\}$.\\
+If $a=(u,v) \in \delta^+(W)$ then $z_u^* > 0$, $z_v^* \leq 0$.
 
-$y^* a > 0$. By complementary slackness $x^* a = Ca$ if $a =(u,v) \in \delta^-
-(w)$, then $y^*a + zv - zu > 0$, so, $x^*a = 0$. Thus, $val(x) = \sum_{a \in 
-\delta^+(w)} xa - \sum_{a \in \delta^-(w)} xa = \sum_{a \in \delta^+(w)} Ca -
-\sum_{a \in \delta^-(w)} 0 = c(\delta^+(w))$.
-
+$y^*_a > 0$. By complementary slackness $x^*_a = c_a$ if $a =(u,v) \in \delta^-
+(W)$, then $y^*_a + z_v - z_u > 0$, so, $x^*_a = 0$. Thus, $val(x) = \sum_{a
+\in \delta^+(W)} x_a - \sum_{a \in \delta^-(W)} x_a = \sum_{a \in \delta^+(W)}
+c_a - \sum_{a \in \delta^-(W)} 0 = c(\delta^+(W))$.
 
 \end{document}

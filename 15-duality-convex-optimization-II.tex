@@ -9,16 +9,17 @@
 \section{Convex Optimization Duality II}
 \subsection{KKT theorem - optimal certificate}
 \paragraph{Theorem: Let $f, g_{1}, \dots, g_{m}$ be convex and twice
-differentiable functions. Let $dom(f) \supset \cap_{i = 1}^{m} dom (g_{i})$.}
+differentiable functions. Let $dom(f) \supseteq \cap_{i = 1}^{m} dom (g_{i})$.}
 
 \subparagraph{Slater condition: $\exists \bar{x}$ such that $ g( \bar{x} ) < b$
-(for all components). Let $Q = \{ x = g(x) \leq b \}$ }
+(for all components).}
 
-$x^{*}$ minimizes $f \leftrightarrow \exists \lambda^{*}_{1}, \dots,
+Let $Q = \{ f(x) = g(x) \leq b \}$.
+$x^{*} \in Q$ minimizes $f \iff \exists \lambda^{*}_{1}, \dots,
 \lambda^{*}_{m} \geq 0$ such that:
 \begin{itemize}
-\item $\lambda^{*}_{i} = 0 \forall i \notin I(x^{*})$
-\item $\nabla f(x^{*}) + \sum \lambda^{*}_{i} \nabla g_{i}(x^{*}) = 0$
+\item $\lambda^{*}_{i} = 0 \forall i \notin I(x^{*}) = \{j: g_i(x^*) = b_i\}$
+\item $\nabla f(x^{*}) + \sum_{i=1}^m \lambda^{*}_{i} \nabla g_{i}(x^{*}) = 0$
 \end{itemize}
 
 \subparagraph{Proof}
@@ -50,9 +51,9 @@ g_{i}(x^{*}) \underbrace{=}_{\text{by dividing by $0$}} \nabla f(x^{*}) +
 \nabla f(x^{*}) + \sum_{i \in I(x^{*})} \lambda_{i}^{*} \nabla g_{i}(x^{*})$
 and $ \lambda_{i}^{*} = 0 \forall i \in I(x^{*})$.
 
-\subparagraph{Remark: The KKT point is $x^{*}$ such that $\nabla f(x^{*} +
+\subparagraph{Remark: The KKT point is $x^{*}$ such that $\nabla f(x^{*}) +
 \sum_{i=1}^{m} \lambda_{i}^{*} \nabla g_{i}(x^{*})$ minimizes
-$f + \sum_{i =1 }^{m} (g_{i}(x) - b_{i})$ over $D$.}
+$f + \sum_{i=1}^{m} \lambda_{i}^{*} (g_{i}(x) - b_{i})$ over $D$.}
 
 \subsection{Duality for convex optimization problems}
 

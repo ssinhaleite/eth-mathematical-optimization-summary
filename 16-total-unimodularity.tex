@@ -18,15 +18,15 @@ P is integral if the minimal faces (vertices) are integers, i.e, $v^{i} \in
 \mathbb{Z}^{n}$
 
 \subparagraph{Fact from linear algebra - Cramer's rule}
-$A \in \mathbb{Q}^{m \times n}$, regular, $b \in \mathbb{Q}^{m}$. $Ax = b 
-\rightarrow \forall i = 1, dots, n$, $x_{i} = \frac{det[A^{i}}{det[A]}$, where
-$A^{i} = A_{\cdot l} \forall l \in \{1, \dots, n \} \setminus \{i\}$, $A^{i}
-_{\cdot i} = b$.
+$A \in \mathbb{Q}^{n \times n}$, regular, $b \in \mathbb{Q}^{n}$. $Ax = b 
+\iff x = A^{-1}b \iff$ $\forall i = 1, \dots, n$, $x_{i} = \frac{det(A^{i})}
+{det(A)}$, where $A^{i} = A_{\cdot l}$ $\forall l \in \{1, \dots, n \} 
+\setminus \{i\}$, $A^{i}_{\cdot i} = b$.
 
 \paragraph{Definition - unimodular}
 $A \in \mathbb{Z}^{m \times n}$ of full row rank is unimodular if the
-determinant of every basis of $A$ ($mxn$ regular submatrix) is equal to
-$\pm 1$.
+determinant of every basis of $A$ ($m \times n$ regular submatrix) is equal to
+$\pm 1$. A matrix $A \in \Z^{m \times m}$ of full row rank is unimodular if $det(A) = \pm 1$.
 
 \paragraph{Definition - totally unimodular}
 $A \in \mathbb{Z}^{m \times n}$ is called totally unimodular (TU) if every
@@ -60,8 +60,8 @@ $\begin{bmatrix}
 \end{bmatrix}$ is 2.
 \end{itemize}
 
-\paragraph{Exercises}
-\begin{itemize}
+\paragraph{Propositions}
+\begin{enumerate}
 \item $A$ is TU $\leftrightarrow [AI]$ is unimodular
 \item $A$ is TU $\leftrightarrow$
 $\begin{bmatrix}
@@ -71,12 +71,17 @@ I \\
 -I \\
 \end{bmatrix}$ is TU
 \item $A$ is TU $\leftrightarrow A^{T}$ is TU
-\end{itemize}
+\end{enumerate}
+
+\subparagraph{Proofs:}
+\begin{enumerate}
+\item add proof.
+\end{enumerate}
 
 \paragraph{Theorem - Unimodular}
 Let $A \in \mathbb{Z}^{m \times n}$ of full row rank. $A$ is unimodular if and
-only if the family of polyhedra $P(b) = \{ x \in \mathbb{R}^{n} \mid Ax = b \}$
-is integral $\forall b \in \mathbb{Z}^{m}$ such that $P(b) \neq \emptyset$.
+only if the family of polyhedra $P(b) = \{ x \in \mathbb{R}^{n}_+ \mid Ax = b
+\}$ is integral $\forall b \in \mathbb{Z}^{m}$ such that $P(b) \neq \emptyset$.
 
 \subparagraph{Proof}
 \begin{itemize}
@@ -85,15 +90,16 @@ is integral $\forall b \in \mathbb{Z}^{m}$ such that $P(b) \neq \emptyset$.
 P(b)$. $x^{*} = (x^{*}_{B}, x^{*}_{N})$ for basis B, $x^{*}_{B} = A^{-1}_{B}b$,
 $x^{*}_{N} = 0$.\\
 $det[A_{B}] = \pm 1$ (because A is unimodular). From Cramer's rule $A_{B} \dot
-x^{*}_{B} = b$, $x^{*}_{B}$ is integral.
+x^{*}_{B} = b$, $x^{*}_{B}$ is integral. Hence, $x$ has integer entries.
+Therefore, all extreme points of $P(b)$ are integral, i.e., $P(b)$ is integral.
 
 \item direction "$\leftarrow$", Assume $x^{*}$ is integral. Suppose $P(b)$ is
 integral, $\forall b \in \mathbb{Z}^{m}$ such that $P(b) \neq \emptyset$. Let
-$B \subseteq \{1, \dots, n\}$ be a basis. We want to show $det A_{B} \in \{-1,
+$B \subseteq \{1, \dots, n\}$ be a basis. We want to show $det(A_{B}) \in \{-1,
 +1\}$.
-Let $b = A_{B}z + \underbrace{e_{i}}_{ith unit vector}$, where $z$ is integer
-($z \in \mathbb{Z}^{m}$ such that $z + A^{-1}_{B} e_{i} \geq 0$. Consider
-$P(b)$ and the extreme point $(x^{*}_{B}, x^{*}_{N})$, $x^{*}_{B} =
+Let $b = A_{B}z + \underbrace{e_{i}}_{\text{$i$-th unit vector}}$, where $z$ is
+integer ($z \in \mathbb{Z}^{m}$) such that $z + A^{-1}_{B} e_{i} \geq 0$.
+Consider $P(b)$ and the extreme point $(x^{*}_{B}, x^{*}_{N})$, $x^{*}_{B} =
 A^{-1}_{B}b = z + A^{-1}_{B} e_{i}$ which by assumption is feasible for $P(b)$
 by $z + A^{-1}_{B} e_{i} \geq 0$. $z + A^{-1}_{B} e_{i} \in \mathbb{Z}^{m}
 \rightarrow A^{-1}_{B} e_{i} \in \mathbb{Z}^{m} \rightarrow A^{-1}_{B}$ is
@@ -106,10 +112,7 @@ polyhedra $P(b) = \{ x \in \mathbb{R}^{n} \mid Ax \leq b \}$ is integral
 $\forall b \in \mathbb{Z}^{m}$ such that $P(b) \neq \emptyset$.
 
 \subparagraph{Proof}
-$A$ is TU $\leftrightarrow \begin{bmatrix}
-A & I\\
- & -I\\
-\end{bmatrix}$ unimodular.\\
+We know $A$ is TU $\iff [A,I]$ unimodular.\\
 $P(b) = \{x \in \mathbb{R}^{n} \mid Ax \leq b \}$. Extreme points of $P(b)$ are
 in 1-1-correspondence with extreme points in $\{(x,y) \mid Ax + Iy = b, y \geq
 0 \}$. From previous proof result, this result follows.
@@ -117,7 +120,8 @@ in 1-1-correspondence with extreme points in $\{(x,y) \mid Ax + Iy = b, y \geq
 \paragraph{Theorem - combination property} $A \in \mathbb{Z}^{m \times n}$ is
 TU $\leftrightarrow$ for every subset $J$ of $\{1, \dots, n\}$ we can partition
 $J$ into $J_{1}$ and $J_{-1}$ such that $\mid \sum_{j \in J} A_{ij} -
-\sum_{j \in J_{-1}} A_{ij} \mid$ $\leq 1$ $\forall i \in \{1, \dots, m\}$.
+\sum_{j \in J_{-1}} A_{ij} \mid$ $\leq 1$(result vector with entries equals to
+$0, +1 and -1)$ $\forall i \in \{1, \dots, m\}$.
 
 \subparagraph{Proof:}
 \begin{itemize}

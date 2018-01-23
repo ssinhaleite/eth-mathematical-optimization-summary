@@ -12,7 +12,7 @@
 
 \subsection{Convex optimization}
 \paragraph{Basic properties}
-$f(x^*) = \displaystyle \min_{x \in Q} f(x)$, $f$ convex function, $Q$ convex
+$f* = \displaystyle \min_{x \in Q} f(x)$, $f$ convex function, $Q$ convex
 set, $Q \subseteq dom(f)$, $f^*$ is the optimal solution.
 
 \emph{Remember: to identify optimal solutions, we need to evaluate conditions
@@ -22,27 +22,36 @@ set, $Q \subseteq dom(f)$, $f^*$ is the optimal solution.
 minimizer $\iff \nabla f(x^*)^T (y-x^*) \geq 0$, $\forall y \in Q$.}
 
 \subparagraph{Proof:}
-$x^* \in Q$ satisfies $\nabla f(x^*)^T (y-x^*) \geq 0$, $\forall y \in Q$, then
-$f(y) \geq f(x^*) + \nabla f(x^*)^T (y-x^*) \geq f(x^*)$, $\forall y \in Q$.
-Conversely, assume $f(x^*) = f^*$ and suppose $\exists y \in Q$ st $\nabla
+\begin{itemize}
+\item "$\leftarrow$":
+\subitem $x^* \in Q$ satisfies $\nabla f(x^*)^T (y-x^*) \geq 0$, $\forall y
+\in Q$, then $\underbrace{f(y) \geq f(x^*) + \underbrace{\nabla f(x^*)^T (y-x^*)}_{\geq 0}}_{\text{$f$ convex and diff'ble}} \geq f(x^*)$,
+$\forall y \in Q$, thus $x^*$ is a minimizer.
+\item "$\rightarrow$":
+\subitem Assume $f(x^*) = f^*$ and suppose $\exists y \in Q$ st $\nabla 
 f(x^*)^T (y-x^*) < 0$.\\
-$\phi \mathbb{R} \mapsto \mathbb{R}$, $\phi(\lambda) = f(\lambda y +
+$\phi: \mathbb{R} \mapsto \mathbb{R}$, $\phi(\lambda) = f(\lambda y +
 (1-\lambda)x^*)$. $\phi$ is convex.\\
-$\phi'(\lambda) = \nabla f(\lambda y + (1-\lambda)x^*)$.\\
+$\phi'(\lambda) = \nabla f(\lambda y + (1-\lambda)x^*)^T (y-x^*)$.\\
 $\phi'(0) = \nabla f(x^*)^T(y-x^*) \underbrace{< 0}_{\text{by assumption}}$.\\
-$\exists \lambda > 0$ such that $\phi)\lambda) < \phi(0)$, this is a
+$\exists \lambda > 0$ such that $\phi(\lambda) < \phi(0)$, this is a
 contradiction.
+\end{itemize}
 
 \paragraph{Lemma: $f$ continuously differentiable on $dom(f)$. $x^* \in dom(f)$
 attains $f^* \iff \nabla f(x^*) = 0$.}
 
 \subparagraph{Proof:}
-if $x^* \in dom(f)$ and $\nabla f(x^*) = 0$, then, $\forall y \in dom(f)$,
-$f(y) \geq f(x^*)+ \nabla f(x^*)^T (y-x^*) = f(x^*)$.\\
-Conversely, suppose $x^* \in dom(f)$ attains $f^*$. Choose some positive number
+\begin{itemize}
+\item "$\leftarrow$":
+\subitem if $x^* \in dom(f)$ and $\nabla f(x^*) = 0$, then,
+$\forall y \in dom(f)$, $f(y) \geq f(x^*)+ \nabla f(x^*)^T (y-x^*) = f(x^*)$.\\
+\item "$\rightarrow$":
+\subitem Suppose $x^* \in dom(f)$ attains $f^*$. Choose some positive number
 $t > 0$ such that $y = x^* - t \nabla f(x^*) \in dom(f)$.\\
 From previous lemma, $0 \leq \nabla f(x^*)^T(y-x^*) = -t \underbrace{||\nabla
 f(x^*)||^2}_{\rightarrow 0} \leq 0$.
+\end{itemize}
 
 \paragraph{Lemma: Let $f_1, \dots, f_m$: be convex functions.
 Let $D = \bigcap^m_{i=1} dom(f_i) \subseteq \R^n$. $f(x) = \max \{f_1(x),
@@ -64,7 +73,7 @@ $\forall x,y \in D$: $f(\lambda x + (1-\lambda)y)
 $i =1, \dots, m\}
 = \lambda \max\{f_i(x)$: $i =1, \dots, m\} + (1-\lambda) \max \{f_i(y)$: $i =1,
 \dots, m \}
-=\lambda f(x) + (1-\lambda f(y)$
+=\lambda f(x) + (1-\lambda) f(y)$
 
 \paragraph{Definition: strongly convexity \emph{(not strictly convexity)}}
 $f: dom(f) \mapsto \R$ is strongly convex with modulus $\sigma > 0$, if
@@ -72,13 +81,17 @@ $\forall \lambda \in (0,1)$ and $x, y \in dom(f)$: $f(\lambda x + (1-\lambda)y)
 + \frac{\sigma}{2} \lambda(1-\lambda) || y - x||^2 \leq \lambda f(x) +
 (1-\lambda)f(y)$.
 
-\paragraph{Remark: Let $f$ be continuously differentiable on $dom(f)$.
-Then $f$ is strongly convex with modulus $\sigma \iff f(y) \geq f(x) + \nabla
-f(x)^T (y-x) + \frac{\sigma}{2} ||y-x||^2$ $\forall x, y \in dom(f)$.
-Then, $f$ is strongly convex with modulus $\sigma \iff \nabla^2 f(x)
-\geq \sigma I$}
+\paragraph{Remark:}
+\begin{itemize}
+\item Let $f$ be continuously differentiable on $dom(f) \neq
+\emptyset$ convex. Then $f$ is strongly convex with modulus $\sigma \iff f(y)
+\geq f(x) + \nabla f(x)^T (y-x) + \frac{\sigma}{2} ||y-x||^2$ $\forall x, y
+\in dom(f)$.
+\item If $f$ is strongly convex with modulus $\sigma \iff \nabla^2 f(x) \geq
+\sigma I$, i.e., $\nabla^2 f(x) - \sigma I \geq 0$ (PSD).
+\end{itemize}
 Example: $f(x) = ||x||^2$ is strongly convex with modulus $2$ (diagonal of
-Hessian Matrix is $2$.
+Hessian Matrix is $2$).
 
 \paragraph{Remember:}
 Hessian Matrix is a square matrix of second order partial derivatives.\\
@@ -124,7 +137,7 @@ Goal: find $x^* \in dom(f)$ such that $\nabla f(x^*) = 0$.
 (There are many situation where this is not easy to find.)\\
 Develop an iterative scheme:\\
 
-Aapproximate functions: $x \mapsto \nabla f(x_t) + \nabla^2 f(x_t)(x-x_t)$\\
+Approximate functions: $x \mapsto \nabla f(x_t) + \nabla^2 f(x_t)(x-x_t)$\\
 Now, we set this function to be zero:\\
 $\nabla f(x_t) + \nabla^2 f(x_t)(x-x_t) = 0 \iff x_{t+1} = x_t + \delta t$.\\
 $\delta t = -[\nabla^2 f(x_t)]^{-1} \nabla f(x_t)$\\
@@ -141,10 +154,12 @@ $x_{t+1} = x_t + \delta t$
 
 
 \paragraph{Theorem: $f(x_t) - f^* \leq \frac{2 \sigma^3}{L^2}
-(\frac{1}{2})^(2^{T+1}$}
+(\frac{1}{2})^{2^{T+1}}$, i.e, under the above assumptions, the Newton method
+converges quadratically to the optimal value $f^*$, provided that we start
+close enough ($||\nabla f(x_0)||_2 \leq \frac{\sigma^2}{L}$)}
 
 \subparagraph{Proof:}
-We know $f(y) \leq \underbrace{f(x_t) + \nabla f(x_t)^T(y-x_t) +
+We know $f(y) \geq \underbrace{f(x_t) + \nabla f(x_t)^T(y-x_t) +
 \frac{\sigma}{2} ||y - x_t||^2}_{= g(y)}$ $\forall y \in dom(f)$.\\
 $g(y)$ is strictly convex and attains its minimum at
 $y^* = x_t - \frac{1}{\sigma} \nabla f(x_t)$.\\
@@ -168,9 +183,8 @@ nabla norm}} || \delta t|| ds$\\
 $= \int_0^1 L s ||\delta t||^2 ds$ \\
 $= \frac{L}{2} || \delta t||^2 = \frac{L}{2} || \underbrace{\nabla^2
 f(x_t)^{-1} \nabla f(x_t)}_{\text{definition of $\delta t$}} ||^2$\\
-$\underbrace{\leq}_{\text{lemma 3}} \frac{L}{2 \sigma^3} ||\nabla f(x_t)||^2$\\
+$\underbrace{\leq}_{\text{lemma 3(?)}} \frac{L}{2 \sigma^3} ||\nabla f(x_t)||^2$\\
 $\rightarrow f(x_t) - f^* \leq \frac{1}{2 \sigma} ||\nabla f(x_t)||^2 \leq
 \frac{2 \sigma^3}{L^2} (\frac{1}{2})^{2^{T+1}}$.
-
 
 \end{document}
