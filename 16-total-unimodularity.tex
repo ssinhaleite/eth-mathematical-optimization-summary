@@ -20,8 +20,9 @@ P is integral if the minimal faces (vertices) are integers, i.e, $v^{i} \in
 \subparagraph{Fact from linear algebra - Cramer's rule}
 $A \in \mathbb{Q}^{n \times n}$, regular, $b \in \mathbb{Q}^{n}$. $Ax = b 
 \iff x = A^{-1}b \iff$ $\forall i = 1, \dots, n$, $x_{i} = \frac{det(A^{i})}
-{det(A)}$, where $A^{i} = A_{\cdot l}$ $\forall l \in \{1, \dots, n \} 
-\setminus \{i\}$, $A^{i}_{\cdot i} = b$.
+{det(A)}$, where $A^{i} = A^i_{\cdot l}$ $\forall l \in \{1, \dots, n \} 
+\setminus \{i\}$, $A^{i}_{\cdot i} = b$, i.e, $A^i$ is the matrix formed by
+replacing the $i$-th column of A by the column vector $b$.
 
 \paragraph{Definition - unimodular}
 $A \in \mathbb{Z}^{m \times n}$ of full row rank is unimodular if the
@@ -49,7 +50,7 @@ $\begin{bmatrix}
 contain the submatrix 
 $\begin{bmatrix}
 \pm 1 & \pm 1 \\
-\pm 1 & \pm -1  \\
+\pm 1 & -1  \\
 \end{bmatrix}$
 \item $A \in \{0,1\}^{3 \times n}$ is not always TU, for instance, determinant
 of 
@@ -75,7 +76,11 @@ I \\
 
 \subparagraph{Proofs:}
 \begin{enumerate}
-\item add proof.
+\item \todo[inline]{add proof}
+\item \todo[inline]{add proof}
+\item if $A$ is TU, then every square submatrix of $A$ has determinant $0, \pm
+1$. Since $det(A) = det(A^T)$, every square submatrix of $A^T$ has also
+determinant $0, \pm 1$.
 \end{enumerate}
 
 \paragraph{Theorem - Unimodular}
@@ -108,7 +113,7 @@ integral $\rightarrow det(A_{B}) \in \{-1, +1\}$.
 
 \paragraph{Theorem - Totally Unimodular}
 Let $A \in \mathbb{Z}^{m \times n}$. $A$ is TU if and only if the family of
-polyhedra $P(b) = \{ x \in \mathbb{R}^{n} \mid Ax \leq b \}$ is integral
+polyhedra $P(b) = \{ x \in \mathbb{R}^{n}_+ \mid Ax \leq b \}$ is integral
 $\forall b \in \mathbb{Z}^{m}$ such that $P(b) \neq \emptyset$.
 
 \subparagraph{Proof}
@@ -120,8 +125,8 @@ in 1-1-correspondence with extreme points in $\{(x,y) \mid Ax + Iy = b, y \geq
 \paragraph{Theorem - combination property} $A \in \mathbb{Z}^{m \times n}$ is
 TU $\leftrightarrow$ for every subset $J$ of $\{1, \dots, n\}$ we can partition
 $J$ into $J_{1}$ and $J_{-1}$ such that $\mid \sum_{j \in J} A_{ij} -
-\sum_{j \in J_{-1}} A_{ij} \mid$ $\leq 1$(result vector with entries equals to
-$0, +1 and -1)$ $\forall i \in \{1, \dots, m\}$.
+\sum_{j \in J_{-1}} A_{ij} \mid = {0, -1, +1}$, i.e., result vector with
+entries equals to $0, +1 and -1$ $\forall i \in \{1, \dots, m\}$.
 
 \subparagraph{Proof:}
 \begin{itemize}
