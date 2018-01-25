@@ -11,15 +11,20 @@
 \subsection{knapsack problem}
 \paragraph{Definition - knapsack problem}
 
-Given a set $C = \{ c_{1}, \dots, c_{n} \} \subseteq \mathbb{Z}_{+} \setminus \{ 0\}$ (values) and $A = \{a_{1}, \dots, a_{n} \subseteq \mathbb{Z}_{+} \setminus \{ 0\} \}$ (weights), $a_{0} \in \mathbb{Z}_{+} \setminus \{ 0\}, a_{0} \geq a_{i} \forall i$.
+Given a set $C = \{ c_{1}, \dots, c_{n} \} \subseteq \mathbb{Z}_{+} \setminus
+\{ 0\}$ (values) and $A = \{a_{1}, \dots, a_{n} \subseteq \mathbb{Z}_{+}
+\setminus \{ 0\} \}$ (weights), $a_{0} \in \mathbb{Z}_{+} \setminus \{ 0\},
+a_{0} \geq a_{i} \forall i$.
 
-$\gamma(k, a_{0}) = \{ \max \sum_{i =1}^{k} c_{i} x_{i} \mid \sum_{i=1}^{k} a_{i}x_{i} \leq a_{0}, x \in \{0,1\}^{k} \}$ is a (binary) knapsack problem. (If $x \in \mathbb{Z}_{+}^{k}$, then it is a integer knapsack problem).
+$\gamma(k, a_{0}) = \{ \max \sum_{i =1}^{k} c_{i} x_{i} \mid \sum_{i=1}^{k}
+a_{i}x_{i} \leq a_{0}, x \in \{0,1\}^{k} \}$ is a (binary) knapsack problem.
+(If $x \in \mathbb{Z}_{+}^{k}$, then it is a integer knapsack problem).
 
 Dual:
-$\alpha(k, c_{0}) = \{ \min \sum_{i =1}^{k} a_{i} x_{i} \mid \sum_{i=1}^{k} c_{i}x_{i} \geq c_{0}, x \in \{0,1\}^{k} \}$
+$\alpha(k, c_{0}) = \{ \min \sum_{i =1}^{k} a_{i} x_{i} \mid \sum_{i=1}^{k}
+c_{i}x_{i} \geq c_{0}, x \in \{0,1\}^{k} \}$
 
 \paragraph{A k-cursive algorithm}
-
 \[
   \gamma(1, a_{0})=\begin{cases}
                0, a_{1} > a_{0}\\
@@ -27,7 +32,8 @@ $\alpha(k, c_{0}) = \{ \min \sum_{i =1}^{k} a_{i} x_{i} \mid \sum_{i=1}^{k} c_{i
             \end{cases}
 \]
 
-$\gamma(k, a_{0}) = max\{\gamma(k-1, a_{0}), \gamma(k-1, a_{0} - a_{k}) + c_{k}\}$
+$\gamma(k, a_{0}) = max\{\gamma(k-1, a_{0}), \gamma(k-1, a_{0} - a_{k}) +
+c_{k}\}$
 
 The number of iterations for a given $a_{0}$ is $\mathcal{O}(n \times a_{0})$.
 
@@ -39,11 +45,16 @@ For the dual knapsack problem:
             \end{cases}
 \]
 
-$\alpha(k, c_{0}) = mix\{\alpha(k-1, c_{0}), \alpha(k-1, c_{0} - c_{k}) + a_{k}\}$
+$\alpha(k, c_{0}) = mix\{\alpha(k-1, c_{0}), \alpha(k-1, c_{0} - c_{k}) +
+a_{k}\}$
 
-\paragraph{Corollary} The knapsack problem can be solved in time $\mathcal{O}(n \times a_{0})$ and the dual version in time $\mathcal{O}(n \times c_{0}) = \mathcal{O}(n^{2} \times max\{c_{i}: i = \{1, \dots, n\}\})$
+\paragraph{Corollary} The knapsack problem can be solved in time
+$\mathcal{O}(n \times a_{0})$ and the dual version in time
+$\mathcal{O}(n \times c_{0}) = \mathcal{O}(n^{2} \times max\{c_{i}: i =
+\{1, \dots, n\}\})$
 
-\paragraph{Notation} For numbers $d_{1}, \dots, d_{k}$, $d_{max} = max\{d_{i}: i =\{1, \dots, k\} \}$
+\paragraph{Notation} For numbers $d_{1}, \dots, d_{k}$, $d_{max} = max\{d_{i}:
+i =\{1, \dots, k\} \}$
 
 \subsection{Connections primal/dual knapsack}
 
@@ -57,25 +68,89 @@ Then:
 \item (ii) $\sum c_{i}x_{i}^{*} = \gamma(k, a_{0})$
 \end{itemize}
 
-Consider the dual: $\min \{\sum_{i=1}^{k} a_i x_{i} \mid \sum_{i=1}^{k} c_{i}x_{i} \geq \gamma(k, a_{0})\}$, $x^{*}$ is feasible for the dual, $\leq \sum a_{i}x_{i}^{*} \leq a_{0}$.
+Consider the dual: $\min \{\sum_{i=1}^{k} a_i x_{i} \mid \sum_{i=1}^{k}
+c_{i} x_{i} \geq \gamma(k, a_{0})\}$, $x^{*}$ is feasible for the dual,
+$\leq \sum a_{i}x_{i}^{*} \leq a_{0}$.
 
-\paragraph{Lemma} Let $\mathbb{A}$ be an algorithm for computing $\alpha(k, c_{0}) \forall k$ and $c_{0}$. With "polynomial" many calls of $\mathbb{A}$ we can compute $\gamma(k, a_{0})$.
+\paragraph{Lemma} Let $\mathbb{A}$ be an algorithm for computing
+$\alpha(k, c_{0}) \forall k$ and $c_{0}$. With "polynomial" many calls of
+$\mathbb{A}$ we can compute $\gamma(k, a_{0})$.
 
 \subparagraph{Proof:}
-$\gamma(k, a_{0}) = \max c^{T}x, a^{T}x \leq a_{0}, x \in \{0,1\}^{k}$. Assume $a_{0} \geq a_{max}$:
+$\gamma(k, a_{0}) = \max c^{T}x, a^{T}x \leq a_{0}, x \in \{0,1\}^{k}$.
+Assume $a_{0} \geq a_{max}$:
 
-$\underbrace{1}_{\underline{\mu}} \leq \gamma(k, a_{0}) \leq \underbrace{\sum_{i=1}^{k}c_{i}}_{\bar{\mu}}$.
+$\underbrace{1}_{\underline{\mu}} \leq \gamma(k, a_{0}) \leq
+\underbrace{\sum_{i=1}^{k}c_{i}}_{\bar{\mu}}$.
 
-Consider $\mu = \frac{\bar{\mu} + \underline{\mu}}{2}$. Compute $\alpha(k, \mu)$, then two things ca happen:
+Consider $\mu = \frac{\bar{\mu} + \underline{\mu}}{2}$. Compute
+$\alpha(k, \mu)$, then two things ca happen:
 \begin{itemize}
 \item (i) the result is greather than $a_{0} \rightarrow \bar{\mu} = \mu$
-\item (ii) the result is less or equal $a_{0} \rightarrow \underline{\mu} = \mu$
+\item (ii) the result is less or equal to $a_{0} \rightarrow \underline{\mu} =
+\mu$
 
-The number of steps that takes until $\underline{\mu} = \bar{\mu}$ is $log(k \times c_{max})$.
-
-\paragraph{Remark}
+The number of steps that takes until $\underline{\mu} = \bar{\mu}$ is $log(k
+\times c_{max})$.
 \end{itemize}
 
+\paragraph{Remark}
+$\alpha(k, \mu)$ can be computed by finding a shortest path in a digraph
+$D=(V,A)$, $V =\{0, \dots, n\} \times \{0, \dots, \sum_1^k c_i\}$. The arc $A$
+is of the type $((i, \sigma^\prime), (i+1, \sigma)) \iff \sigma - \sigma^\prime
+\in \{0, c_i + 1\}$ of weight $0$ (if $\sigma - \sigma^\prime = 0$) or
+$a_i + 1$ (if $\sigma - \sigma^\prime = c_i +1$). Find a shortest path from
+$(0,0)$ to a node $(k, \sigma)$, where $\sigma \geq \mu$. This is a "flow
+problem" in an "exponentially" large graph.
+
+
 \subsection{Two approximation results}
+
+\paragraph{Theorem: Let $\frac{c_1}{a_1} \geq \frac{c_2}{a_2}\geq \dots \geq
+\frac{c_n}{a_n}$. With $\mathcal{O}(n)$ comparisons we can determine $\bar{x}
+\in \{0,1\}^n$, $a^T \bar{x} \leq a_0$ (feasible) and $c^T \bar{x} \geq
+\frac{1}{2} \gamma (n, a_0)$. }
+
+\subparagraph{Proof:}
+Let $s$ be such that $\sum_1^s a_i \leq a_0$ but $\sum_1^s a_i + a_s + 1 > a_0$
+wlog, $a_i \leq a_0$, $\forall i s \geq 1$.\\
+$\gamma (n, a_O) \leq \sum_1^s c_i + c_{s+1} \frac{a_0 - \sum_1^s a_i}{a_{s+1}}
+\leq \sum_1^s c_i + c_{s+1} = \underbrace{c^T x_1}_{\text{all elements until
+$s$}} + \underbrace{c^T x_2}_{\text{just $s+1$ element, since
+$a_0 \geq a_i$}}$.\\
+Where $x_1$ and $x_2$ are feasible $0/1$-solutions.\\
+$c^T x_1 + c^T x_2 \leq 2 \max \{c^T x_1, c^T x_2\}$.
+
+\paragraph{FPTAS: Fully polynomial time approximation scheme} A family of
+algorithms $\mathcal{A}_\epsilon$ such that $\mathcal{A}_\epsilon$ finds a
+feasible $0/1$-solution for knapsack of value $\geq (1-\epsilon) \gamma (k,
+a_0)$ in running time polynomial in $\frac{1}{\epsilon}$ and in the binary
+encoding of the instance.
+
+\paragraph{Theorem - FPTAS} Let $\epsilon > 0$. In time $\mathcal{O}(n^3
+\frac{1}{\epsilon} log (\frac{n^2}{\epsilon}))$ we can compute a feasible
+solution $\bar{x} \in \{0,1\}^n$, $a^T \bar{x} \leq a_0$, such that $c^T
+\bar{x} \geq (1-\epsilon) \gamma (n, a_0)$ ($\bar{x}$ is not far away from the
+optimal solution).
+
+\subparagraph{Proof:}
+Let $\Delta = \frac{\epsilon c_{max}}{n} \rightarrow \epsilon = \frac{\Delta n}
+{c_{max}} \rightarrow c_{max} = \frac{\Delta n}{\epsilon}$.\\
+$\frac{c^T}{\Delta} \geq c^\prime = (\lfloor \frac{c_1}{\Delta} \rfloor, \dots,
+\lfloor \frac{c_n}{\Delta} \rfloor) \geq (\frac{c_1}{\Delta} - 1, \dots,
+\frac{c_n}{\Delta} - 1)$ (*)\\
+$c'_{max} \leq \frac{c_{max}}{\Delta} = \frac{n}{\epsilon}$\\
+Compute an optimal solution for $\max \{c^{\prime T} x \mid a^T x \leq a_0,
+x \in \{0,1\}^n \}$. This can be done with the lemma before ($\alpha, \gamma$-
+relation) in time $\mathcal{O}(n^3 \frac{1}{\epsilon} log(\frac{n^2}
+{\epsilon}))$. Let $\bar{x}$ be this solution. Let $x^*$ be an optimal solution 
+for $\max \{c^T x \mid a^T x \leq a_0, x \in \{0,1\}^n\} \rightarrow c^T x^* =
+\gamma (n, a_0)$.\\
+$(1-\epsilon) \gamma (n,a_0) - \epsilon \gamma (n, a_0) = \gamma (n,a_0) -
+\frac{\Delta n}{c_{max}} \underbrace{\gamma (n, a_0)}_{\geq c_{max}} \leq 
+\gamma (n, a_0) - \Delta n = c^T x^* - \Delta n \leq c^T x^* - \Delta
+\mathds{1}^T x^* \rightarrow \Delta (\frac{c_1}{\Delta} - 1, \dots, \frac{c_n}
+{\Delta}-1) x^* \underbrace{\leq}_{\text{(*)}} \Delta c^{\prime T} x^* \leq 
+\Delta c^{T} \bar{x} \leq c^T x$.
 
 \end{document}

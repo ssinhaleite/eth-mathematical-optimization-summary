@@ -5,8 +5,137 @@
 % Main Topics: Independence systems, the rank function, submodularity and the
 % connection to matroids, the greedy algorithm
 % Independence Systems and Matroids - 07.12.2017
-% author:
+% author: Vanessa Leite
 
 \section{Independence Systems and Matroids}
+
+\paragraph{Definition - Independece system}
+Let $N$ be a finite set, $N = \{1, \dots, n\}$. $\mathcal{I}$ is a collection
+of subsets of $N$. $(N, \mathcal{I})$ is an independence system if it has the
+properties:
+\begin{itemize}
+\item $\emptyset \in \mathcal{I}$
+\item $A \in \mathcal{I}$ and $B \subseteq A \rightarrow B \in \mathcal{I}$
+\end{itemize}
+
+Usually, $\mathcal{I}$ is implicitly defined, for example, look at all vertices
+in a graph that do not form a cycle.\\
+
+Examples:
+\begin{enumerate}
+\item Linear independence: $A \in \Z^{m \times n}$, $\mathcal{I}$ is a
+collection of sets in $\{1, \dots, n\}$ st $\{A_i \mid i \in \mathcal{I}\}$ is
+linearly independent whenever $i \in \mathcal{I}$.
+\item $G=(V,E)$ is given, $I \subseteq E$ is independent if $(V,I)$ does not
+contain a cycle and $\mathcal{I} = \{ I: \text{ does not contain a cycle}\}$.
+\item Knapsack problem: $\{x \in \{0,1\}^n \mid a_1 x_1 + \dots + a_n x_n \leq
+b \}$, $a_i \in \Z_+\setminus \{0\}$ and $b \in \Z_+ \setminus \{0\}$. $N = \{
+1, \dots, n\}$. $I \subseteq N$ is independent if $\sum_{i \in I} a_i \leq b$.
+$\mathcal{I} = \{I \subseteq N \mid \sum_{i \in I} a_i \leq b\}$ is an
+independent system. This is not true if $A_{\cdot i} \ngeq 0$.
+\end{enumerate}
+
+\paragraph{Definition: Let $(N,\mathcal{I})$ be an independent system. Then
+each member $I \in \mathcal{I}$ is independent. $I \notin \mathcal{I}$ is
+dependent.}
+Let $S \subseteq N$, $F \subseteq S$, $F \in \mathcal{I}$. $F$ is a basis of
+$S$ if we can't enlarge it: $F \cup \{i\} \notin \mathcal{I}, \forall i \in
+S\setminus \{F\}$. A basis of $S$ is not necessarily a basis of $N$.
+
+The rank of $S$ is $r(S) = \max \{|F|: F \text{ basis of } S\}$.
+
+$I \notin \mathcal{I}$, $I \subseteq N$ is a circuit if $I\setminus \{i\} \in
+\mathcal{I}, \forall i \in I$.
+
+A independence system $(N,\mathcal{I})$ is a matroid if $\forall S \subseteq
+N$, every basis of $S$ has the same cardinality.\\
+Example: Consider $\{x \in \{0,1\}^3 \mid x_1 + x_2 + 2x_3 \leq 2\}$.\\
+$S = \{1, 2, 3\} = N$. $\{1,2\}$ and $\{3\}$ are basis of $S$. Both are
+independent and cannot be enlarged, but they do not have the same cardinality,
+this way, knanpsack problems are not matroids in general.
+
+\paragraph{Definition: Given a finite set $N$. A function of a set (set
+function) $f: 2^N \mapsto \R$ is submodular if $\forall S$, $T \subseteq N$,
+then $f(S) + f(T) \geq f(S \cup T) + f(S \cap T)$.}
+
+\subparagraph{$f$ non decreasing if $f(S) \leq f(T) \forall S \subseteq T$.}
+
+\paragraph{Theorem:}
+\begin{enumerate}
+\item The set function $f$ is submodular iff $\forall j, k$, $j \neq k$ and
+$A \subseteq N \setminus \{j,k\}$ then $f(A \cup \{j\}) - f(A) \leq f(A \cup
+\{j,k\}) - f(A \cup \{k\})$ (diminishing return property)
+\item $f$ is submodular and nondecreasing iff $\forall S, T \subseteq N$:
+$f(T) \leq f(S) + \sum_{j \in T\setminus S} [f(S \cup \{j\} - f(S)]$.
+\todo[inline]{exercise!}
+\end{enumerate}
+
+\paragraph{Theorem: $(N,\mathcal{I})$ is a matroid iff its rank function is
+submodular.}
+\subparagraph{Proof:}
+\begin{itemize}
+\item "$\rightarrow$": $(N,\mathcal{I})$ ind. system then rank function 
+nondecreasing.
+\subitem $r(S \cup \{j\}) - r(S) \leq 1$, $r(\emptyset) = 0$. Let
+$(N,\mathcal{I})$ be a matroid: $r$ satisfies diminishing return property in
+previous theorem. We want to show that $r(S \cup \{j\}) - r(S) \geq  r(S \cup
+\{j,k\}) - r(S \cup \{k\})$.\\
+This is satisfied whenever $r(S \cup \{j\}) - r(S) = 1$ or $r(S \cup \{j,k\}
+- r(S \cup \{k\}) = 0$.\\
+Suppose $r(S \cup \{j\}) = r(S) = a$. $r(S \cup \{j,k\}) - r(S \cup \{k\}) = 1
+\rightarrow r(S \cup \{j,k\}) = a+ 1 \rightarrow a = r(S \cup \{k\})$.\\
+Let $Q$ be a basis of $S$ st $|Q| = a$. $Q \cup \{i\} \notin \mathcal{I}$,
+$\forall i \in S\setminus \{Q\}$.\\
+$Q \cup \{j\} \notin \mathcal{I} \rightarrow Q$ basis of $S \cup \{j\}$.\\
+$Q \cup \{k\} \notin \mathcal{I} \rightarrow Q$ basis of $S \cup \{k\}$.\\
+$Q$ is a basis of $S \cup \{j,k\}$, which is a contradiction because $|Q| = a$,
+$r(S \cup \{j,k\}) = a+1$.
+\item "$\leftarrow$": assume $r$ is submodular and nondecreasing.
+\subitem Suppose $(N,\mathcal{I})$ is not a matroid. There exists $T \subseteq
+N$ and basis $S_1$ and $S_2$ of $T$ st $|S_1| < |S_2|$.\\
+Check (2) from previous theorem with $T = S_2$ and $S = S_1$:\\
+$r(S_2) \leq r(S_1) + \sum_{j \in S_2 \setminus S_1}( r(S_1 \cup \{j\}) -
+r(S_1)) \rightarrow \exists j \in S_2 \setminus S_1$ st $r(S_1 \cup \{j\}) =
+r(S_1) + 1$\\
+$S_1 \cup \{j\} \subseteq T$ and $S_1 \cup \{j\} \in \mathcal{I}$, and this is
+a contradiction because $S_1$ was basis of $T$ and thus, should have maximum
+cardinality.
+\end{itemize}
+
+\subsection{Optimization over matroids}
+
+Consider $\max \sum_{j=1}^n c_j x_j$. $(N,\mathcal{I})$ independence system,
+$c_j \in \Z_+$.
+$\sum_{j \in S} x_j \leq r(S)$, $\forall S \subseteq N$, $x_j \in \{0,1\}
+\forall j$ (to find maximum independence set)
+
+Relaxation problem: Let $P_r = \{x \in [0,1]^n \mid \sum_{j \in S} x_j \leq
+r(S), \forall S \subseteq N\}$. $F = P_r \cap \Z^n$.
+
+\paragraph{Theorem: Let $r$ be a submodular function $r(S) \in \Z_+$, $\forall
+S \subseteq N$, $r$ non decreasing, $r(\emptyset) = 0$. $P_r = conv(P_r \cap
+\Z^n)$, i.e., all the extreme points are integers.}
+
+\subparagraph{Proof:}
+Consider $\max \sum c_j x_j$ st $x \in P_r$, and its dual is $\min \{\sum_{S
+\subseteq N} r(S)y_s \mid \sum_{s: j \in S} y_s \geq c_j, y_s \geq 0, \forall
+S \subseteq N, c \in \Z^n\}$. Wlog: $c_1 \geq c_2 \geq \dots \geq c_k > 0 \geq
+c_{k+1} \geq \dots \geq c_n$ (the values are sorted).\\
+Define $S^0 = \emptyset$, $S^j = \{1, \dots, j\}$ and
+\begin{itemize}
+\item $x_j = r(S^j) - r(S^{j-1})$ for $j \leq k-1$ and $x_j = 0$, elsewhere.
+\item $y_s = 0 \forall S \neq S^1, \dots, S^k$ and $y_{s^k} = c_k$, $y_{s^j} =
+c_j - c_{j+1} \forall 1 \leq j \leq k-1$.
+\end{itemize}
+$x,y$ are integral vectors and $x,y$ are both non negatives vectors.\\
+$\sum_{j \in T} x_j = \sum_{j \in T, j \leq k}(r(S^j) - r(S^{j-1}))
+\underbrace{\leq}_{\text{definition of submodularity}} \sum_{j \in T, j \leq k}
+(r(S^j \cap T) - r(S^{j-1} \cap T) \leq \sum_{j=1}^k (r(S^j \cap T) - r(S^{j-1}
+\cap T)) = r(S^k \cap T) - r(\emptyset) \leq r(T)$.\\
+In the dual, $\sum_{s: j \in S} y_s = y_{s^j} + \dots + y_{s^k} = c_j$ $\forall
+j \leq k$. $\sum_{s: j \in S, j > k} y_s = 0 > c_j$.\\
+primal value equals to dual value: $\sum_{j=1}^k c_j(r(S^j) - r(S^{j-1})) =
+\sum_{j=1}^{k-1}\underbrace{(c_j - c_{j+1})}_{y_{s^j}} r(S^j) +
+\underbrace{c_k r(S^k)}_{y_{s^k}}$.
 
 \end{document}

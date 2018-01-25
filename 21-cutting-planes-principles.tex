@@ -5,8 +5,111 @@
 % Main Topics: Chvátal-Gomory closure, Example: Matchings and the travelling
 % salesman problem, Mixed-integer rounding
 % Principles of cutting planes generation - 30.11.2017
-% author:
+% author: Vanessa Leite
 
 \section{Cutting plane principles}
+
+\subsection{Integer rounding}
+Solve optimization problem $\max \{c^T x \mid Ax \leq b, x \in \Z^n\}$. Find
+$a^T x \leq \alpha$ (halfspaces) such that $a^T x \leq \alpha$ is true $\forall
+x \in \Z^n \cap P$. $P = \{x \in \R^n \mid Ax \leq b\}$. $a^T x > \alpha$ for
+some points in $P\setminus \Z^n$.\\
+Consider $u \geq 0$ st $a^T = u^T A \in \Z^n$. We know $a^T x = u^T Ax \geq u^T 
+b \forall x \in P$. $\forall x \in P \cap \Z^n$, then $a^Tx \leq \lfloor u^T b
+\rfloor$.
+
+Starting with a polyhedron $P$, we can define an algebraic operator:\\
+From $P$ define for $A \in \Z^{m \times n}$, $b \in Z^m$:\\
+$P^{(1)} = \{ x \in \R^n \mid u^T Ax \leq \lfloor u^Tb \rfloor \forall u \geq
+0$, st $u^T A \in Z^n\}$. $P^{(1)} \supseteq P \cap \Z^n$, $P^{(1)} \cap \Z^n =
+P \cap Z^n$ (closure of $P$ operator).
+
+In the standard form setting: $P = \{x \in \R^n \mid Ax = b, x \geq 0\}$.\\
+Take any $u \in \R^n$ then $\sum_{j =1}^n \lfloor u^T A_{\cdot j} \rfloor x_j
+\leq \lfloor u^T b \rfloor$ is satisfied by all $x \in P \cap \Z^n$ (we can
+round down for any multiplier $u$ because $x \geq 0$).
+
+$P^{(1)} = \{ x \in \R^n \mid \sum_{j =1}^n \lfloor u^T A_{\cdot j} \rfloor x_j
+\leq \lfloor u^T b \rfloor \forall u \in \R^n\}$.
+$P^{(1)}$ is a polyhedron and $P^{(1)} \supseteq P \cap \Z^n$ and $P^{(1)} \cap
+\Z^n = P \cap \Z^n$.
+
+\paragraph{Remark - $P = \{ x \mid Ax \leq b, x \geq 0\}$} The closure $P^{(1)}
+= \{x \mid \sum_{j =1}^n \lfloor u^T A_{\cdot j} \rfloor x_j \leq \lfloor u^T b
+\rfloor, \forall u \geq 0\}$.
+
+\subparagraph{Example 1:}
+\todo[inline]{add example - check notes}
+
+\subparagraph{Example 2 - the matching polyhedron (polytime problem):}
+$G=(V,E)$, $M \subseteq E$ is a matching, i.e., $m_i \cap m_j = \emptyset
+\forall m_i, m_j \in M, m_i \neq m_j$.\\
+$P = \{ x \in [0,1]^{|E|} \mid \sum_{e \in \delta(i)} x_e \leq 1$,
+$\forall i \in V\}$. $P \cap \Z^n = \{X^M \mid M \text{matching in $G$} \}$.
+$X^M \in \R^{|E|}$, $X^M_e = 1$ if $e \in M, X^M_e =0$ if $e \notin M$.\\
+Consider $\max \{\sum_{e \in E} c_e x_e \mid x \in P \cap \Z^n \}$ and $\max
+\{\sum_{e \in E} c_e x_e \mid x \in P\}$.
+
+Consider the graph:
+\todo[inline]{add graph}
+
+$\hat{x}$ optimal matching solution: $c^T \hat{x} = 2M + \epsilon$. So, the two
+formulations above cannot be the same.
+
+Take all inequalities for $ i \in S \subseteq V$, $|S|$ odd.
+$\frac{1}{2} \sum_{e \in \delta(S)} x_e \leq \frac{1}{2}$, summing them up, you
+get $\sum_{e \in E(S)} x_e + \frac{1}{2} \sum_{e \in \delta(S)} x_e \leq
+\frac{|S|}{2}$.\\
+Now, add $-\frac{1}{2}x_e \leq 0, \forall e \in \delta(S)$. We obtain:
+$\sum_{e \in E(S)} x_e \leq \frac{|S| -1}{2}$ must hold $\forall x \in P \cap
+\Z^n$.
+
+\subsection{Mixed Integer Rounding}
+$\{(x,y) \mid x \in \Z, y \geq 0, y \in \R, x-y \leq b \} = F$. wlog, $b \notin
+\Z$ (if $b \in \Z$, then, nothing to do). Consider $x-y \leq \frac{3}{2}$.
+
+\todo[inline]{add figure - see notes}
+
+\subparagraph{Proof:}
+$F = F_1 \cup F_2$, $F_1 = \{(x,y) \in F \mid x \leq \lfloor b \rfloor \}$,
+$F_2 = \{(x,y) \in F \mid x \geq \lceil b \rceil \}$.
+$x-\frac{y}{1 -f(b)}\leq \lfloor b \rfloor \iff (1-f(b))(x- \lfloor b \rfloor)
+\leq y$.
+
+\paragraph{Lemma of the proof: $x-\frac{y}{1 -f(b)}\leq \lfloor b \rfloor$ is
+satisfied by all $(x,y) \in F$.}
+\subparagraph{Proof:}
+$\forall(x,y) \in F_1$: take $x-\lfloor b \rfloor \leq 0, 0 \leq y$. Multiply
+inequality by $(1-f(b))$: $(1-f(b))(x-\lfloor b \rfloor) \leq 0 \rightarrow
+(1-f(b))$: $(1-f(b))(x-\lfloor b \rfloor) \leq y$.\\
+$\forall(x,y) \in F_2$: $x \geq \lceil b \rceil \iff -(x -\lfloor b \rfloor)
+\leq -1$. Take $-(x-\lfloor b \rfloor) \leq -1$ times $f(b)$ and add $x-y \leq
+b$. This leads to $-f(b)(x - \lfloor b \rfloor) + x-y \leq \lfloor b \rfloor =
+b - f(b) \rightarrow -f(b)(x-\lfloor b \rfloor)+x - \lfloor b \rfloor \leq y
+\iff (1-f(b))(x- \lfloor b \rfloor) \leq y$.\\
+$\rightarrow \forall(x,y) \in F$ we have $x - \frac{y}{1-f(b)} \leq \lfloor b
+\rfloor$.
+
+\paragraph{Theorem (how to apply the principle):}
+Let $F = \{x \in \Z^n \mid x \geq 0, Ax \leq b\}$. For $u \in \R^m_+$ and
+$x \in F$ we have that $\sum_{j = 1}^n (\lfloor u^T A_{\cdot j} + max\{0,
+\frac{f(u^T A_{\cdot j} - f(u^T b)}{1 - f(u^T b)}\} x_j) \leq \lfloor u^T
+b \rfloor$.
+
+\subparagraph{Proof - sketch (how to match a high dimension in a low
+dimension)}
+
+$N_1 = \{j \mid f(u^T A_{ \cdot j}) \leq f(u^T b) \}$. $N_2 = N\N_1$.\\
+$\underbrace{\sum_{j \in N_1} \lfloor u^T A_{\cdot j} \rfloor x_j}_{(1)} +
+\underbrace{\sum_{j \in N_2}\lceil u^T A_{\cdot j} \rceil x_j}_{(2)} - 
+\underbrace{\sum_{j \in N_2} (1 - f(u^T A_{\cdot j})) x_j}_{(3)} \leq u^T b$
+satisfied by all $x \in F$.
+
+$(1) + (2) = w \in \Z$, $(2) - (3) = \sum_{j \in N_2} u^T A_{\cdot j} x_j$,
+$(3) = z \geq 0$.
+
+We obtain $\{ (w,z) \mid w \in \Z, z \geq 0, w-z \leq \lfloor u^T b \rfloor +
+f(u^T b) \} \rightarrow w - \frac{z}{1-f(u^T b)} \leq \lfloor u^T b \rfloor$ is
+correct and give us the previous formula.
 
 \end{document}

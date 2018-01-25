@@ -4,8 +4,129 @@
 %@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 % Main Topics: Lift-and-project algorithm
 % The lift and project method - 04.12.2017
-% author:
+% author: Vanessa Leite
 
 \section{Method of Lift and Project}
 
+$P=\{ x \in \R^n \mid Ax \leq b\}$ when $0\leq x_i \leq 1 \forall i = 1, \dots,
+n$ are part of $Ax \leq b \rightarrow P \cap \Z^n \subseteq \{0,1\}^n$.
+
+\paragraph{Target: compute the convex hull of $P \cap \Z^n$}
+Ingredients:
+\begin{itemize}
+\item projection $Q = \{(x,y) \in \R^{n \times d} \mid \tilde{A}x + \tilde{B}y
+\leq \tilde{b}\}$. $proj_x(Q) = \{x \in \R^n \mid (x,y) \in Q\}$.
+\item algebraic quadratic operator: $x^2 = x \forall x \in \{0,1\}$.
+\end{itemize}
+
+\paragraph{Algorithm - Lift and Project:}
+Input: $P$, $j \in \{1, \dots, n\}$. Output: polyhedron $P_j$.
+\begin{enumerate}
+\item Lift:
+\subitem Consider $x_j Ax \leq b x_j$, $(1-x_j)Ax \leq b(1-x_j)$ (*)\\
+Define variables: $y_{ij} = x_i x_j, \forall i \neq j$.\\
+Replace the system (*) by the another system where we put $y_{ij}$ in place of
+$x_i x_j$ and $x^2_j = x_j$, so our formulation is purely linear (not quadratic
+anymore).\\
+Call the resulting polyhedron $L_j(P) \subseteq \R^{n + (n-1)}$.
+\item Project:
+\subitem Project $L_j(P)$ to the space of $x$-variables, $P_j = proj(L_j(P))$.
+\end{enumerate}
+
+\paragraph{Theorem: $P_j = conv(P \cap \{x \in \R^n \mid x_j \in \{0,1\}) = 
+conv(P \cap \{x \mid x_j = 0\} \cup (P \cap \{x \mid x_j = 1\})$.
+$P\neq \emptyset$.}
+
+\subparagraph{Proof:}
+\begin{itemize}
+\item "$conv(...) \subseteq P_j$"
+\subitem Let $\bar{x} \in conv(P \cap \{x \in \R^n \mid x_j \in \{0,1\})$ st
+$\bar{x_j} \in \{0,1\}$ (we just need to show for $0$ and $1$ because $P$ is a
+polyhedron and thus, convex). Define $\bar{y_{ij}} = \bar{x_i} \bar{x_j}$.
+$\bar{x}$ satisfies (*), $\bar{x_j}^2 = \bar{x_j}$. So we know $(\bar{x},
+\bar{y}) \in L_j(P) \rightarrow \bar{x} \in P_j$
+\item "$P_j \subseteq conv(...)$"
+\subitem We distinguish three cases:
+\begin{itemize}
+\item $P \cap \{x \in \R^n \mid x_j = 0\} = \emptyset$
+\subitem We need to prove that $P$ lies on $x_j = 1$. By Farka's lemma:
+$\exists u \geq 0$ st $u^T A = -e_j$, $-\epsilon = u^T b < 0$, where $\epsilon
+> 0$. In particular, all $x$ satisfying (*), satisfy $(1 - x_j) u^T Ax \leq u^T
+b (1-x_j) \rightarrow - (1 - x_j) x_j \leq - \epsilon (1 - x_j) \rightarrow
+-x_j + \underbrace{x_j^2}_{= x_j} \leq - \epsilon (1 - x_j) \rightarrow
+\forall(x,y) \in L_j(P)$: $0 \leq - \epsilon (1 - x_j) \rightarrow x_j \geq 1$.
+$\rightarrow \forall x \in P_j$, then $x_j$ is valid.
+\item $P \cap \{x \in \R^n \mid x_j = 1\} = \emptyset$
+\subitem \todo[inline]{similar as 01, exercise!}
+\item $P \cap \{x \mid x_j = 0\} \neq \emptyset$ and $P \cap \{x \mid x_j = 1\}
+\neq \emptyset$
+\subitem Take any inequality $a^T x \leq \alpha$ valid for $conv(P \cap \{x
+\in \R^n \mid x_j \in \{0,1\}\} )$ and show it is valid for $P_j$.\\
+Claim: $\exists \mu < 0, \lambda < 0$ st $a^T x + \mu x_j \leq \alpha$ (1) and
+$a^T x + \lambda(1-x_j) \leq \alpha$ are valid for $P$.\\
+Proof of the claim: Let $V$ be all extreme points in $P$, st $0 < v_j < 1$
+(points $0$ and $1$ already proved). We have finite points since $P$ is
+bounded. Define  $\mu = \min \{ \frac{-a^T v + \alpha}{v_j} \mid v \in V\}$,
+$\lambda = \min \{\frac{-a^T v + \alpha}{1 - v_j} \mid v \in V\}$. From the
+claim, every $x$ satisfying (*) satisfies $(1-x_j)(a^T x + \mu x_j) \leq
+\alpha (1 -x_j)$, $x_j(a^T x + \lambda (1 -x_j)) \leq \alpha x_j$.\\
+All points $x$ in (*) satisfies also the sum: $a^T x + (\lambda + \mu)
+\underbrace{x_j (1 - x_j)}_{= x_j - x^2_j = 0} \leq \alpha \rightarrow a^T x
+\leq \alpha$ is satisfied by all $x$ in $P_j$.
+\end{itemize}
+\end{itemize}
+
+\emph{Definition: For $i_1, \dots, i_t \in N$, all distinct, $P_{i_1},
+\dots, P_{i_t} = (P_{i_1, \dots, i_{t-1}})_{i_t}$.}
+
+\paragraph{Theorem: For any sequence $i_1, \dots, i_t \in N$, all distinct,
+then $P_{i_1, \dots, i_t} = conv(P \cap \{x \in \R^n \mid x_k \in \{0,1\}$,
+$\forall k \in \{i_1, \dots, i_t\}\})$}
+
+\subparagraph{Proof:}
+Induction on $t$. We know it is true for $t=1$, from theorem before. Let $Q =
+\{x \in \R^n \mid x_k \in \{0,1\} \forall k \in \{i_1, \dots, i_{t-1}\}\}$.
+Assume theorem is true for sequence $i_1, \dots, i_{t-1}$.\\
+$P_{i_1}, \dots, P_{i_t} = (P_{i_1, \dots, i_{t-1}})_{i_t} \underbrace{=}
+_{\text{from hypothesis}} conv (P \cap Q)_{i_t} \underbrace{=}_{\text{from 
+previous theorem}} conv( conv(P \cap Q) \cap \{x \in \R^n \mid x_{i_t} \in
+\{0,1\}\}) \cup conv (P \cap Q \cap \{x \in \R^n \mid x_{i_t} = 1\}))$.
+Or, simpler: $conv(S_1 \cup S_2) = conv (conv(S_1) \cup conv(S_2))$.\\
+$\rightarrow conv(P \cap Q \cap \{x \mid x_{i_t} \in \{0,1\}\}) = conv( P \cap
+\{x \in \R^n \mid x_k \in \{0,1\} \forall k \in \{i_1, \dots, i_t\}\})$.
+
+\emph{Note that $conv( P \cap \{x \mid a^T x = \alpha\} \cap \Z^n) \neq conv(
+P \cap \Z^n) \cap \{x \mid a^T x = \alpha\}$. However, we can do this in the
+previous proof because $x_{i_t} = 0$ is a face of $P$ and $x_{i_t} = 1$ is also
+a face of $P$.}
+
+\paragraph{Example:}
+$P = \{x \mid 2x_1 - x_2 \geq 0, 2 x_1 + x_2 \leq 2, 0 \leq x_1 \leq 1,
+0 \leq x_2 \leq 1 \}$.
+Select $j=1$ and multiply all inequalities by $x_1$ and $(1 -x_1)$:
+$2x^2_1 - x_1x_2 \geq 0$\\
+$2x_1(1-x_1) - x_2 (1-x_1) \geq 0$\\
+$2 x_1^2 + x_1x_2 \leq 2x_1$\\
+$2 x_1(1-x_1) + x_2(1-x_1) \leq 2(1-x_1)$\\
+$0 \leq x^2_1 \leq x_1$\\
+$0 \leq x_1 (1 -x_1) \leq 1 - x_1$\\
+$0 \leq x_1x_2 \leq x_1$\\
+$0 \leq x_2 (1 -x_1) \leq 1 - x_1$\\
+Now, replace $x^2_1$ by $x_1$ and $x_1x_2$ by $y$. We obtain:
+$2x1 -y \geq 0$\\
+$-x_2 + y \geq 0$\\
+$y \leq 0$\\
+$x_2 - y \leq 2 - 2x_1$\\
+$0 \leq x_1 \leq x_1$\\
+$0 \leq 0 \leq 1 - x_1$\\
+$0 \leq y \leq x_1$\\
+$0 \leq x_2 - y \leq 1 - x_1$\\
+As, $y \leq 0$ and $0 \leq y$, $y = 0$, which implies:
+$x_1 \geq 0$\\
+$x_2 \leq 0$\\
+$x_2 \leq 2 - 2x_1$\\
+$0 \leq x_1 \leq 1$\\
+$0 \leq x_2 \leq 1 - x_1$\\
+As, $x_2 \leq 0$ and $0 \leq x_2$, $x_2 = 0$. Thus, $P_1 = \{(x_1, x_2) \mid
+0 \leq x_1 \leq 1, x_2 = 0\} = conv (P \cap \Z^n)$.
 \end{document}
