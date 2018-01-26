@@ -78,22 +78,28 @@ $(N,\mathcal{I})$ is an independence system. $\mathcal{I} = \mathcal{I}_1
 \paragraph{Example:}
 $D=(V,A)$ a digraph. $T \subseteq A$ is a branching if $(V,T)$ contains no
 cycle and $\forall v \in V$: $\abs{\delta^-(v) \cap T} \leq 1$.
-Greedy algorithm does not work.
+
 \begin{figure}[!h]
   \centering
     \includegraphics[width=0.3\textwidth]{imgs/matroid-intersection.png}
 \end{figure}
 
-$\mathcal{I}_1 = \{ T \subseteq A \mid |\delta^-(v) \cap T | \leq 1,
-\forall v \in V\}$ (partition matroid)
+Any branching is an independent set contained in the intersection of the two
+following matroids:\\
+$\mathcal{I}_1 = \{ T \subseteq A \mid |\delta^-(v) \cap T | \leq 1, \forall v
+\in V\}$ (partition matroid)\\
 $\mathcal{I}_2 = \{ T \subseteq A \mid (V,T) \text{ no cycle }\}$ (graphic
-matroid)
+matroid)\\
 $\mathcal{I} = \mathcal{I_1} \cap \mathcal{I_2}$.
+
+Greedy algorithm does not work in a branching, i.e, the intersection of two
+matroids is not a matroid.
 
 Consider optimization problem over intersection of two matroids:\\
 $Z = \max \{\sum_{j=1}^n c_j x_j \mid$
 $\underbrace{\sum_{j \in T} x_j \leq min\{r_1(T), r_2(T)\} \forall T \subseteq
 N, x \geq 0}_{P} \}$, where $r_i$ are rank functions of the two matroids.
+For functions $f_1(T)$ and $f_2(T)$ as above, $P = conv(F)$
 
 Task: find $x \in P \cap \Z^n$.
 

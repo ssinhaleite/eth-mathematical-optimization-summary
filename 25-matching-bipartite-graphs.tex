@@ -21,6 +21,8 @@ v_{i+1}\} \in E$, $\forall i \in 0, \dots, t-1$}
 
 \subparagraph{$M \subseteq E$ is a matching if $\forall e,e^\prime \in M$,
 $e \neq e^\prime$, $e \cap e^\prime = \emptyset$}
+A perfect matching is a matching that covers all vertices, i.e., it has size
+$\frac{\abs{V}}{2}$.
 
 \subparagraph{$F \subseteq E$ is an edge cover if $\forall v \in V$,
 $v \cap e = \emptyset$, for some $e \in F$. Edge cover is the set $F$ of edges
@@ -87,8 +89,8 @@ Thus, $\rho(G) + v(G) = \abs{V}$.
 \paragraph{Definition - $M$-augmenting path}
 $M \subseteq E$ is a matching. A path $(v_0, \dots, v_t)$ is $M$-augmenting if:
 \begin{itemize}
-\item $t$ is odd
-\item $\{v_1, v_2\}, \dots, \{v_{t-2}, v_{t-1}\} \in M$
+\item $t$ is odd and all nodes $v_i, i = 1, \dots, t$ are distincts.
+\item $\{v_1, v_2\}, \dots, \{v_{t-2}, v_{t-1}\} \in M$.
 \item $v_0$ and $v_t$ are nodes missed by $M$.
 \end{itemize}
 
@@ -96,6 +98,11 @@ $M \subseteq E$ is a matching. A path $(v_0, \dots, v_t)$ is $M$-augmenting if:
 \{v2, v_3\}, \dots, \{v_{t-1}, v_t\} \notin M$ and $\bigcup_{i=0}^{t-1} \{v_i,
 v_{i+1}\} = M \cup M^\prime$, where $M^\prime$ is a matching of size $\abs{M}
 + 1$.}
+
+\paragraph{Remark: Let $M$ be a matching, $P$ an $M$-augmenting path. Then,
+$M\Delta E[P]$ gives a larger matching, where $A\Delta B = (A \cup B) \setminus
+(A \cap B) = (A\setminus B) \cup (B \setminus A)$ is the symmetric difference
+of the sets $A$ and $B$.}
 
 \paragraph{Theorem: For any graph $G=(V,E)$ a current matching $M \subseteq E$
 is either of max size ($\abs{M} = v(G)$) or there exists an $M$-augmenting
@@ -149,5 +156,7 @@ containing $u$ is a path $P$. If $\abs{E(P)}$ is odd, $P$ is $M$-augmenting
 path, which is a contradiction. Otherwise, if $\abs{E(P)}$ is even, $E(P) \cup
 \{e\}$ is $N$-augmenting path, contradiction.
 
-
+\paragraph{Konig's edge cover Theorem: For any bipartite graph without isolated
+vertices, $\alpha(G) = \rho(G)$.}
+Isolated vertice: ?
 \end{document}

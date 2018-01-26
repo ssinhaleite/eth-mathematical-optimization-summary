@@ -12,41 +12,43 @@
 \paragraph{Definition - knapsack problem}
 
 Given a set $C = \{ c_{1}, \dots, c_{n} \} \subseteq \mathbb{Z}_{+} \setminus
-\{ 0\}$ (values) and $A = \{a_{1}, \dots, a_{n} \subseteq \mathbb{Z}_{+}
-\setminus \{ 0\} \}$ (weights), $a_{0} \in \mathbb{Z}_{+} \setminus \{ 0\},
+\{ 0\}$ (values) and $A = \{a_{1}, \dots, a_{n}\} \subseteq \mathbb{Z}_{+}
+\setminus \{ 0\}$ (weights), $a_{0} \in \mathbb{Z}_{+} \setminus \{ 0\},
 a_{0} \geq a_{i} \forall i$.
 
-$\gamma(k, a_{0}) = \{ \max \sum_{i =1}^{k} c_{i} x_{i} \mid \sum_{i=1}^{k}
+$\gamma(k, a_{0}) = \max \{\sum_{i =1}^{k} c_{i} x_{i} \mid \sum_{i=1}^{k}
 a_{i}x_{i} \leq a_{0}, x \in \{0,1\}^{k} \}$ is a (binary) knapsack problem.
 (If $x \in \mathbb{Z}_{+}^{k}$, then it is a integer knapsack problem).
 
 Dual:
-$\alpha(k, c_{0}) = \{ \min \sum_{i =1}^{k} a_{i} x_{i} \mid \sum_{i=1}^{k}
+$\alpha(k, c_{0}) = \min \{ \sum_{i =1}^{k} a_{i} x_{i} \mid \sum_{i=1}^{k}
 c_{i}x_{i} \geq c_{0}, x \in \{0,1\}^{k} \}$
 
 \paragraph{A k-cursive algorithm}
+For all $a \in \{1, \dots, \sum_{i=1}^{n} a_i\}$, initialize $\gamma(1, a_0)$:
 \[
   \gamma(1, a_{0})=\begin{cases}
                0, a_{1} > a_{0}\\
                c_{1}, a_{1} \leq a_{0}\\
             \end{cases}
 \]
+For $k = 2, \dots, n$ and for $a = 1, \dots, \sum_{i=1}^{n} a_i$:
+$\gamma(k, a) = \max \{\gamma(k-1, a), \gamma(k-1, a - a_k) + c_k \}$
 
-$\gamma(k, a_{0}) = max\{\gamma(k-1, a_{0}), \gamma(k-1, a_{0} - a_{k}) +
-c_{k}\}$
+The number of iterations for a given $a_{0}$ is $\mathcal{O}(a_{max} n^2)$.
+Since $a_0 \leq n a_{max}$, $\mathcal{O}(n \times a_{0})$.
 
-The number of iterations for a given $a_{0}$ is $\mathcal{O}(n \times a_{0})$.
-
-For the dual knapsack problem:
+For the dual knapsack problem: for all $c \in \{1, \dots, \sum_{i=1}^{n} c_i
+\}$, initialize $\alpha(1, c_0)$:
 \[
   \alpha(1, c_{0})=\begin{cases}
                +\infty, c_{1} < c_{0}\\
-               a_{1}, otherwise\\
+               a_{1} \text{, if } 1 \leq c_0 \leq c_1\\
+               0 \text{, if } c_0 = 0\\
             \end{cases}
 \]
-
-$\alpha(k, c_{0}) = mix\{\alpha(k-1, c_{0}), \alpha(k-1, c_{0} - c_{k}) +
-a_{k}\}$
+For $k = 2, \dots, n$ and for $c = 1, \dots, \sum_{i=1}^{n} c_i$:
+$\alpha(k, c) = \min \{\alpha(k-1, c), \alpha(k-1, c - c_{k}) + a_{k}\}$
 
 \paragraph{Corollary} The knapsack problem can be solved in time
 $\mathcal{O}(n \times a_{0})$ and the dual version in time
@@ -58,7 +60,8 @@ i =\{1, \dots, k\} \}$
 
 \subsection{Connections primal/dual knapsack}
 
-\paragraph{Lemma} $\alpha(k, \gamma(k, a_{0}) \leq a_{0}$
+\paragraph{Lemma} $\alpha(k, \gamma(k, a_{0}) \leq a_{0}$ and $\gamma(k,
+\alpha(k, c_{0}) \geq c_{0}$
 
 \subparagraph{Proof:}
 Let $x^{*} \in \{0,1\}^{k}$ attain optimal value for $\gamma(k, a_{0})$.
@@ -80,7 +83,7 @@ $\mathbb{A}$ we can compute $\gamma(k, a_{0})$.
 $\gamma(k, a_{0}) = \max c^{T}x, a^{T}x \leq a_{0}, x \in \{0,1\}^{k}$.
 Assume $a_{0} \geq a_{max}$:
 
-$\underbrace{1}_{\underline{\mu}} \leq \gamma(k, a_{0}) \leq
+$\underbrace{0}_{\underline{\mu}} \leq \gamma(k, a_{0}) \leq
 \underbrace{\sum_{i=1}^{k}c_{i}}_{\bar{\mu}}$.
 
 Consider $\mu = \frac{\bar{\mu} + \underline{\mu}}{2}$. Compute
@@ -123,9 +126,10 @@ $c^T x_1 + c^T x_2 \leq 2 \max \{c^T x_1, c^T x_2\}$.
 
 \paragraph{FPTAS: Fully polynomial time approximation scheme} A family of
 algorithms $\mathcal{A}_\epsilon$ such that $\mathcal{A}_\epsilon$ finds a
-feasible $0/1$-solution for knapsack of value $\geq (1-\epsilon) \gamma (k,
-a_0)$ in running time polynomial in $\frac{1}{\epsilon}$ and in the binary
-encoding of the instance.
+feasible $0/1$-solution for knapsack of value $c(\bar{x}) \geq (1-\epsilon)
+\times OPT$ (max problem) or $c(\bar{x}) \leq (1+\epsilon) \times OPT$ (min
+problem), where $OPT$ is the optimal objective value, in running time
+polynomial in $\frac{1}{\epsilon}$ and in the binary encoding of the instance.
 
 \paragraph{Theorem - FPTAS} Let $\epsilon > 0$. In time $\mathcal{O}(n^3
 \frac{1}{\epsilon} log (\frac{n^2}{\epsilon}))$ we can compute a feasible

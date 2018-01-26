@@ -8,6 +8,25 @@
 
 \section{Matchings in general graphs}
 
+\paragraph{Definition: a component of a graph is odd if it has an odd number of
+vertices. For any graph $G$, let $\sigma(G)$ be the number of odd components of
+$G$. For any graph $G=(V,E)$ and $U \subseteq V$, the graph obtained by
+deleting all vertices in $U$ and all edges incident with $U$ is denoted by
+$G \ U$.}
+
+\paragraph{For a graph $G=(V,E)$, $v(G) = \displaystyle \min_{U \subseteq V}
+\frac{1}{2}(|V| + |U| - \sigma(G - U))$.}
+
+\paragraph{A graph $G=(V,E)$ has an perfect matching iff $G - U$ has at most
+$|U|$ odd components for each $U \subseteq V$.}
+\subparagraph{Proof:} Follows from previous formula, since $G$ has a perfect
+matching iff $v(G) \geq \frac{1}{2} |V|$.
+
+\paragraph{Let $G=(V,E)$ be a graph without isolated vertices. Then, $\rho(G) =
+\displaystyle \max_{U \subseteq V} \frac{|U| + \sigma(G)}{2}$}
+
+\subsection{Finding a maximum-cardinality matching}
+
 \paragraph{The max-size algorithm in general graphs:}
 The problem: we want to find an $M$-augmenting path.
 
@@ -29,7 +48,7 @@ For $e =\{u,v\} \in E$, then $e/C =
   \emptyset \text{, if } u \in C \text{ and } v \in C \\
   \{u,C\} \text{, if } v \in C, u \notin C \\
   \{u,v\} \text{, if } u,v \notin C\\
-\end{cases}$.
+\end{cases}$\\
 $E/C = \{ e/C: e \in E\}$ and $G/C = (V/C, E/C)$
 
 \paragraph{Definition: Let $G=(V,E)$ and $M \subseteq E$. Let $W \subseteq V$
@@ -54,17 +73,26 @@ Parameters: $M$ matching, $G$ graph and $W$ missed nodes.
 \item Find a shortest $W-W$-walk, i.e, from a missed node to another missed
 node in $G$, $P$.
 \item Check wether $P$ contains $M$-augmenting path
-\item Otherwise, construct $M$-blossom from $P$ with node set $C \subseteq V$
-\item Let $G = (V/C, E/C)$, $M^\prime = M/C$, $W^\prime$ are missed nodes by
-$M^\prime$ in $G^\prime$.
-\item Call $\mathcal{A}(M^\prime, G^\prime, W^\prime)$.
-\subitem if answer in 5(?) is optimal, then $M$ is optimal.
-\subitem if answer is a better matching, then expand it to a matching in G as
-indicated in the next theorem.
+\subitem If yes, augment the path
+\subitem Otherwise, construct $M$-blossom from $P$ with node set
+$C \subseteq V$. Let $G = (V/C, E/C)$, $M^\prime = M/C$, $W^\prime$ are missed
+nodes by $M^\prime$ in $G^\prime$. Call $\mathcal{A}(M^\prime, G^\prime,
+W^\prime)$.
 \end{enumerate}
+If answer for $M^\prime$ is optimal, then $M$ is optimal.
+If answer is a better matching, then expand it to a matching in G as indicated
+in the next theorem.
 
 \paragraph{Corollary: $v(G)$ can be computed in time $\mathcal{O}(\abs{V}^2
-\abs{E}$}
+\abs{E})$ for an undirected graph}
+
+\subparagraph{Proof:} Apply the above algorithm iteratively, starting with
+$M = \emptyset$ until a maximum-size matching is attained. By using (10?), a
+shortest M-alternating w-w-walk can be found in time $\mathcal{O}(|E|)$.
+Moreover, the graph $G/C$ can be constructed in time $\mathcal{O}(|E|)$. Since
+the recursion has depth at most $|V|$, each application of the algorithm above
+takes $\mathcal{O}(|V||E|)$ time. Since the number of applications is at most
+$|V|$, we have the time bound given.
 
 \paragraph{Theorem: Let $C = (v_0, \dots, v_t)$ be an $M$-blossom. $M$ attains
 $v(G) \iff M^\prime = M/C$ attains $v(G/C)$.}

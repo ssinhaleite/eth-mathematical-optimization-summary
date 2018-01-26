@@ -100,6 +100,8 @@ Some stable sets are: $\{v_1\}$, $\{v_1, v_2\}$, $\{v_1, v_4\}$, and the
 maximum for this graph contains two vertices.
 
 \paragraph{We can model this problem as an ILP}
+If we have a cost function $c \in \R^V$, the objective function is written as:
+$\sum_{v \in V} x_v c_v$, the constraints are kept the same as in the ILP:
 \begin{equation*}
 \begin{aligned}
 & \max      & & \sum_{v \in V} x_v \\

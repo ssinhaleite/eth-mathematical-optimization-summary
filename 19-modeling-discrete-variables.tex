@@ -9,16 +9,30 @@
 
 \section{Modeling with Discrete Variables}
 
+\paragraph{Definition: Assume that you are given $F \subseteq \Z^n \times \R^d$
+such that $P = conv(F)$.}
+\begin{enumerate}
+\item A model for $F$ is a system of linear inequalities $Q = \{ x \in \R^s
+\times \R^t: Ax \leq b\}$ with rational data $A$ and $b$ together with a
+rational linear map $\phi: \R^{s+t} \mapsto \R^{n+d}$ such that $\phi(Q) \cap
+(\Z^n \times \R^d) = F$.
+\item For polyhedra $A$ and $B$ in $\R^n$, let $d(A,B)$ be a distance function
+which fulfills $d(A,A) = 0$ and for polyhedra $A \subseteq B \subseteq C$, we
+postulate that $d(A,B) \leq d(A,C)$. Then, we define the quality of a model $Q$
+for $F$ as $d(P,Q)$.
+\item A model is an ideal formulation for $F$ if $d(P,Q) = 0$.
+\end{enumerate}
+
 \subsection{Set covering, packing and partitioning}
 \paragraph{Definition: Let $M$ be a finite ground set. $M = \{1, \dots, m\}$.
 Given a collection $M_1, \dots, M_n \subseteq M$, $c_j > 0$ is the weight of
 subsets $M_j$, $M_j = \{1, \dots, n\}$.}
 
-\subparagraph{Cover:} $J \subseteq \{1, \dots, n\}$ is a cover if $\bigcup_{j
-\in J} M_j = M$.
+\subparagraph{Cover:} $J \subseteq \{1, \dots, n\}$ is a cover of $M$ if
+$\bigcup_{j \in J} M_j = M$.
 
-\subparagraph{Packing:} $J \subseteq \{1, \dots, n\}$ is a packing if $M_i \cap
-M_j = \emptyset$, $\forall i \in J, i \neq j$.
+\subparagraph{Packing:} $J \subseteq \{1, \dots, n\}$ is a packing of $M$ if
+$M_i \cap M_j = \emptyset$, $\forall i \in J, i \neq j$.
 
 \subparagraph{Partition:} A partition is a subset $J \subseteq \{1, \dots, n\}$
 such that $J$ is a cover and a packing.
@@ -31,14 +45,16 @@ such that $J$ is a cover and a packing.
 
 \paragraph{The optimization problems:}
 \begin{enumerate}
-\item Max-weight packing
-\item Min-weight cover
-\item Min/Max-weight partition
+\item Max-weight packing: we want to find a packing of maximum weight.
+\item Min-weight cover: we want to find a cover of minimum weight.
+\item Min/Max-weight partition: partition with min/max weight.
 \end{enumerate}
 
 \paragraph{Goal: "translate" these optimization problems into "polyhedral
-language".} It requires to find a matrix $A \in \Z^{m \times n}$, where $m$ is
-our ground set and $n$ is the subsets of $M$. $A_{ij} = 
+language".} Assume that we are given an objective function $c \in \Z^{\abs{N}}$
+with $c_i \geq 0, \forall i \in \{1, \dots, n\}$.It requires to find a matrix
+$A \in \Z^{m \times n}$, where $m$ is our ground set and $n$ is the subsets of
+$M$. $A_{ij} = 
 \begin{cases}
   0\text{, if } i \notin M_j\\
   1\text{, if } i \in M_j\\
@@ -56,6 +72,12 @@ means to select the set.
 \mathds{1} \in \R^m$, $0 \leq x \leq \mathds{1}$, $x \in \Z^n$
 \end{enumerate}
 
+\subparagraph{For a more general problem, we can consider the right hand side
+$b \in \Z^m_+$ instead of $\mathds{1}$.}
+
+\subparagraph{By defining $y_i = 1-x_i$, $i \in \{1, \dots, n\}$ we can
+transform a covering to a packing problem and vice-versa. if $x$ satisfies
+$Ax \leq b$ then $y$ satisfies $Ay \leq A - b$, $y \in \{0,1\}^n$.}
 
 \subsection{Formulations}
 
@@ -74,14 +96,14 @@ $x_{ij} \in [0,1]$: percentage of serving client $i$ from $j$. For all $i \in
 \{1, \dots, n\}$ and $j \in \{1, \dots, m\}$.\\
 $y_j \in \{0,1\}$ $\forall j \in \{1, \dots, m\}$ indicates if we open $j$-th
 facility.\\
-$P_{FL} = \{ \sum_{j =1}^{m} x_{ij} = 1$, $\forall i \in \{1, \dots, n\}$,
+$P_{FL} = \{ \sum_{j =1}^{n} x_{ij} = 1$, $\forall i \in \{1, \dots, n\}$,
 $x_{ij} \leq y_j$ $\forall i,j \}$\\
-Objective: $Z_{FL} = \min \sum_{j=1}^m c_j y_j + \sum_{i,j} d_{ij} x_{ij}$
+Objective: $Z_{FL} = \min \sum_{j=1}^n c_j y_j + \sum_{i,j} d_{ij} x_{ij}$
 
 We could also look at a second version of the problem:
-$P_{AFL} = \{ (x,y) \mid \sum_{j=1}^{m} x_{ij} = 1$, $\forall i$, $\sum_{i=1}^n
-x_{ij} \leq n y_j \forall j$, $0 \leq x_{ij} \leq 1$, $0 \leq y_j \leq 1\}$\\
-Objective: $Z_{AFL} = \min \sum_{j=1}^m c_j y_j + \sum_{i,j} d_{ij} x_{ij}$,
+$P_{AFL} = \{ (x,y) \mid \sum_{j=1}^{n} x_{ij} = 1$, $\forall i$, $\sum_{i=1}^m
+x_{ij} \leq m y_j \forall j$, $0 \leq x_{ij} \leq 1$, $0 \leq y_j \leq 1\}$\\
+Objective: $Z_{AFL} = \min \sum_{j=1}^n c_j y_j + \sum_{i,j} d_{ij} x_{ij}$,
 $(x,y) \in P_{AFL}$.
 
 \emph{Observe: $P_{AFL} \supseteq P_{FL} \supseteq P_{FL} \cap
@@ -89,10 +111,15 @@ $(x,y) \in P_{AFL}$.
 (\R^{n \times m} \times \Z^m)$}
 
 $(x,y) \in P_{FL} \rightarrow x_{ij} \leq y_i \forall i \rightarrow
-\sum_{i=1}^n x_ij \leq n y_j$
+\sum_{i=1}^m x_ij \leq m y_j$
+
+\paragraph{Let $A$ and $B$ be two formulations of the same integer optimization
+problem and $P_A$ and $P_B$ be the feasible sets of the corresponding linear
+relaxations. We say, that formulation $A$ is at least as strong as formulation
+$B$ if $P_A \subseteq P_B$ }
 
 \paragraph{Example (minimum spanning tree):}
-Given $G=(V,E)$, weights $w_ij \forall i,j \in E$, $G$ connected, a forest $F
+Given $G=(V,E)$, weights $w_{e} \forall e \in E$, $G$ connected, a forest $F
 \subseteq E$, $(V,F)$ contains no cycle.
 
 \subparagraph{Definition - spanning tree:} $T \subseteq E$ is a spanning tree
@@ -101,24 +128,28 @@ if $(V,T)$ has no cycles and $|T| = n-1$, $n = |V|$.
 \subparagraph{Lemma - graph theory:} $T \subseteq E$ is a spanning tree
 $\iff |T| = n-1$ and $(V,T)$ is connected.
 
-Two formulations for min-weight spanning trees: variables $x_{ij} \in \{0,1\}
-\forall (i,j) \in E$.
+\subparagraph{The cost of a spanning tree is the sum of the costs of the edges
+of the tree.}
 
-\subparagraph{Subtour-elimination formulation (relaxation)}
-$P_{SUB} = \{ x \in [0,1]^{|E|} \mid \sum_{e \in E(S)} x_e \leq |S| - 1
-\forall S \subseteq V \}$
+\subsection{Two formulations for min-weight spanning trees}
+Consider new variables $x_{ij} \in \{0,1\} \forall (i,j) \in E$.
 
 \emph{Notation: For $S \subseteq V$, $E(S) = \{(i,j) \in E \mid i,j \in S\}$.
 $\delta(S) = \{(i,j) \in E \mid i \in S, j \notin S\}$, i.e., a cut comming
 from $S$.}
 
+\paragraph{Subtour-elimination formulation (relaxation)}
+$P_{SUB} = \{ x \in [0,1]^{|E|} \mid \sum_{e \in E(S)} x_e = n-1, \sum_{e \in
+E(S)} x_e \leq |S| - 1 \forall \emptyset \neq S \neq V$, $S \subseteq V \}$
+
 \subparagraph{Optimization problem 1:}
 $Z_{SUB} = \min \{ x \in P_{SUB} \cap \Z^n \sum_{e \in E} w_e x_e\}$
 
-\subparagraph{Optimization problem 2 (cut set formulation):}
-$P_{cut} = \{ x \in [0,1]^{|E|} \mid \sum_{e \in \delta(S)} x_e \geq 1$,
-$\forall \emptyset \neq S \neq V$, $S \subseteq V$.
+\paragraph{Cut set formulation:}
+$P_{cut} = \{ x \in [0,1]^{|E|} \mid  \sum_{e \in E(S)} x_e = n-1, \sum_{e \in
+\delta(S)} x_e \geq 1$, $\forall \emptyset \neq S \neq V$, $S \subseteq V\}$.
 
+\subparagraph{Optimization problem 2:}
 $Z_{cut} = \min \{ x \in P_{cut} \cap \Z^n \sum_{e \in E} w_e x_e\}$
 
 \paragraph{Theorem:}

@@ -11,7 +11,7 @@
 $P=\{ x \in \R^n \mid Ax \leq b\}$ when $0\leq x_i \leq 1 \forall i = 1, \dots,
 n$ are part of $Ax \leq b \rightarrow P \cap \Z^n \subseteq \{0,1\}^n$.
 
-\paragraph{Target: compute the convex hull of $P \cap \Z^n$}
+\paragraph{Target: compute the convex hull of $P \cap \Z^n$.}
 Ingredients:
 \begin{itemize}
 \item projection $Q = \{(x,y) \in \R^{n \times d} \mid \tilde{A}x + \tilde{B}y
@@ -22,7 +22,7 @@ Ingredients:
 \paragraph{Algorithm - Lift and Project:}
 Input: $P$, $j \in \{1, \dots, n\}$. Output: polyhedron $P_j$.
 \begin{enumerate}
-\item Lift:
+\item Lift: multiply $Ax \leq b$ by $x_j$ and $(1-x_j)$:
 \subitem Consider $x_j Ax \leq b x_j$, $(1-x_j)Ax \leq b(1-x_j)$ (*)\\
 Define variables: $y_{ij} = x_i x_j, \forall i \neq j$.\\
 Replace the system (*) by the another system where we put $y_{ij}$ in place of
@@ -32,6 +32,10 @@ Call the resulting polyhedron $L_j(P) \subseteq \R^{n + (n-1)}$.
 \item Project:
 \subitem Project $L_j(P)$ to the space of $x$-variables, $P_j = proj(L_j(P))$.
 \end{enumerate}
+
+\paragraph{Remark: for $x \in [0,1]$ it holds that $x^2 = x \iff x \in
+\{0,1\}$. Furthermore, for $y_{kj} = x_k x_j$, where $x_k$ and $x_j\in [0,1]$,
+it holds that $y_{kj} = 1 \iff x_k = x_j = 1$.}
 
 \paragraph{Theorem: $P_j = conv(P \cap \{x \in \R^n \mid x_j \in \{0,1\}) = 
 conv(P \cap \{x \mid x_j = 0\} \cup (P \cap \{x \mid x_j = 1\})$.

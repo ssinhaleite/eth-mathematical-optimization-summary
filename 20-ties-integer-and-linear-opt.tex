@@ -11,7 +11,7 @@
 \section{From Linear to Integer Optimization}
 
 \subsection{The integer convex hull of a polyhedron }
-\paragraph{Theorem (?) for integer points in polyhedra}
+\paragraph{Theorem for integer points in polyhedra}
 Note: The convex hull of the integer points of a polyhedron is also a
 polyhedron.
 
@@ -25,7 +25,8 @@ $\mathcal{F} = \{ x \in \mathbb{R}^n : x = \sum_{t \in T} \lambda_{t}t +
 _{\text{exists only one $\lambda \neq 0$ and $\lambda = 1$}} \}$
 
 where $E \subseteq \mathbb{Z}^n$ and $\underbrace{\mathcal{C}}_{\text{recession
-cone}} = \{ x \in \mathbb{R}^n \mid Ax \leq 0 \} = cone(E)$
+cone}} = \{ x \in \mathbb{R}^n \mid Ax \leq 0 \} = cone(E) = rec(P) =
+conv(P \cap \Z^n)$
 
 \subparagraph{Proof:}
 $P = conv(V) + cone(E) \rightarrow$ the polyhedron can be written as a convex
@@ -108,8 +109,8 @@ For $i = 0, \dots, N$:
 \item if $x^* \in \Z^n$: problem solved.
 \item Otherwise, determine hyperplane $a^T x = \alpha, a \in \Q^n$ (*), $\alpha
 \in \Q$ such that:
-\subitem $\forall x \in P \cap Z^n, a^T x \leq \alpha$
-\subitem $a^T x > \alpha$
+\subitem $\forall x \in P^i \cap Z^n, a^T x \leq \alpha$
+\subitem $a^T x^* > \alpha$
 \item $P^{i+1} = P^i \cap \{x \mid a^T x \leq \alpha\}$
 \end{enumerate}
 
@@ -128,12 +129,12 @@ $x^*_B = A^{-1}_B b \geq 0$. Suppose $x^* \notin \Z^n \rightarrow \exists i \in
 B$ such that $x_i^* \notin \Z^n$. $\bar{b} = A^{-1}_B b$, $\bar{A_N} = A^{-1}_B
 A_N$. Notice $x^*_i = \bar{b_i}$.
 
-Consider row $i$: $x_i + \sum_{j \in N} \bar{A_{ij}} x_j = \bar{b_i}
-\underbrace{\geq}_{x_j \geq 0 \forall j} x_i + \sum_{j \in N} \lfloor A_{ij}
-\rfloor x_j$.\\
+Consider row $i$: $x_i + \sum_{j \in N} \bar{a_{ij}} x_j = \bar{b_i}
+\underbrace{\geq}_{x_j \geq 0 \forall j} x_i + \sum_{j \in N} \lfloor
+\bar{a_{ij}} \rfloor x_j$.\\
 $\forall x \in \Z^n$ such that $Ax = b, x \geq 0$ we know $x_i + \sum_{j \in N}
-\lfloor \bar{A_{ij}} x_j \in \Z \leq \lfloor \bar{b_i} \rfloor < b_i$.
-$\rightarrow x^*_i + \sum_{j \in N} \lfloor \bar{A_{ij}} \rfloor x^*_j =
+\lfloor \bar{a_{ij}} \rfloor x_j \in \Z \leq \lfloor \bar{b_i} \rfloor < b_i$.
+$\rightarrow x^*_i + \sum_{j \in N} \lfloor \bar{a_{ij}} \rfloor x^*_j =
 \bar{b_i} > \lfloor \bar{b_i} \rfloor$. (integer gomory cuts)
 
 \subparagraph{Why is it atractive to add a cutting plane to an LP-relaxation?}

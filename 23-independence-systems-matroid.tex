@@ -56,19 +56,24 @@ this way, knanpsack problems are not matroids in general.
 
 \paragraph{Definition: Given a finite set $N$. A function of a set (set
 function) $f: 2^N \mapsto \R$ is submodular if $\forall S$, $T \subseteq N$,
-then $f(S) + f(T) \geq f(S \cup T) + f(S \cap T)$.}
+then $f(S) + f(T) \geq f(S \cup T) + f(S \cap T)$. (supermodular $\leq$ instead
+of $\geq$)}
 
 \subparagraph{$f$ non decreasing if $f(S) \leq f(T) \forall S \subseteq T$.}
 
 \paragraph{Theorem:}
 \begin{enumerate}
 \item The set function $f$ is submodular iff $\forall j, k$, $j \neq k$ and
-$A \subseteq N \setminus \{j,k\}$ then $f(A \cup \{j\}) - f(A) \leq f(A \cup
+$A \subseteq N \setminus \{j,k\}$ then $f(A \cup \{j\}) - f(A) \geq f(A \cup
 \{j,k\}) - f(A \cup \{k\})$ (diminishing return property)
 \item $f$ is submodular and nondecreasing iff $\forall S, T \subseteq N$:
-$f(T) \leq f(S) + \sum_{j \in T\setminus S} [f(S \cup \{j\} - f(S)]$.
-\todo[inline]{exercise!}
+$f(T) \leq f(S) + \sum_{j \in T\setminus S} [f(S \cup \{j\}) - f(S)]$.
+\subitem $r(S) + r(T\setminus S) \geq |A \cap S| + |A \cap (T\setminus S)| =
+|A| = r(T)$
 \end{enumerate}
+
+\paragraph{$(N,\mathcal{I})$ is a matroid if, for all $F \subseteq N$, every
+maximal independent set contained in $F$ has the same cardinality $r(F)$.}
 
 \paragraph{Theorem: $(N,\mathcal{I})$ is a matroid iff its rank function is
 submodular.}
