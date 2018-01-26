@@ -6,8 +6,148 @@
 % cover number, theorem: \alpha(G) + \tau(G) = |V| = \rho(G) + \nu(G),
 % M-Augmenting paths, combinatorial proof of König's Theorem
 % Matchings in bipartite graphs - 14.12.2017
-% author:
+% author: Vanessa Leite
 
 \section{Matchings in bipartite graphs}
+
+\paragraph{Notation: Let $G=(V,E)$ be a graph. $e \in E$ is viewed as a subset
+of nodes of cardinality $2$.}
+
+\subparagraph{$deg(v) = \abs{\{v,u\} \in E}$}
+\subparagraph{$deg_F(v) = \abs{\{v,u\} \in F}$, $F \subseteq E$}
+
+\subparagraph{A path is a sequence of nodes $(v_0, v_1, \dots, v_t)$ st $\{v_i,
+v_{i+1}\} \in E$, $\forall i \in 0, \dots, t-1$}
+
+\subparagraph{$M \subseteq E$ is a matching if $\forall e,e^\prime \in M$,
+$e \neq e^\prime$, $e \cap e^\prime = \emptyset$}
+
+\subparagraph{$F \subseteq E$ is an edge cover if $\forall v \in V$,
+$v \cap e = \emptyset$, for some $e \in F$. Edge cover is the set $F$ of edges
+such that every vertex of $V$ is incident to some edge in $F$. $F$ covers $V$.}
+
+\subparagraph{$W \subseteq V$ is a node cover if $\forall e \in E$,
+$e \cap w = \emptyset$, for some $w \in W$. Node or vertex cover, is the set
+$W$ of vertices that contains at least one endpoint of every edge. This way,
+$W$ covers $E$.}
+
+\subparagraph{$S \subseteq V$ is a stable set if $e \nsubseteq S$ $\forall e
+\in E$. Stable set is a subset of vertices $S$ such that no two vertices in $S$
+are adjacent in $G$.}
+
+\paragraph{Definition - graph parameters}
+
+\subparagraph{$\alpha(G)$ is the maximum size of a stable set in $G$}
+
+\subparagraph{$\rho(G) = \min \{ \abs{F} \mid F \subseteq E \text{ edge cover}
+\}$}
+
+\subparagraph{$\tau(G) = \min \{ \abs{W} \mid W \subseteq V \text{ node cover}
+\}$}
+
+\subparagraph{$v(G)$ is the maximum size of a matching in $G$}
+
+\paragraph{Observations:}
+\begin{enumerate}
+\item $S \subseteq V$ stable iff $V \setminus S$ is a node cover
+\item $\alpha(G) \leq \rho(G)$
+\item $v(G) \leq \tau(G)$
+\end{enumerate}
+\subparagraph{Proof:}
+Consider that G has no isolated node.
+\begin{enumerate}
+\item $S \subseteq V$ stable $\iff \forall e \in E$, $e \nsubseteq S \iff
+\forall e \in E$, $e \cap (V \setminus S) \neq \emptyset \iff V \setminus S$
+is a node cover.
+\item Let $S \subseteq V$ be stable and $F \subseteq E$ an edge cover. In
+particular, $F$ must cover all nodes in $S$, thus, $\alpha(G) \leq \rho(G)$.
+\item Let $M \subseteq E$ be a matching and $W \subseteq V$ is a node cover. In
+particular, $W$ must cover all edges on $M$, thus, $v(G) \leq \tau(G)$.
+\end{enumerate}
+
+\paragraph{Theorem: For any graph $G=(V,E)$ without isolated nodes, $\alpha(G)
++ \tau(G) = \abs{V} = v(G) + \rho(G)$}
+
+\subparagraph{Proof:}
+$\alpha(G) + \tau(G) = \abs{V}$ follows from observation.\\
+Let $M$ be a maximum matching, $\abs{M} = v(G)$. $M$ misses $\abs{V} -
+2\abs{M}$ nodes. For every "missed" node, pick an edge incident to it. This
+gives $T \subseteq E$. $M \cup T$ is an edge cover of size $\abs{M} + \abs{V}
+- 2\abs{M} = \abs{V} - \abs{M} \rightarrow \rho(G) \leq \abs{V} - \abs{M}
+\rightarrow \rho(G) + \underbrace{\abs{M}}_{=v(G)} \leq \abs{V}$.\\
+Conversely, let $F \subseteq E$ be an edge cover, $\abs{F} = \rho(G)$. Note
+that if $\{u,v\} \in F$ then $deg_F(u) \leq 1$ or $deg_F(v) \leq 1$. For every
+$v \in V$ st $deg_F(v) > 1$ remove arbitrarily $deg_F(v) -1$ many edges from
+$F$. This operation leads to a matching of size $\abs{F} - \sum_{v \in V}
+(deg_F(v) -1) = \abs{F} + \underbrace{\abs{V}}_{\text{count each node}} -
+\underbrace{2\abs{F}}_{count each edge twice} = -\abs{F} + \abs{V} \rightarrow
+v(G) \geq \abs{V} - \rho(G) \rightarrow v(G) + \rho(G) \geq \abs{V}$.
+Thus, $\rho(G) + v(G) = \abs{V}$.
+
+\paragraph{Definition - $M$-augmenting path}
+$M \subseteq E$ is a matching. A path $(v_0, \dots, v_t)$ is $M$-augmenting if:
+\begin{itemize}
+\item $t$ is odd
+\item $\{v_1, v_2\}, \dots, \{v_{t-2}, v_{t-1}\} \in M$
+\item $v_0$ and $v_t$ are nodes missed by $M$.
+\end{itemize}
+
+\emph{Note: if $(v_0, \dots, v_t)$ is $M$-augmenting path, then $\{v_0, v_1\},
+\{v2, v_3\}, \dots, \{v_{t-1}, v_t\} \notin M$ and $\bigcup_{i=0}^{t-1} \{v_i,
+v_{i+1}\} = M \cup M^\prime$, where $M^\prime$ is a matching of size $\abs{M}
++ 1$.}
+
+\paragraph{Theorem: For any graph $G=(V,E)$ a current matching $M \subseteq E$
+is either of max size ($\abs{M} = v(G)$) or there exists an $M$-augmenting
+path.}
+\subparagraph{Proof:}
+If $\abs{M} = v(G)$ then, no augmenting path exists.
+Suppose $\abs{M} < v(G)$. Let $M^\prime$ be a matching, $\abs{M^\prime} >
+\abs{M}$. Consider subgraph $(V, M \cup M^\prime)$. $G$ decomposis in connected
+components: paths, cycles and/or isolated components. As $\abs{M^\prime} >
+\abs{M}$ there exists a connected component in $(V, M \cup M^\prime)$ that is
+an augmenting path.
+
+\paragraph{Algorithm for computing $v(G)$ when $G$ is bipartite}
+Note: $G$ bipartite means $V = U \cup W$ and $\forall e in E$, $e = (u,w)$,
+where $u \in U$, $w \in W$. It also implies that $U$ is a stable set and $W$ is
+also a stable set.
+
+\begin{enumerate}
+\item $M = \emptyset$
+\item Find an $M$-augmenting path and update $M$ as long as possible.
+\end{enumerate}
+
+\subparagraph{How to find $M$-augmenting path when $G$ is bipartite?}
+Pick $u \in U$ missed by $M$. Let $w \in W$ be mised by $M$. Turn all edges in
+$M$ from $W$ to $U$ and all edges in $E \setminus M$ from $U$ to $W$. Test
+wether there exists a directed path from $u$ to $w$ in the digraph $D=(V,A)$
+with arc set $A$ defined before. Using BFS, this task can be accomplished in
+time $\mathcal{O}(\abs{E})$.
+
+\paragraph{Theorem: $v(G)$ can be determined, when $G$ is bipartite, in time
+$\mathcal{O}(\abs{V} \abs{E})$}
+
+\paragraph{Konig's Theorem: In a bipartite graph $G$: $v(G) = \tau(G)$}
+\subparagraph{Proof:}
+From observation, show $v(G) = \tau(G)$. Perform induction on $\abs{V}$\\
+For $G$ contains one edge, the number of vertices is $\abs{V} = 2$, results
+trivial.
+\textbf{Claim: $\exists u \in V$ that is covered by all max size matchings.}\\
+Consider $G^\prime = G \setminus u$. From hypothesis of induction $v(G^\prime)
+= \tau(G^\prime) \rightarrow v(G) = v(G^\prime) + 1$.
+Let $W^\prime$ be a node cover in $G^\prime$ of size $\tau(G^\prime)$.
+$W^\prime \cup \{u\}$ is a node cover such that $\abs{W^\prime \cup \{u\}} =
+\tau(G^\prime) + 1 = v(G)$.
+
+\subparagraph{Proof of the claim:}
+Suppose not true. For every edge $e = \{u,v\} \in E$, there exists a maximum
+size matching not covering $u$ or $v$. So, there exists a maximum matching $M$
+covering $v$ but not $u$ and there exists a maximum matchin $N$ covering $u$
+but not $v$. Consider $G^\prime = \{V, M \cup U\}$. The component of $G^\prime$
+containing $u$ is a path $P$. If $\abs{E(P)}$ is odd, $P$ is $M$-augmenting
+path, which is a contradiction. Otherwise, if $\abs{E(P)}$ is even, $E(P) \cup
+\{e\}$ is $N$-augmenting path, contradiction.
+
 
 \end{document}
