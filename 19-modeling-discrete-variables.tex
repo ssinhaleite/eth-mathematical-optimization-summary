@@ -163,12 +163,14 @@ extreme points.
 \begin{enumerate}
 \item $x$ in $P_{SUB}$. Show $S \subseteq V$, $S \neq 0$, $S \neq V$,
 $\sum_{e \in \delta(S)} x_e \geq 1$.\\
-$E = E(S) \cup \delta(S) \cup E(V\S)$. $x \in P_{SUB} \rightarrow \sum_{e \in 
-E(S)} x_e \leq |S| - 1$. $\sum_{e \in E(V\S)} x_e \leq |V|-|S|-1 = n-|S|-1$
+$E = E(S) \cup \delta(S) \cup E(V\setminus S)$. $x \in P_{SUB} \rightarrow
+\sum_{e \in E(S)} x_e \leq |S| - 1$. $\sum_{e \in E(V\setminus S)} x_e \leq
+|V|-|S|-1 = n-|S|-1$
 $\rightarrow n - 1 = \sum_{e \in E(S)} x_e + \sum_{e \in \delta(S)} x_e +
-\sum_{e \in E(V\S)} x_e \rightarrow \sum_{e \in \delta(S)} x_e = n-1 -
+\sum_{e \in E(V\setminus S)} x_e \rightarrow \sum_{e \in \delta(S)} x_e = n-1 -
 \underbrace{(\sum_{e \in E(S)} x_e)}_{\leq |S| - 1} - \underbrace{(\sum_{e \in 
-E(V\S)} x_e)}_{\leq n-|S|-1} \geq n - 1 - (|S|-1)-(n-|S|-1) = -|S|+|S|+1 =1$
+E(V\setminus S)} x_e)}_{\leq n-|S|-1} \geq n - 1 - (|S|-1)-(n-|S|-1) = -|S|+|S|
++1 =1$
 \item 
 \end{enumerate}
 
