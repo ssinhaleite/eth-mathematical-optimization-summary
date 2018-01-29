@@ -72,15 +72,40 @@ I \\
 -I \\
 \end{bmatrix}$ is TU
 \item $A$ is TU $\leftrightarrow A^{T}$ is TU
+\item $A$ is TU $\iff [A |-A]$ is TU
 \end{enumerate}
 
 \subparagraph{Proofs:}
 \begin{enumerate}
-\item \todo[inline]{add proof}
-\item \todo[inline]{add proof}
+\item $A$ is TU $\rightarrow [A|I]$ is TU, $[A|I]$ is unimodular $\rightarrow
+A$ is TU
+\subitem Choose any square submatrix $B$ of $[A|I]$. If $B$ is a submatrix of
+$A$ as well, since $A$ is TU by def $|det(B)| \in \{0,\pm 1\}$. Otherwise,
+$B = [A^\prime, I^\prime]$, where $A^\prime$ is a submatrix of $A$ and
+$I^\prime$ is a submatrix of $I$. If any column of $I$ is $0$, then $det(B)=0$.
+Otherwise we can permute rows and columns in $B$ st it is of the form
+$[A^{\prime\prime} | I_k]$. Now we apply Laplace until some submatrix of
+$A^{\prime\prime}$ remains whose determinant is in $\{\pm 1, 0\}$ and its
+determinant is $|det(A^{\prime\prime})| = |det([A^{\prime\prime} | I_k])| =
+|det(B)|$.
+\subitem $[A|I]$ unimodular means that every square submatrix $mxm$ of $[A|I]$
+has determinant in $\{\pm 1, 0\}$. Let $A^{\prime\prime}$ be a square submatrix
+of $A$. Let $A^\prime$ be a square submatrix of $A$ and $A^{\prime\prime}$.
+After row permutations we can write $A^{\prime\prime}$ as $[A^\prime |
+\tilde{A}]$ and then look at $C = [A^\prime 0 | \tilde{A} I ]$. Then,
+$|det(A^\prime)| = |det(C)| \in \{0,1\}$. Since $C$ is an $m \times m$
+submatrix of $[A|I]$, $A$ is TU.
+\item $A$ is TU $\iff A^T$ is TU $\iff [A^T |I]$ is TU $\iff [A^T | I | -A^T |
+-I]$ is TU $\iff [A^T | -A^T | I | -I]$ is TU $\iff [A | -A | I | -I]$ is TU.
 \item if $A$ is TU, then every square submatrix of $A$ has determinant $0, \pm
 1$. Since $det(A) = det(A^T)$, every square submatrix of $A^T$ has also
 determinant $0, \pm 1$.
+\item "$\leftarrow$", "$\rightarrow$"
+\subitem Any square submatrix of $A$ is also a square submatrix of $[A|-A]$.
+\subitem Let $B$ be a square submatrix of $[A|-A]$. If it is also a submatrix
+of $A$ or of $-A$ then $|det(B)| \in \{0,1\}$. Otherwise, it contains a row
+from $A_{i\cdot}$ as well as a row from $-A_{i\cdot}$, then $det(B) = 0$.
+This way, $|det([A|-A])| \in \{0,1\}$.
 \end{enumerate}
 
 \paragraph{Theorem - Unimodular}
@@ -205,6 +230,29 @@ From (*): $B\bar{A_{\cdot 1}} = r e_1 \rightarrow \underbrace{\bar{A_{\cdot
 \{-1, 0, 1\}^k} \rightarrow \abs{r} = 1$.
 \end{itemize}
 \end{itemize}
+
+\paragraph{$A$ TU, add a row with all elements $1$s, $A$ still TU}
+We can partition $A$ so $J = J^+ \cup J^-$, where the vertices of $G$ are
+partitioned into $V_J = V_{J^+} + 0 V_{J^-}$ and every edge in $G$ goes from
+$V_{J^+}$ to $V_{J^-}$. After row permutation, each column of $A_{J^+}$ and
+$A_{J^-}$ contain at most one zero non entry, which is one, then $\sum_{J^+}
+A_{ij} - \sum_{J^-} A_{ij} \in \{0, \pm 1\}$. Now, choose $J^+ = J \setminus
+\{m+1\}$ and $J^- = \{m+1\}$. Since $A_{J^+}$ has at most two one's in each
+column, $\sum_{J^+} A_{ij} \in \{0, 1, 2\}$. Then, $\sum_{J^+} A_{ij} -
+\sum_{J^-} A_{ij} = \sum_{J^+} - 1 \in \{\pm 1, 0\}$.
+
+\paragraph{$[A | a] \in \Z^{m_1 \times n_1 + 1}$ and $[b^T \\B ] \in \Z^{m_2 +1
+\times n_2}$ are TU. 2-sum ($T = [A ab^T \\ 0 B]$ is also TU.}
+Let $J \subseteq \{1, \dots, n_1 + n_2\}$. Let $J_B = J
+\setminus \{1, \dots, n_1\}$ and $J_A = J \cap \{1, \dots, n_1\}$. Let $J_B^+$
+and $J_B^-$ be partition for $[b^T \\ B]$ according to G.H. If $\sum_{i \in
+J_B^+} bi - \sum_{i \in J_B^-} bi = 0$ then $\sum_{i \in J_B^+} (ab^T)_{\cdot
+j} - \sum_{i \in J_B^-} (ab^T)_{\cdot j} = 0$, so if $J_A \neq \emptyset$
+choose $J_A^+$ and $J_A^-$ to be a G.H. decomposition of $J_A$. Choose $J^+ =
+J_A^+ \cup J_B^+$ and $J^- = J_A^- \cup J_B^-$. Otherwise, wlog, $\sum_{i \in
+J_B^+} bi - \sum_{i \in J_B^-} bi = 1$. Then choose a partition of $J_A \cup
+\{n+1\}$ for $[A |a]$ into $J_A^+  \cup \{n+1\}$ and $J_A^-$ according to G.H.
+Then, $J_A^+ \cup J_B^+$ and $J_A^- \cup J_B^-$ give the desired composition.
 
 \todo[inline]{supplementary: sections 19.1 and 19.2 from [sch86]}
 
