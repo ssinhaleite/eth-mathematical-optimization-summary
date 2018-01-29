@@ -87,8 +87,10 @@ in the next theorem.
 \abs{E})$ for an undirected graph}
 
 \subparagraph{Proof:} Apply the above algorithm iteratively, starting with
-$M = \emptyset$ until a maximum-size matching is attained. By using (10?), a
-shortest M-alternating w-w-walk can be found in time $\mathcal{O}(|E|)$.
+$M = \emptyset$ until a maximum-size matching is attained. By using the fact 
+that, M-alternating w-w-path correspond to direct paths in $D$ (finding a max.
+cardinality matchin algorithm) a shortest M-alternating w-w-walk can be found
+in time $\mathcal{O}(|E|)$.
 Moreover, the graph $G/C$ can be constructed in time $\mathcal{O}(|E|)$. Since
 the recursion has depth at most $|V|$, each application of the algorithm above
 takes $\mathcal{O}(|V||E|)$ time. Since the number of applications is at most
