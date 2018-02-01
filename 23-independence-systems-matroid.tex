@@ -14,6 +14,7 @@ Let $N$ be a finite set, $N = \{1, \dots, n\}$. $\mathcal{I}$ is a collection
 of subsets of $N$. $(N, \mathcal{I})$ is an independence system if it has the
 properties:
 \begin{itemize}
+\itemsep0em
 \item $\emptyset \in \mathcal{I}$
 \item $A \in \mathcal{I}$ and $B \subseteq A \rightarrow B \in \mathcal{I}$
 \end{itemize}
@@ -21,8 +22,19 @@ properties:
 Usually, $\mathcal{I}$ is implicitly defined, for example, look at all vertices
 in a graph that do not form a cycle.\\
 
+\paragraph{Matroid - definition}
+A matroid $M$ is a finite collection of finite sets that satisfies three
+axioms:\\
+1. Non-emptiness: the empty set is in $M$. (Thus, $M$ is not itself
+empty.)\\
+2. Heredity: If a set $X$ is an element of $M$, then every subset of $X$ is
+also in $M$.\\
+3. Exchange: If $X$ and $Y$ are two sets in $M$ where $|X|>|Y|$, then there is
+an element $x \in X \setminus Y$ such that $Y \cup \{x\} $ is in $M$.
+
 Examples:
 \begin{enumerate}
+\itemsep0em
 \item Linear independence: $A \in \Z^{m \times n}$, $\mathcal{I}$ is a
 collection of sets in $\{1, \dots, n\}$ st $\{A_i \mid i \in \mathcal{I}\}$ is
 linearly independent whenever $i \in \mathcal{I}$.
@@ -46,6 +58,16 @@ The rank of $S$ is $r(S) = \max \{|F|: F \text{ basis of } S\}$.
 
 $I \notin \mathcal{I}$, $I \subseteq N$ is a circuit if $I\setminus \{i\} \in
 \mathcal{I}, \forall i \in I$.
+Unique circuit property: Let $M=(E,I)$ be a matroid. Let $S\in I$ and $e$ st
+$S+e \notin I$.  Then there exists a unique circuit $C\subseteq S+e$. Proof:
+Suppose $S+e$ contains more than one circuit, say $C1$ and$C2$ with $C1\neq
+C2$. By minimality of $C1$ and $C2$, we have that there exists $f\in C1
+\setminus C2$ and $g \in C2\setminus C1$.  Since $C1-f \in I$ (by minimality
+of the circuit $C1$), we can extend it to a maximal independent set $X$ of
+$S+e$. Since $S$ is also independent, we must have that $|X|=|S|$ and since 
+$e \in C1-f$, we must have that $X=S+e-f \in I$. But this means that 
+$C2\subseteq S+e-f=X$ which is a contradiction since $C2$ is dependent.
+
 
 A independence system $(N,\mathcal{I})$ is a matroid if $\forall S \subseteq
 N$, every basis of $S$ has the same cardinality.\\
@@ -63,6 +85,7 @@ of $\geq$)}
 
 \paragraph{Theorem:}
 \begin{enumerate}
+\itemsep0em
 \item The set function $f$ is submodular iff $\forall j, k$, $j \neq k$ and
 $A \subseteq N \setminus \{j,k\}$ then $f(A \cup \{j\}) - f(A) \geq f(A \cup
 \{j,k\}) - f(A \cup \{k\})$ (diminishing return property)
@@ -77,8 +100,10 @@ maximal independent set contained in $F$ has the same cardinality $r(F)$.}
 
 \paragraph{Theorem: $(N,\mathcal{I})$ is a matroid iff its rank function is
 submodular.}
+
 \subparagraph{Proof:}
 \begin{itemize}
+\itemsep0em
 \item "$\rightarrow$": $(N,\mathcal{I})$ ind. system then rank function 
 nondecreasing.
 \subitem $r(S \cup \{j\}) - r(S) \leq 1$, $r(\emptyset) = 0$. Let
@@ -107,6 +132,15 @@ a contradiction because $S_1$ was basis of $T$ and thus, should have maximum
 cardinality.
 \end{itemize}
 
+\paragraph{Summary}
+The sets in a matroid $M$ are typically called independent sets; for example,
+we would say that any subset of an independent set is independent. The union of
+all sets in $M$ is called the ground set. An independent set is called a basis
+if it is not a proper subset of another independent set. The exchange property
+implies that every basis of a matroid has the same cardinality. The rank of
+a subset $X$ of the ground set is the size of the largest independent subset of 
+$X$. A subset of theground set that is not in $M$ is called dependent. A
+dependent set is called a circuit if every proper subset is independent.
 \subsection{Optimization over matroids}
 
 Consider $\max \sum_{j=1}^n c_j x_j$. $(N,\mathcal{I})$ independence system,
@@ -128,6 +162,7 @@ S \subseteq N, c \in \Z^n\}$. Wlog: $c_1 \geq c_2 \geq \dots \geq c_k > 0 \geq
 c_{k+1} \geq \dots \geq c_n$ (the values are sorted).\\
 Define $S^0 = \emptyset$, $S^j = \{1, \dots, j\}$ and
 \begin{itemize}
+\itemsep0em
 \item $x_j = r(S^j) - r(S^{j-1})$ for $j \leq k-1$ and $x_j = 0$, elsewhere.
 \item $y_s = 0 \forall S \neq S^1, \dots, S^k$ and $y_{s^k} = c_k$, $y_{s^j} =
 c_j - c_{j+1} \forall 1 \leq j \leq k-1$.
