@@ -12,9 +12,8 @@
 
 \paragraph{Notation: Let $G=(V,E)$ be a graph. $e \in E$ is viewed as a subset
 of nodes of cardinality $2$.}
-
-\subparagraph{$deg(v) = \abs{\{v,u\} \in E}$}
-\subparagraph{$deg_F(v) = \abs{\{v,u\} \in F}$, $F \subseteq E$}
+$deg(v) = \abs{\{v,u\} \in E}$\\
+$deg_F(v) = \abs{\{v,u\} \in F}$, $F \subseteq E$\\
 
 \subparagraph{A path is a sequence of nodes $(v_0, v_1, \dots, v_t)$ st $\{v_i,
 v_{i+1}\} \in E$, $\forall i \in 0, \dots, t-1$}
@@ -39,18 +38,14 @@ are adjacent in $G$.}
 
 \paragraph{Definition - graph parameters}
 
-\subparagraph{$\alpha(G)$ is the maximum size of a stable set in $G$}
-
-\subparagraph{$\rho(G) = \min \{ \abs{F} \mid F \subseteq E \text{ edge cover}
-\}$}
-
-\subparagraph{$\tau(G) = \min \{ \abs{W} \mid W \subseteq V \text{ node cover}
-\}$}
-
-\subparagraph{$v(G)$ is the maximum size of a matching in $G$}
+$\alpha(G)$ is the maximum size of a stable set in $G$\\
+$\rho(G) = \min \{ \abs{F} \mid F \subseteq E \text{ edge cover}\}$\\
+$\tau(G) = \min \{ \abs{W} \mid W \subseteq V \text{ node cover}\}$\\
+$v(G)$ is the maximum size of a matching in $G$\\
 
 \paragraph{Observations:}
 \begin{enumerate}
+\itemsep0em
 \item $S \subseteq V$ stable iff $V \setminus S$ is a node cover
 \item $\alpha(G) \leq \rho(G)$
 \item $v(G) \leq \tau(G)$
@@ -58,6 +53,7 @@ are adjacent in $G$.}
 \subparagraph{Proof:}
 Consider that G has no isolated node.
 \begin{enumerate}
+\itemsep0em
 \item $S \subseteq V$ stable $\iff \forall e \in E$, $e \nsubseteq S \iff
 \forall e \in E$, $e \cap (V \setminus S) \neq \emptyset \iff V \setminus S$
 is a node cover.
@@ -89,6 +85,7 @@ Thus, $\rho(G) + v(G) = \abs{V}$.
 \paragraph{Definition - $M$-augmenting path}
 $M \subseteq E$ is a matching. A path $(v_0, \dots, v_t)$ is $M$-augmenting if:
 \begin{itemize}
+\itemsep0em
 \item $t$ is odd and all nodes $v_i, i = 1, \dots, t$ are distincts.
 \item $\{v_1, v_2\}, \dots, \{v_{t-2}, v_{t-1}\} \in M$.
 \item $v_0$ and $v_t$ are nodes missed by $M$.
@@ -107,6 +104,7 @@ of the sets $A$ and $B$.}
 \paragraph{Theorem: For any graph $G=(V,E)$ a current matching $M \subseteq E$
 is either of max size ($\abs{M} = v(G)$) or there exists an $M$-augmenting
 path.}
+
 \subparagraph{Proof:}
 If $\abs{M} = v(G)$ then, no augmenting path exists.
 Suppose $\abs{M} < v(G)$. Let $M^\prime$ be a matching, $\abs{M^\prime} >
@@ -121,6 +119,7 @@ where $u \in U$, $w \in W$. It also implies that $U$ is a stable set and $W$ is
 also a stable set.
 
 \begin{enumerate}
+\itemsep0em
 \item $M = \emptyset$
 \item Find an $M$-augmenting path and update $M$ as long as possible.
 \end{enumerate}
@@ -157,6 +156,18 @@ path, which is a contradiction. Otherwise, if $\abs{E(P)}$ is even, $E(P) \cup
 \{e\}$ is $N$-augmenting path, contradiction.
 
 \paragraph{Konig's edge cover Theorem: For any bipartite graph without isolated
-vertices, $\alpha(G) = \rho(G)$.}
-Isolated vertice: ?
+node, $\alpha(G) = \rho(G)$.}
+
+\paragraph{The (perfect) matching polytope $PMA(G)$ is defined as the convex
+hull of (the incidence vectors of) of perfect matchings of $G$, i.e. $PMA(G) =
+conv \{X^M \mid M$ is a perfect matching of $G\}$.}
+$PMA(G) = \{x \in \R^{|E|}|x_e\geq 0$ $\forall e \in E$, and $\sum_{e \in
+\delta(v)} x_e = 1$ $\forall v \in V \}$
+Denoting the RHS by $Q(G)$, we thus have the containment: $PMA(G)\subseteq
+Q(G)$. Every point in $Q(G)$ is a convex combination of perfect matchings.
+For any fractional pointx in $Q(G)$, one can find two points$x_1$ and
+$x_2$ in $Q(G)$ different from $x$ such that $x= (x_1 + x_2)/2$. Here $x_1$ and
+$x_2$ are not necessarily integral. (Hint: the set of edges $e$ having a
+fractional weight $x_e$ must contain a cycle in $G$.)
+
 \end{document}
