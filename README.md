@@ -13,6 +13,8 @@ Course webpage: [https://www.math.ethz.ch/ifor/education/courses/fall-2017/mathe
 Some notes/exercises can be found at the moodle website: [https://moodle-app2.let.ethz.ch/auth/shibboleth/login.php](https://moodle-app2.let.ethz.ch/auth/shibboleth/login.php)
 Course assistants: Christoph Glanzer (christoph.glanzer@ifor.math.ethz.ch)
 
+# Disclaimer
+Please note that nothing found here is guaranteed to be complete and/or correct. Feel free to report mistakes and to do pull requests.
 
 ## References
 - Graph Theory: The course requires basic knowledge in graph theory. This is, for example, covered in Diestel's book (Chapters 1.1 to 1.7).
