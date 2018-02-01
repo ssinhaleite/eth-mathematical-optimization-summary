@@ -45,6 +45,7 @@ such that $J$ is a cover and a packing.
 
 \paragraph{The optimization problems:}
 \begin{enumerate}
+\itemsep0em
 \item Max-weight packing: we want to find a packing of maximum weight.
 \item Min-weight cover: we want to find a cover of minimum weight.
 \item Min/Max-weight partition: partition with min/max weight.
@@ -64,6 +65,7 @@ Introduce variables $x_j \forall j \in N$. $x_j \in \{0,1\}$. Each $x_j = 1$
 means to select the set.
 
 \begin{enumerate}
+\itemsep0em
 \item Max-weight packing: $\max \sum_{j = 1}^n c_j x_j$, $Ax \leq
 \mathds{1} \in \R^m$
 \item Min-weight cover: $\min \sum_{j = 1}^n c_j x_j$, $Ax \geq
@@ -154,6 +156,7 @@ $Z_{cut} = \min \{ x \in P_{cut} \cap \Z^n \sum_{e \in E} w_e x_e\}$
 
 \paragraph{Theorem:}
 \begin{enumerate}
+\itemsep0em
 \item $P_{SUB} \subseteq P_{cut}$
 \item In general, $P_{SUB} \neq P_{cut}$ and $P_{cut}$ may have non integral
 extreme points.
@@ -161,6 +164,7 @@ extreme points.
 
 \subparagraph{Proof:}
 \begin{enumerate}
+\itemsep0em
 \item $x$ in $P_{SUB}$. Show $S \subseteq V$, $S \neq 0$, $S \neq V$,
 $\sum_{e \in \delta(S)} x_e \geq 1$.\\
 $E = E(S) \cup \delta(S) \cup E(V\setminus S)$. $x \in P_{SUB} \rightarrow
