@@ -8,6 +8,16 @@
 
 \section{Matchings in general graphs}
 
+For any subset $S\subseteq V$ of odd cardinality $|S|= 2k+ 1$, the induced
+subgraph $G(S) = (S, E(S))$ can contain at most $k$ edges from any matchings.
+Note that $E(S)$ is the subset of edges of $G$ whose endpoints are contained
+in $S$.\\
+$PMA(G) = \{x \in \R^{|E|} \mid x_e \geq 0$ $\forall e \in E, \sum_{e \in
+\delta(v)} x_e = 1$ $\forall v \in V$, and $ \sum_{e \in E(S)} x_e \leq k$
+$\forall S \subseteq V$ of odd cardinality, $|S|= 2k+ 1\}$\\
+The inequalities for odd cardinality sets $S$ are known as the blossom
+inequalities. There are exponentially many such inequalities and it is not
+clear how many of them are redundant.
 \paragraph{Definition: a component of a graph is odd if it has an odd number of
 vertices. For any graph $G$, let $\sigma(G)$ be the number of odd components of
 $G$. For any graph $G=(V,E)$ and $U \subseteq V$, the graph obtained by
@@ -70,6 +80,7 @@ $v_t$ gives an $M$-alternating walk in $G$.
 Parameters: $M$ matching, $G$ graph and $W$ missed nodes.
 
 \begin{enumerate}
+\itemsep0em
 \item Find a shortest $W-W$-walk, i.e, from a missed node to another missed
 node in $G$, $P$.
 \item Check wether $P$ contains $M$-augmenting path
@@ -86,11 +97,12 @@ in the next theorem.
 \paragraph{Corollary: $v(G)$ can be computed in time $\mathcal{O}(\abs{V}^2
 \abs{E})$ for an undirected graph}
 
-\subparagraph{Proof:} Apply the above algorithm iteratively, starting with
-$M = \emptyset$ until a maximum-size matching is attained. By using the fact 
-that, M-alternating w-w-path correspond to direct paths in $D$ (finding a max.
-cardinality matchin algorithm) a shortest M-alternating w-w-walk can be found
-in time $\mathcal{O}(|E|)$.
+\subparagraph{Proof:}
+Apply the above algorithm iteratively, starting with $M = \emptyset$ until a
+maximum-size matching is attained. By using the fact  that, $M$-alternating
+w-w-path correspond to direct paths in $D$ (finding a max. cardinality matching
+algorithm) a shortest $M$-alternating w-w-walk can be found in time
+$\mathcal{O}(|E|)$.
 Moreover, the graph $G/C$ can be constructed in time $\mathcal{O}(|E|)$. Since
 the recursion has depth at most $|V|$, each application of the algorithm above
 takes $\mathcal{O}(|V||E|)$ time. Since the number of applications is at most
@@ -101,6 +113,7 @@ $v(G) \iff M^\prime = M/C$ attains $v(G/C)$.}
 
 \subparagraph{Proof:}
 \begin{itemize}
+\itemsep0em
 \item "$\rightarrow$"
 \subitem Let $P$ be $M$-augmenting path in $G$, wlog $P$ does not start in
 $v_0$. $P \cap C = \emptyset$ is clear. $M$-augmenting path in $M$ will be on
