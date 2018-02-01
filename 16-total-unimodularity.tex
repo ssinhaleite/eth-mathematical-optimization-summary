@@ -27,7 +27,8 @@ replacing the $i$-th column of A by the column vector $b$.
 \paragraph{Definition - unimodular}
 $A \in \mathbb{Z}^{m \times n}$ of full row rank is unimodular if the
 determinant of every basis of $A$ ($m \times n$ regular submatrix) is equal to
-$\pm 1$. A matrix $A \in \Z^{m \times m}$ of full row rank is unimodular if $det(A) = \pm 1$.
+$\pm 1$. A matrix $A \in \Z^{m \times m}$ of full row rank is unimodular if
+$det(A) = \pm 1$.
 
 \paragraph{Definition - totally unimodular}
 $A \in \mathbb{Z}^{m \times n}$ is called totally unimodular (TU) if every
@@ -35,6 +36,7 @@ square submatrix of $A$ has determinant $0$, $+1$, or $-1$.
 
 \paragraph{Examples:}
 \begin{itemize}
+\itemsep0em
 \item
 $\begin{bmatrix}
 3 & 5\\
@@ -63,6 +65,7 @@ $\begin{bmatrix}
 
 \paragraph{Propositions}
 \begin{enumerate}
+\itemsep0em
 \item $A$ is TU $\leftrightarrow [AI]$ is unimodular
 \item $A$ is TU $\leftrightarrow$
 $\begin{bmatrix}
@@ -77,6 +80,7 @@ I \\
 
 \subparagraph{Proofs:}
 \begin{enumerate}
+\itemsep0em
 \item $A$ is TU $\rightarrow [A|I]$ is TU, $[A|I]$ is unimodular $\rightarrow
 A$ is TU
 \subitem Choose any square submatrix $B$ of $[A|I]$. If $B$ is a submatrix of
@@ -115,6 +119,7 @@ only if the family of polyhedra $P(b) = \{ x \in \mathbb{R}^{n}_+ \mid Ax = b
 
 \subparagraph{Proof}
 \begin{itemize}
+\itemsep0em
 \item direction "$\rightarrow$", Assume $A$ is unimodular $\rightarrow$ let $b
 \in \mathbb{Z}^{m}$, $P(b) \neq \emptyset$. Take an extreme point $x^{*} \in
 P(b)$. $x^{*} = (x^{*}_{B}, x^{*}_{N})$ for basis B, $x^{*}_{B} = A^{-1}_{B}b$,
@@ -155,6 +160,7 @@ entries equals to $0, +1 and -1$ $\forall i \in \{1, \dots, m\}$.
 
 \subparagraph{Proof:}
 \begin{itemize}
+\itemsep0em
 \item "$A$ is TU $\rightarrow$ ..."
 \subitem Let $J \subseteq \{1, \dots, n\}$. Define $d \in \{0,1\}^n$, $d_j = 1
 \forall j \in J$, $d_i = 0 \forall i \notin J$.\\
@@ -241,11 +247,20 @@ A_{ij} - \sum_{J^-} A_{ij} \in \{0, \pm 1\}$. Now, choose $J^+ = J \setminus
 column, $\sum_{J^+} A_{ij} \in \{0, 1, 2\}$. Then, $\sum_{J^+} A_{ij} -
 \sum_{J^-} A_{ij} = \sum_{J^+} - 1 \in \{\pm 1, 0\}$.
 
-\paragraph{$[A | a] \in \Z^{m_1 \times n_1 + 1}$ and $[b^T \\B ] \in \Z^{m_2 +1
-\times n_2}$ are TU. 2-sum ($T = [A ab^T \\ 0 B]$ is also TU.}
+\paragraph{$[A | a] \in \Z^{m_1 \times n_1 + 1}$ and $[b^T B]$ vertical vector
+$\in \Z^{m_2 +1 \times n_2}$ are TU. 2-sum is also TU.}
+2-sum ($T =
+\begin{bmatrix}
+A & ab^T\\
+0 & B
+\end{bmatrix}$
 Let $J \subseteq \{1, \dots, n_1 + n_2\}$. Let $J_B = J
 \setminus \{1, \dots, n_1\}$ and $J_A = J \cap \{1, \dots, n_1\}$. Let $J_B^+$
-and $J_B^-$ be partition for $[b^T \\ B]$ according to G.H. If $\sum_{i \in
+and $J_B^-$ be partition for $
+\begin{bmatrix}
+b^T \\
+B
+\end{bmatrix}$ according to G.H. If $\sum_{i \in
 J_B^+} bi - \sum_{i \in J_B^-} bi = 0$ then $\sum_{i \in J_B^+} (ab^T)_{\cdot
 j} - \sum_{i \in J_B^-} (ab^T)_{\cdot j} = 0$, so if $J_A \neq \emptyset$
 choose $J_A^+$ and $J_A^-$ to be a G.H. decomposition of $J_A$. Choose $J^+ =
