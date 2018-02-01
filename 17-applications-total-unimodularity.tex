@@ -61,6 +61,7 @@ $\delta^-(w) = \emptyset$.\\
 
 \paragraph{Theorem: The following matrices are TU:}
 \begin{enumerate}
+\itemsep0em
 \item The node-arc incidence matrix of a digraph
 \item The node-edge incidence matrix of a bipartite undirected graph
 \item An interval matrix, i.e, a $\{0,1\}$ matrix where in each row, the $1$'s
@@ -69,6 +70,7 @@ are consecutives.
 
 \subparagraph{Proof:}
 \begin{enumerate}
+\itemsep0em
 \item Let $M$ be a node-arc incidence matrix of a digraph $D=(V,A)$. Every
 column of $M$ has one $1$'s and one $-1$'s. Let $J \subseteq [\abs{V}]$ be a
 subset of the rows.
@@ -137,19 +139,23 @@ Let $D=(V,A)$ be a digraph. For each $a \in A$, $c_a \in \R_+$ is the \emph{arc
 capacity}. Let $s, t \in V$ with $s \neq t$. A function $x: A \mapsto \R$ is an
 \emph{(s-t)-flow} if:
 \begin{enumerate}
+\itemsep0em
 \item flow conservation constraint: $\sum_{a \in \delta^+(v)} x_a = \sum_{a \in
 \delta^-(v)} x_a$, $\forall v \in V \setminus \{s, t\}$, i.e., the amount of
 flow arriving in an intermediate node must be the same amount that comes out.
-\item $0 \leq x_a \leq c_a$ $\forall a \in A$
+\item $0 \leq x_a \leq c_a$ $\forall a \in A$, the flow in an arc is greather
+equal to zero and less equal to the capacity of the edge, i.e., $x_a \leq c_a$.
 \end{enumerate}
 
 The value of $x$ is $val(x) = \sum_{a \in \delta^+(s)} x_a - \sum_{a \in
-\delta^-(s)} x_a$.
-
+\delta^-(s)} x_a$, i.e., the maximum flow is the difference between the amount
+that enters the sink node and the amount that leaves the sink node (because of
+the flow conservation constraint).
 \todo[inline]{check figure on notes}
 
 \paragraph{Theorem: If $c_a \in \Z_+$ for all $a \in A$, then the max value of
 an (s-t)-flow can be chosen to be integral.}
+
 \subparagraph{Proof:}
 Let $M$ be the node-arc incidence matrix of $D$. Define $b \in \R^{|V|}$ as 
 $b_i =
@@ -167,8 +173,8 @@ As M is TU, the optimal solution to the problem is integral.
 \paragraph{Definition - cut} Let $D=(V,A)$ and $W \subseteq V$. The set
 $\delta^+(W)$ is a cut (induced by $W$). An (s-t)-cut satisfies $s \in W$ and
 $t \notin W$. Given $c \in \R^{|A|}_+$, the capacity of $\delta^+(W)$ is
-$c(\delta^+(W)) = \sum_{a \in \delta^+(W)} c_a$.
-
+$c(\delta^+(W)) = \sum_{a \in \delta^+(W)} c_a$, i.e, the sum of weights of
+all edges in the cut.
 \todo[inline]{example on notes}
 
 \paragraph{Lemma: Given $D=(V,A)$ and $s \neq t \in V$, let $x$ be an
@@ -177,8 +183,24 @@ $c(\delta^+(W)) = \sum_{a \in \delta^+(W)} c_a$.
 Intuitively, $val(x)$ is (flow out of $W$) - (flow into $W$).
 
 \subparagraph{Proof}
-proof requires some manipulation of definition
-\todo[inline]{prove!}
+$W$ is the set of vertices reachable from $s$ in $D$. Let $W^c$ be the set of
+remaining vertices i.e. $V \setminus W$.
+Now, we know, $\displaystyle value(x)=\delta^+(W)- \delta^-(W)$ for any subset
+of vertices, $W$. Therefore, all outgoing edges from the cut must be fully
+saturateda and all incoming edges to the cut must have zero flow.
+To prove the above claim we consider two cases:
+In $D$, there exists an outgoing edge $(x,y), x\in W, y\in W^{c}$ st it is not
+saturated, i.e., $val(x,y) < c_{xy}$. This implies, that there exists a
+forward edge from $x$ to $y$ in $D$, therefore there exists a path from $s$ to
+$y$ in $D$, which is a contradiction. Hence, any outgoing edge $(x, y)$ is
+fully saturated.\\
+In $D$, there exists an incoming edge $(y,x),x\in W,y\in W^{c}$ st it carries
+some non-zero flow, i.e.,$val(x,y)> 0$. This implies, that there exists a
+backward edge from $x$ to $y$ in $D$, therefore there exists a path from $s$
+to $y$ in $D$, which is again a contradiction. Hence, any incoming edge
+$(x, y)$ must have zero flow. Both of the above statements prove that the
+capacity of cut obtained in the above described manner is equal to the flow
+obtained in the network.
 
 \paragraph{Lemma: Let $x$ be an (s-t)-flow and $\delta^+(W)$ an (s-t)-cut. Then
 $val(x) \leq c(\delta^+(W))$, i.e., the amount of the flow is at most the
@@ -229,4 +251,7 @@ $y^*_a > 0$. By complementary slackness $x^*_a = c_a$ if $a =(u,v) \in \delta^-
 \in \delta^+(W)} x_a - \sum_{a \in \delta^-(W)} x_a = \sum_{a \in \delta^+(W)}
 c_a - \sum_{a \in \delta^-(W)} 0 = c(\delta^+(W))$.
 
+\paragraph{undirected graph}
+the maximum number of edge-disjoint $s-t$ paths in an undirected graph is
+equal to the minimum number of edges in an $s-t$ cut-set.
 \end{document}
