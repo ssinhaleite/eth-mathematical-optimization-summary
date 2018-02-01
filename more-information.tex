@@ -1,0 +1,128 @@
+\documentclass[main]{subfiles}
+\begin{document}
+
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+% Main Topics: barrier functions and central path
+% Interior Point Methods - 30.10.2017
+% author: Vanessa Leite
+
+\section{Other informations}
+\subsection{Revised Simplex Algorithm}
+
+\begin{enumerate}
+\item Choose a starting basis $B$ and calculate $A^{-1}_B$.
+\item Calculate $\bar{c} = C^T_B A^{-1}_B$.
+\item If $\bar{c} \geq 0$, return optimal solution $x^* = (A^{-1}_B b, 0)$.
+Otherwise, choose $j \in N$ such that $\bar{c_j} < 0$.
+\item Compute $u = A^{-1}_B A_{\cdot j}$.
+\item If $u_i \leq 0$ for all $i \in \{1, \dots, m\}$, the problem is unbounded
+($-\infty$).
+\item Determine $\lambda^* = \min \{ \frac{x_i}{u_i}\} (u_i>0$ and $i \{ 1,
+\dots, m\}$. Let $k$ be an index for which $\lambda^*$ is attained.
+\item Let $\bar{B} = B\setminus\{k\} \cup \{j\}$.
+\item Update $x_i$: $\lambda^*$ if $i=j$, $x_i - \lambda^* u_i$, if $i \in B$,
+and $x_i$, else.
+\item Let $Q$ be the matrix obtained from elementary column operations which
+transforms $A^{-1}_B A_{\bar{B}}$ to $I_{m \times m}$.
+\item Update $A^{-1}_{\bar{B}} = Q \times A^{-1}_B$.
+\item Set $B = \bar{B}$, go to $2$.
+\end{enumerate}
+
+To obtain $Q$ in $9$, observe that $A^{-1}_B A_{\bar{B}} = [e_1, e_2, \dots,
+A^{-1}_B A_{\cdot j}, \dots, e_{m-1}, e_m] = [e_1, e_2, \dots, u, \dots,
+e_{m-1}, e_m]$, $e_i$ is the $i$-th unit vector. Let $Q$ be the matrix
+corresponding to the sequence of ERO which transforms $A6 {-1}_B A_{\bar{B}}$
+to $I$. By construction, $Q$ only depends on $u$. It follows that $Q A^{-1}_B
+A_{\bar{B}} = I \iff Q A^{-1}_B = A^{-1}_{\bar{B}}$ (update step on 10).
+
+\subsection{Anticycling rules}
+For $u,v \in \R^n$, $u <_{lex} v \iff \exists k \in \{0, \dots, n-1\}$ (index)
+st $u_1 = v_1, \dots, u_k = v_k, u_{k+1} < v_{k+1}$.\\
+$u <_{lex} v \iff u - v <_{lex} 0$\\
+For $u <_{lex} 0$ and any $v$ and $\alpha > 0$: $v +\alpha \times u>_{lex} v$.\\
+Lexicographic Pivoting rule: replace step 6 on previous algorithm:
+\begin{enumerate}
+\item Denote by $I$ the index set of all rows $T_{i\cdot}$ st $\bar{A_{ij}} > 0$
+and $i>0$.
+\item Choose the index $k \in I$ st the vector $\frac{T_{k\cdot}}
+{\bar{A_{k,j}}}$ is lexicographically smallest among all $\frac{T_{i\cdot}}
+{\bar{A_{ij}}}: i \in I$. $k$ minimizes the ratio $\frac{(A^{-1}_B b)_k}
+{ \bar{A_{ij}}} = \frac{x^*_k}{\bar{A_{ij}}}$.
+\end{enumerate}
+
+\subsection{Simplex Lexicographic Pivoting rule always terminates}
+Basis exchange maintains the property that $T_{i\cdot} >_{lex} 0$. This holds
+true for the initial tableu as $A^{-1}_B b \geq 0$ (x is feasible) and due to
+the unit matrix. Lets change the basis from $B$ to $B\cup\{j\} \setminus \{k\}$.
+Call the new tableu after basis exchange of $T^{new}$. By assumption, $\bar{c_j}
+< 0$, $\bar{A_{kj}} > 0$ and by our choice of $k$, $\frac{T_{k\cdot}}
+{\bar{A_{kj}}} <_{lex} \frac{T_{i\cdot}}{\bar{A_{ij}}}$, $\forall i \geq 1, i
+\neq k$ st $\bar{A_{ij}} >0$. Then:
+\begin{enumerate}
+\item $T^{new}_{k\cdot} = \frac{T_{k\cdot}}{\bar{A_{kj}}} >_{lex} 0$ as
+$\bar{A_{kj}} > 0$.
+\item $T^{new}_{i\cdot} = T_{i\cdot} - \frac{\bar{A_{ij}}}{\bar{A_{kj}}}
+T_{k\cdot}$, $\forall i \geq 0$, $i \neq k$. We distinguish between:
+\subitem if $\bar{A_{ij}} \leq 0, T^{new}_{i\cdot} >_{lex} 0$ as $T_{i\cdot}
+>_{lex} 0$, where $T_{k\cdot} >_{lex} 0$.
+\subitem For $\bar{A_{ij}} >0$ it holds that $\frac{T_{i\cdot}}{\bar{A_{ij}}} 
+>_{lex} \frac{T_{k\cdot}}{\bar{A_{kj}}} \iff T_{i\cdot} >_{lex} 
+\frac{\bar{A_{ij}}}{\bar{A_{kj}}} T_{k\cdot} \iff T_{i\cdot} -
+\frac{\bar{A_{ij}}}{\bar{A_{kj}}} 
+T_{k\cdot} >_{lex} 0 \iff T^{new}_{i\cdot} >_{lex} 0$.
+\end{enumerate}
+Show $T^{new}_{0\cdot} >_{lex} T_{0\cdot}$ as $\bar{c_j} < 0$:, $T^{new}
+_{0\cdot} = T_{0\cdot} - \frac{\bar{C_j}}{\bar{A_{kj}}} T_{k\cdot} >_{lex} 
+T_{0\cdot}$. It follows that in every basis exchange, the topmost row of the 
+tableu will increase striclty (lexic.). We can therefore never visit the same 
+basis twice, as otherwise, we would end up with the same topmost row of $T$, a 
+contradiction.
+
+\paragraph{Hessian Matrix}
+matrix of second order partial derivatives.\\
+$\frac{\partial^2 g(x,y)}{\partial x \partial y}$: first derivate in $y$,
+then in $x$.\\
+PSD matrix: each main diagonal element $>=0$, and $det >=0$, or $z^T M z \geq 0$
+($z$ is a vector)\\
+$\frac{\partial f}{\partial x}(p) >/< 0$ then $f(x)$ is increasing/decreasing
+function at $x=p$. $=0$ we know nothing.\\
+$\frac{\partial^2 f}{\partial x}(p) >/< 0$ then $f(x)$ is concave up/
+down function at $x=p$. $=0$ we know nothing.\\
+first derivative $= 0$ and $\frac{\partial^2 f}{\partial x}(p) >/< 0$ then
+$f(x)$ has a local minimum/maximum at $x=p$. $=0$ we know nothing.\\
+
+\paragraph{Graphs}
+sum of degrees of all vertices is equal to $2 * |E|$ (undirected),
+in other words, sum of degrees of all vertices is always even.\\
+planar graph: sum of degrees of all faces is twice the number of edges.\\
+sum of entering edges of all vertices = $|E|$ = sum of leaving edges of all
+vertices\\
+In any undirected graph, number of vertices with odd degree is even\\
+For every tree: $|V| - |E| = 1$\\
+In a forest, total vertices - total edges = number of trees
+
+\paragraph{Cliques - subgraph complete connected}
+Most versions of the clique problem are hard. The clique decision problem is
+NP-complete. The problem of finding the maximum clique is both fixed-parameter
+intractable and hard to approximate. And, listing all maximal cliques may
+require exponential time as there exist graphs with exponentially many maximal
+cliques. A maximal clique is a clique to which no more vertices can be added.
+For each vertex v that is not part of a maximal clique, there must be another
+vertex w that is in the clique and non-adjacent to v, preventing v from being
+added to the clique. A maximum clique is a clique that includes the largest
+possible number of vertices. Brute force, max clique with k nodes: $O(n^k k^2)$
+$n^k$ subgraphs to check and each has $k^2$ edges. k fixed: polynomial, not 
+fixed: exponentinal, no FPTAS, or $P=NP$.
+
+\paragraph{Graph partition problem}
+$G=(V,E)$ with an even number of vertices $n=|V|$, divide $V$ into two subsets
+$L$ and $R$ with the same number of vertices satisfying $L\cap R=\emptyset$,
+$L\cup R=V$, $|L|=|R|=n/2$, so as to minimize the number of edges across $L$
+and $R$ (the number of edges $\{i,j\}$ such that either $i\in L$ and $j\in R$
+or $i\in R$ and $j \in L$). IP (quadratic): $\min \sum_{i,j \in E} (x_i(1-x_j)
++(1-x_i)x_j)$ st $\sum_{i \in V} x_i = n/2$, $x_i \in \{0,1\}$. LIP: $\min
+\sum_{i,j \in E} y_{ij}$ st $\sum_{i\in V} x_i = n/2$, $x_i - x_j \leq y_{ij}
+\forall \{i,j\} in E$, $x_j - x_i \leq y_ij$, $x_i \in \{0,1\} \forall i \in
+V$, $y_{ij} \in \{0,1\} \forall \{i,j\} \in E$.
+
+\end{document}
