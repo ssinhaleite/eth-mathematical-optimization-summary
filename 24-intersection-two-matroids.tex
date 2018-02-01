@@ -8,6 +8,29 @@
 % author: Vanessa Leite
 
 \section{The intersection of two matroids}
+\paragraph{Examples of matroids:}
+1. Uniform matroid $U_{k,n}$: A subset $X \subseteq {1,2,...,n}$ is independent
+if and only if $|X|\leq k$. Any subset of ${1,2,...,n}$ of size $k$ is a basis;
+any subset of size $k+1$ is a circuit.\\
+2. Graphic/cycle matroid $M(G)$: Let $G=(V,E)$. A subset of $E$ is independent
+if it defines an acyclic subgraph of $G$.
+A basis in the graphic matroid is a spanning tree of $G$; a circuit in this
+matroid is a cycle in $G$.\\
+3. Cographic/cocycle matroid $M*(G$): Let $G=(V,E)$. A subset $I\subseteq E$
+is independent if the complementary subgraph $(V,E\I)$ of $G$ is connected.
+A basis in this matroid is the complement of a spanning tree; a circuit in this
+matroid is a cocycle (a minimal set of edges that disconnects the graph).\\
+4. Matching matroid: Let $G=(V,E)$. A subset $I\subseteq V$ is independent if
+there is a matching in $G$ that covers $I$.\\
+5. Disjoint path matroid: Let $G=(V,E)$, and let $s$ be a fixed vertex of $G$.
+A subset $I \subseteq V$ is independent if and only if there are edge-disjoint
+paths from $s$ to each vertex in $I$.\\
+
+Taking $D= (V, A)$ and $I = \{$sets of edges without directed cycles$\}$ does
+not in general form a matroid.\\
+For a linear matroid, the matrix $A = [I_m | B]$, where $B$ is an $m \times
+(n-m)$ matrix.\\
+The dual of a matroid is also a matroid.
 
 \subsection{The previous theorem revisited}
 $(N,\mathcal{I})$ matroid, $r: 2^N \mapsto \Z_+$ submodular, non decreasing.
@@ -33,12 +56,11 @@ components of $(V,T)$. Then, (*) is dominated by inequalities:
 $\sum_{e \in E(V_i)} x_e \leq |V_i| - 1 \forall i$, therefore we can describe
 the original problem (find a max-weight forest).
 
-We can walk in vertices instead of vertices: $\forall S \subseteq V$:
+We can walk in vertices instead of edges: $\forall S \subseteq V$:
 $\sum_{e \in E(S)} x_e \leq |S| - 1, x_e \geq 0$ (subtour elimination
 constraints).\\
 
 %In proof a theorem (lecture 23), we constructed a solution as: 
-%
 
 \paragraph{Properties of rank function}
 $r(\{1, \dots, j\}) - r(\{1, \dots, j-1\}) \in \{0,1\}$, i.e, or it doesn't
@@ -50,6 +72,7 @@ This is the famous greedy algorithm. It only works if we have a matroid.
 
 \paragraph{Greedy-solution}
 \begin{enumerate}
+\itemsep0em
 \item Sort edges $c_{e_1} \geq c_{e_2} \geq \dots \geq c_{e_k} > 0$,
 $S= \emptyset$.
 \item For $j = 1, \dots, k$:
@@ -70,6 +93,44 @@ is integral. $Q \cap \{x: \sum_{e \in E} x_e = n-1\}$ is integral. For all
 points $x \in Q$ then $\sum_{e \in E} x_e \leq n-1$.
 $F = \{x \in Q \mid \sum_{e \in E} x_e = n-1\}$ is a face of $Q \rightarrow F$
 is integral $\rightarrow P_{SUB}$ is integral.
+
+\paragraph{For any subset system $S$ that is not a matroid, there is a weight
+function $w$ such that $GreedyBasis(S,w)$ (greedy algorithm) does not return a
+maximum-weight set in$S$.}
+Proof: Let $X$ and $Y$ be two sets in $S$ that violate the exchange property
+($|X|>|Y|$), but for any element $x\in X\setminus Y$, the set $Y \cup \{x\}$
+is not in $S$. Let $m=|Y|$. We define a weight function as follows: 1)Every
+element of $Y$ has weight $m+2$.2)Every element of $X\setminus Y$ has weight
+$m+1$.3)Every other element of the ground set has weight zero. With these
+weights, the greedy algorithm will consider and accept every element of $Y$,
+then consider and reject every element of $X$, and finally consider all the
+other elements. The algorithm returns a set with total weight $m(m+2)=m2+2m$.
+But the total weight of $X$ is at least $(m+1)2=m2+2m+1$. Thus, the output of
+the greedy algorithm is not the maximum-weightset in $S$.
+
+\paragraph{Scheduling with deadlines}
+$n$ tasks to complete in $n$ days, each task requires one full day and has a
+deadline and there is a penalty for the non completed tasks. What order should
+you perform the tasks to minimize the penalty? $cost(\pi) = n \sum_{i=1}^n
+p_i·[\pi_i > D_i]$. $D_i$: deadlines, $p_i$: penalties. $\pi_i$: schedule.\\
+For any schedule $\pi$, call tasks $i$ st $\pi_i>D_i$ as late, and all other
+tasks on time. The following trivial observation is the key to revealing the
+underlying matroid structure: the cost of a schedule is determined by the
+subset of tasks that are on time.\\
+A subset $X$ of tasks is realistic if there is a schedule $\pi$ st every task
+in $X$ is on time.\\
+The collection of realistic sets of jobs forms a matroid.
+Proof: The empty set is vacuously realistic, and any subset of a realistic set
+is clearly realistic. Thus, it suffices to show that the exchange property
+holds. Let $X$ and $Y$ be realistic sets of jobs with $|X|>|Y|$. Let $t^*$ be
+the largest integer such that $|X(t^*)|\leq |Y(t^*)|$. This integer must exist,
+because $|X(0)|=0 \leq 0=|Y(0)|$ and $|X(n)|=|X|>|Y|=|Y(n)|$. By definition
+of $t^*$, there are more tasks with deadline $t^* +1$ in $X$ than in $Y$.
+Thus, we can choose a task $j \in X \setminus Y$ with deadline $t^* +1$;
+let $Z=Y\cup \{j\}$.Let $t$ be an arbitrary integer. If $t\leq t^*$, then
+$|Z(t)|=|Y(t)|\leq t$, because $Y$ is realistic. On the other hand, if $t>t^*$,
+then $|Z(t)|=|Y(t)|+1 \leq |X(t)|<t$ by definition of $t^*$ and because $X$ is
+realistic. $Z$ is realistic ($|Z(t)| \leq t$ is realistic for every integer $t$.
 
 \subsection{The intersection of two matroids theorem}
 $(N,\mathcal{I})$ is an independence system. $\mathcal{I} = \mathcal{I}_1
@@ -105,6 +166,7 @@ Task: find $x \in P \cap \Z^n$.
 
 \paragraph{Theorem: $r_i$ are submodular, integer valued, $r_i (\emptyset) =
 0$, $r_i$ non decreasing, then $P$ is integral.}
+
 \subparagraph{Proof:}
 $\forall c \in \Z^n$, then $z \in \Z \rightarrow P$ is integral.
 
