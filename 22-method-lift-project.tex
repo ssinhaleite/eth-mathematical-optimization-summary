@@ -14,6 +14,7 @@ n$ are part of $Ax \leq b \rightarrow P \cap \Z^n \subseteq \{0,1\}^n$.
 \paragraph{Target: compute the convex hull of $P \cap \Z^n$.}
 Ingredients:
 \begin{itemize}
+\itemsep0em
 \item projection $Q = \{(x,y) \in \R^{n \times d} \mid \tilde{A}x + \tilde{B}y
 \leq \tilde{b}\}$. $proj_x(Q) = \{x \in \R^n \mid (x,y) \in Q\}$.
 \item algebraic quadratic operator: $x^2 = x \forall x \in \{0,1\}$.
@@ -22,6 +23,7 @@ Ingredients:
 \paragraph{Algorithm - Lift and Project:}
 Input: $P$, $j \in \{1, \dots, n\}$. Output: polyhedron $P_j$.
 \begin{enumerate}
+\itemsep0em
 \item Lift: multiply $Ax \leq b$ by $x_j$ and $(1-x_j)$:
 \subitem Consider $x_j Ax \leq b x_j$, $(1-x_j)Ax \leq b(1-x_j)$ (*)\\
 Define variables: $y_{ij} = x_i x_j, \forall i \neq j$.\\
@@ -43,6 +45,7 @@ $P\neq \emptyset$.}
 
 \subparagraph{Proof:}
 \begin{itemize}
+\itemsep0em
 \item "$conv(...) \subseteq P_j$"
 \subitem Let $\bar{x} \in conv(P \cap \{x \in \R^n \mid x_j \in \{0,1\})$ st
 $\bar{x_j} \in \{0,1\}$ (we just need to show for $0$ and $1$ because $P$ is a
