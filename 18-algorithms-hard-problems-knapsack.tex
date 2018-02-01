@@ -25,11 +25,11 @@ $\alpha(k, c_{0}) = \min \{ \sum_{i =1}^{k} a_{i} x_{i} \mid \sum_{i=1}^{k}
 c_{i}x_{i} \geq c_{0}, x \in \{0,1\}^{k} \}$
 
 \paragraph{A k-cursive algorithm}
-For all $a \in \{1, \dots, \sum_{i=1}^{n} a_i\}$, initialize $\gamma(1, a_0)$:
+For all $a \in \{1, \dots, \sum_{i=1}^{n} a_i\}$, initialize $\gamma(1, a)$:
 \[
-  \gamma(1, a_{0})=\begin{cases}
-               0, a_{1} > a_{0}\\
-               c_{1}, a_{1} \leq a_{0}\\
+  \gamma(1, a)=\begin{cases}
+               0, a_{1} > a\\
+               c_{1}, a_{1} \leq a\\
             \end{cases}
 \]
 For $k = 2, \dots, n$ and for $a = 1, \dots, \sum_{i=1}^{n} a_i$:
@@ -39,12 +39,12 @@ The number of iterations for a given $a_{0}$ is $\mathcal{O}(a_{max} n^2)$.
 Since $a_0 \leq n a_{max}$, $\mathcal{O}(n \times a_{0})$.
 
 For the dual knapsack problem: for all $c \in \{1, \dots, \sum_{i=1}^{n} c_i
-\}$, initialize $\alpha(1, c_0)$:
+\}$, initialize $\alpha(1, c)$:
 \[
-  \alpha(1, c_{0})=\begin{cases}
-               +\infty, c_{1} < c_{0}\\
-               a_{1} \text{, if } 1 \leq c_0 \leq c_1\\
-               0 \text{, if } c_0 = 0\\
+  \alpha(1, c)=\begin{cases}
+               +\infty \text{, if } c_{1} < c\\
+               a_{1} \text{, if } 1 \leq c \leq c_1\\
+               0 \text{, if } c = 0\\
             \end{cases}
 \]
 For $k = 2, \dots, n$ and for $c = 1, \dots, \sum_{i=1}^{n} c_i$:
@@ -67,6 +67,7 @@ i =\{1, \dots, k\} \}$
 Let $x^{*} \in \{0,1\}^{k}$ attain optimal value for $\gamma(k, a_{0})$.
 Then:
 \begin{itemize}
+\itemsep0em
 \item (i) $\sum a_{i}x_{i}^{*} \leq a_{0}$
 \item (ii) $\sum c_{i}x_{i}^{*} = \gamma(k, a_{0})$
 \end{itemize}
